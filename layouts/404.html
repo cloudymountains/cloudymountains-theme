@@ -2,7 +2,7 @@
 <html lang="{{ .Site.LanguageCode }}">
 <head>
     {{ partial "head.html" . }}
-    {{ $notFound := resources.Get "css/404.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
+    {{ $notFound := resources.Get "css/404.scss" | toCSS | resources.Minify | resources.Fingerprint }}
     <link rel="stylesheet" href="{{ $notFound.RelPermalink }}" integrity="{{ $notFound.Data.Integrity }}">
 </head>
 <body>
