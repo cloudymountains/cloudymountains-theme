@@ -1,0 +1,75 @@
+baseURL = 'http://example.org/'
+languageCode = 'en-us'
+title = 'Cloudy Mountains'
+theme = 'cloudymountains'
+
+[params]
+  description = "Welcome to Cloudy Mountains - Your Journey to the Clouds"
+  heroBackgroundImage = "/images/forest-background.jpg"
+  heroTitle = "Welcome to Cloudy Mountains"
+  heroSubtitle = "Your Journey to the Clouds"
+  about_title = "About Me"
+  about_text = "I am passionate about connecting people with the beauty and serenity of nature. My mission is to inspire and educate while preserving the natural wonders around us."
+  first_title = "Cloud"
+  first_text = "Expertise in cloud infrastructure and services"
+  second_title = "Automation"
+  second_text = "Streamlining processes through automation"
+  third_title = "DevOps"
+  third_text = "Bridging development and operations"
+  fourth_title = "Platform Engineering"
+  fourth_text = "Building robust and scalable platforms"
+  linkedin = "https://linkedin.com/in/yourusername"
+  email = "contact@forestdreams.com"
+  github = "https://github.com/yourusername"
+
+[params.seo]
+  googleAnalytics = "UA-XXXXXXXXX-X"  # Replace with your Google Analytics ID
+  googleSiteVerification = "your-verification-code"  # For Google Search Console
+  keywords = ["cloud", "automation", "devops", "platform engineering"]
+  author = "Your Name"
+  copyright = "© 2024 Cloudy Mountains. All rights reserved."
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "About me"
+    url = "/#about"
+    weight = 2
+  [[menu.main]]
+    name = "Projects"
+    url = "/#projects"
+    weight = 3
+  [[menu.main]]
+    name = "Contacts"
+    url = "/#contacts"
+    weight = 4
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[build]
+  writeStats = true
+  noJSBundleInAssets = true
+  useResourceCacheWhen = "fallback"
+
+# SEO Settings
+[permalinks]
+  posts = "/:year/:month/:title/"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    hl_Lines = ''
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
+    noClasses = false
+    style = 'monokai'
+    tabWidth = 4

@@ -1,0 +1,19 @@
+name = 'CloudyMountains'
+license = 'MIT'
+licenselink = 'https://github.com/cloudymountains/cloudymountains-theme/LICENSE'
+description = 'Theme description'
+
+# The home page of the theme, where the source can be found
+homepage = 'https://github.com/cloudymountains/cloudymountains-theme'
+
+# If you have a running demo of the theme
+demosite = 'https://cloudymountains.cloud'
+
+# Taxonomy terms
+tags = ['blog', 'company']
+features = ['some', 'awesome', 'features']
+
+# If the theme has a single author
+[author]
+  name = 'Denislav Tsonev'
+  homepage = 'https://cloudymountains.cloud'

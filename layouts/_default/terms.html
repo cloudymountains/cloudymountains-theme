@@ -1,0 +1,33 @@
+{{ define "main" }}
+  <section class="projects-section">
+    <div class="search-container" id="searchContainer">
+      <div class="search-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+      <div class="search-input-container">
+        <input type="text" id="searchInput" placeholder="Search tags..." class="search-input">
+      </div>
+    </div>
+    <div class="list-container" id="postsList">
+      {{ range .Site.Taxonomies.tags }}
+        {{ $totalWords := 0 }}
+        {{ range .Pages }}
+          {{ $totalWords = add $totalWords (countwords .Content) }}
+        {{ end }}
+        {{ $readTime := mul (div $totalWords 220.0) 60 }}
+        <a href="{{ .Page.RelPermalink }}" class="container-link" data-title="{{ .Page.Title }}">
+          <div class="full-width-container">
+            <div class="text-side">
+              <h3>{{ .Page.Title }}</h3>
+              <p class="description">{{ len .Pages }} articles</p>
+              <p class="description">Reading time: {{ math.Floor (div $readTime 60) }} minutes and {{ mod $readTime 60 }} seconds</p>
+            </div>
+          </div>
+        </a>
+      {{ end }}
+    </div>
+  </section>
+{{ end }} 

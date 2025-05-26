@@ -1,0 +1,171 @@
+// Code block styling
+pre {
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  overflow-x: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+
+  code {
+    font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #e0e0e0;
+    display: block;
+    white-space: pre;
+    overflow-x: auto;
+  }
+}
+
+// Inline code styling
+p code, li code {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 0.9em;
+  color: #e0e0e0;
+}
+
+// Syntax highlighting colors
+.hljs {
+  color: #e0e0e0;
+  background: transparent;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-title.function_ {
+  color: #ff79c6;
+  font-weight: bold;
+}
+
+.hljs-string,
+.hljs-attr {
+  color: #50fa7b;
+}
+
+.hljs-number,
+.hljs-literal {
+  color: #bd93f9;
+}
+
+.hljs-comment {
+  color: #6272a4;
+  font-style: italic;
+}
+
+.hljs-function,
+.hljs-title {
+  color: #8be9fd;
+}
+
+.hljs-params {
+  color: #f8f8f2;
+}
+
+.hljs-built_in {
+  color: #ffb86c;
+}
+
+.hljs-type {
+  color: #8be9fd;
+}
+
+.hljs-variable {
+  color: #f8f8f2;
+}
+
+.hljs-operator {
+  color: #ff79c6;
+}
+
+.hljs-punctuation {
+  color: #f8f8f2;
+}
+
+.hljs-meta {
+  color: #6272a4;
+}
+
+.hljs-meta-string {
+  color: #50fa7b;
+}
+
+.hljs-doctag,
+.hljs-meta-keyword {
+  color: #ff79c6;
+}
+
+.hljs-section {
+  color: #8be9fd;
+  font-weight: bold;
+}
+
+.hljs-selector-class,
+.hljs-selector-id {
+  color: #ffb86c;
+}
+
+.hljs-attribute {
+  color: #50fa7b;
+}
+
+.hljs-tag {
+  color: #ff79c6;
+}
+
+.hljs-name {
+  color: #ff79c6;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #50fa7b;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #bd93f9;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+// Copy button styling
+.copy-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+} 

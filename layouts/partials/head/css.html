@@ -1,0 +1,23 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ .Site.Title }}</title>
+{{ $main := resources.Get "css/main.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $main.RelPermalink }}" integrity="{{ $main.Data.Integrity }}">
+
+{{ $menu := resources.Get "css/menu.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $menu.RelPermalink }}" integrity="{{ $menu.Data.Integrity }}">
+
+{{ $projects := resources.Get "css/projects.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $projects.RelPermalink }}" integrity="{{ $projects.Data.Integrity }}">
+
+{{ $contacts := resources.Get "css/contacts.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $contacts.RelPermalink }}" integrity="{{ $contacts.Data.Integrity }}">
+
+{{ $footer := resources.Get "css/footer.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $footer.RelPermalink }}" integrity="{{ $footer.Data.Integrity }}">
+
+{{ $search := resources.Get "css/search.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $search.RelPermalink }}" integrity="{{ $search.Data.Integrity }}">
+
+{{ $about := resources.Get "css/about.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $about.RelPermalink }}" integrity="{{ $about.Data.Integrity }}">

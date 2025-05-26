@@ -1,0 +1,231 @@
+.projects-section {
+    min-height: 100vh;
+    position: relative;
+    background-image: url('/images/forest-background.jpg');
+    background-position: center;
+    background-repeat: repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    margin-top: -2px;
+    padding: 6rem 2rem;
+    color: #ffffff;
+    filter: grayscale(100%);
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.projects-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.7) 100%
+    );
+    z-index: 1;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    box-sizing: border-box;
+}
+
+.project-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    backdrop-filter: blur(5px);
+    text-decoration: none;
+    display: block;
+    color: inherit;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.project-item:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.15);
+    text-decoration: none;
+}
+
+.project-image {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.project-item:hover .project-image img {
+    transform: scale(1.05);
+}
+
+.project-content {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.project-content p {
+    color: #cccccc;
+    line-height: 1.6;
+    margin-bottom: 0;
+    text-decoration: none;
+}
+
+.list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.full-width-container {
+    display: flex;
+    width: 100%;
+    height: 250px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+    box-sizing: border-box;
+}
+
+.image-side {
+    width: 40%;
+    height: 100%;
+    min-width: 300px;
+}
+
+.image-side img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.text-side {
+    flex: 1;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.text-side h3 {
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    text-decoration: none;
+    width: 100%;
+}
+
+.text-side .description {
+    color: #cccccc;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+    text-decoration: none;
+    width: 100%;
+}
+
+.text-side .content-preview {
+    color: #cccccc;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    width: 100%;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.container-link {
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    color: inherit;
+}
+
+.container-link:hover {
+    text-decoration: none;
+}
+
+.container-link * {
+    text-decoration: none;
+}
+
+.post-divider {
+    border: none;
+    height: 1px;
+    background: #000000;
+    margin: 0.2rem 0;
+    width: 100%;
+    opacity: 1;
+}
+
+.more-projects-button {
+    text-align: center;
+    margin-top: 4rem;
+    position: relative;
+    z-index: 2;
+}
+
+.btn-more {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+} 

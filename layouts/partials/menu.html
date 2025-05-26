@@ -1,0 +1,20 @@
+{{- $page := .page }}
+{{- $menuID := .menuID }}
+
+{{- with index site.Menus $menuID }}
+  <div class="menu-container">
+    <button class="hamburger" onclick="toggleMenu()">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+    
+    <nav class="main-nav" id="main-nav">
+      <ul>
+        {{- range . }}
+          <li><a href="{{ .URL }}" class="nav-link">{{ .Name }}</a></li>
+        {{- end }}
+      </ul>
+    </nav>
+  </div>
+{{- end }}
