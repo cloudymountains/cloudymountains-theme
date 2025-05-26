@@ -1,2 +1,7 @@
-# cloudymountains-theme
-A HUGO theme for the cloudymountains site
+# Theme Name
+
+## Features
+
+## Installation
+
+## Configuration
