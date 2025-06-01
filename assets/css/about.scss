@@ -49,12 +49,22 @@
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: start;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
 }
 
 .about-text {
     max-width: 100%;
     text-align: left;
     padding-right: 2rem;
+
+    @media (max-width: 768px) {
+        padding-right: 0;
+        text-align: center;
+    }
 }
 
 .about-text p {
@@ -72,6 +82,10 @@
     width: 100%;
     max-width: 600px;
     margin-left: auto;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
 }
 
 .about-item {
