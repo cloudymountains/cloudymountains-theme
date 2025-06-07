@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.0.1...v1.1.0) (2025-06-07)
+
+
+### Features
+
+* **aboutme:** Add picture in the About section ([4403a90](https://github.com/cloudymountains/cloudymountains-theme/commit/4403a9068712035281206e1c4a0e55d199e7656e))
+
 ## [1.0.1](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.0.0...v1.0.1) (2025-06-01)
 
 
