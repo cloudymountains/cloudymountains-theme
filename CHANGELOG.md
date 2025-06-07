@@ -1,3 +1,11 @@
+## [1.0.1](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.0.0...v1.0.1) (2025-06-01)
+
+
+### Bug Fixes
+
+* **share-buttons:** Share buttons to be like buttons not just links ([49f36af](https://github.com/cloudymountains/cloudymountains-theme/commit/49f36af50be1e5461cbe2ca0c5d6251b8c6e2886))
+* **theme:** For mobile devices the about section would be only text without grid cards ([75d4c5e](https://github.com/cloudymountains/cloudymountains-theme/commit/75d4c5e1e4f65675135297f16076c4ca781955c6))
+
 # 1.0.0 (2025-05-26)
 
 

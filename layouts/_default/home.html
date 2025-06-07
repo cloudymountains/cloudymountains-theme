@@ -18,8 +18,15 @@
         <h2>{{ .Site.Params.about_title | default "About Me" }}</h2>
     </div>
     <div class="about-content">
-        <div class="about-text">
-            <p>{{ .Site.Params.about_text | default "I am passionate about connecting people with the beauty and serenity of nature. My mission is to inspire and educate while preserving the natural wonders around us." }}</p>
+        <div class="about-text-image">
+            <div class="about-text">
+                <p>{{ .Site.Params.about_text | default "I am passionate about connecting people with the beauty and serenity of nature. My mission is to inspire and educate while preserving the natural wonders around us." }}</p>
+            </div>
+            {{ if .Site.Params.profile_image }}
+            <div class="profile-image">
+                <img src="{{ .Site.Params.profile_image }}" alt="Profile Picture">
+            </div>
+            {{ end }}
         </div>
         <div class="about-grid">
             <a href="/tags/{{ .Site.Params.first_title | default "cloud" | lower }}" class="about-item">
