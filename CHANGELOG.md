@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.1.0...v1.1.1) (2025-06-07)
+
+
+### Bug Fixes
+
+* **share-buttons:** Share buttons to be like buttons not just links ([2746f38](https://github.com/cloudymountains/cloudymountains-theme/commit/2746f387951ffd04c4b92870ce2eeb7cc34de4fd))
+
 # [1.1.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.0.1...v1.1.0) (2025-06-07)
 
 
