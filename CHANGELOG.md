@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.1.1...v1.1.2) (2025-06-23)
+
+
+### Bug Fixes
+
+* **projects-list:** Links in the summary to be properly displayed ([f8501fa](https://github.com/cloudymountains/cloudymountains-theme/commit/f8501fa6ce4c10e7c36dd27e8f91f2d27e9cf0fd))
+
 ## [1.1.1](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.1.0...v1.1.1) (2025-06-07)
 
 
