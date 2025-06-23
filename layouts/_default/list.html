@@ -14,25 +14,25 @@
     <div class="list-container" id="postsList">
       {{ range .Pages.ByDate.Reverse }}
         {{ $readTime := mul (div (countwords .Content) 220.0) 60 }}
-        <a href="{{ .RelPermalink }}" class="container-link" data-title="{{ .Title }}" data-description="{{ .Params.description }}" data-content="{{ .Summary }}">
+        <div class="container-link" data-href="{{ .RelPermalink }}" data-title="{{ .Title }}" data-description="{{ .Params.description }}" data-content="{{ .Summary }}">
           <div class="full-width-container">
+            {{ if .Params.image }}
             <div class="image-side">
-              {{ if .Params.image }}
-                {{ if eq .File.Dir "projects/" }}
-                  <img src="../projects/{{ .Params.image }}" alt="{{ .Title }}">
-                {{ else }}
-                  <img src="{{ .RelPermalink }}{{ .Params.image }}" alt="{{ .Title }}">
-                {{ end }}
+              {{ if eq .File.Dir "projects/" }}
+                <img src="../projects/{{ .Params.image }}" alt="{{ .Title }}" width="300" height="250">
+              {{ else }}
+                <img src="{{ .RelPermalink }}{{ .Params.image }}" alt="{{ .Title }}" width="300" height="250">
               {{ end }}
             </div>
+            {{ end }}
             <div class="text-side">
               <h3>{{ .Title }}</h3>
               <p class="description">Reading time: {{ math.Floor (div $readTime 60) }} minutes and {{ mod $readTime 60 }} seconds</p>
               <hr class="post-divider">
-              <div class="content-preview">{{ .Summary }}</div>
+              <div class="content-preview">{{ .Summary | markdownify }}</div>
             </div>
           </div>
-        </a>
+        </div>
       {{ end }}
     </div>
   </section>

@@ -178,6 +178,17 @@
     width: 100%;
     text-align: center;
     font-size: 0.9rem;
+
+    a {
+        color: #ffffff;
+        text-decoration: underline;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: #ffffff;
+            text-decoration: none;
+        }
+    }
 }
 
 .container-link {
@@ -185,10 +196,13 @@
     display: block;
     width: 100%;
     color: inherit;
-}
+    cursor: pointer;
+    transition: transform 0.3s ease;
 
-.container-link:hover {
-    text-decoration: none;
+    &:hover {
+        text-decoration: none;
+        transform: translateY(-2px);
+    }
 }
 
 .container-link * {

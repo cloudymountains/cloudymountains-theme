@@ -24,7 +24,7 @@
             </div>
             {{ if .Site.Params.profile_image }}
             <div class="profile-image">
-                <img src="{{ .Site.Params.profile_image }}" alt="Profile Picture">
+                <img src="{{ .Site.Params.profile_image }}" alt="Profile Picture" width="250" height="250">
             </div>
             {{ end }}
         </div>
@@ -56,9 +56,9 @@
             <div class="project-image">
             {{ if .Params.image }}
               {{ if eq .File.Dir "projects/" }}
-                <img src="../projects/{{ .Params.image }}" alt="{{ .Title }}">
+                <img src="../projects/{{ .Params.image }}" alt="{{ .Title }}" width="400" height="300">
               {{ else }}
-                <img src="{{ .RelPermalink }}{{ .Params.image }}" alt="{{ .Title }}">
+                <img src="{{ .RelPermalink }}{{ .Params.image }}" alt="{{ .Title }}" width="400" height="300">
               {{ end }}
             {{ end }}
             </div>
