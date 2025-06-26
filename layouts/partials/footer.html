@@ -1,1 +1,1 @@
-<p>Copyright {{ lower .Site.Title }} © {{ now.Year }}. All rights reserved.</p>
+<p>{{ with .Site.Params.seo.copyright }}{{ . }}{{ else }}Copyright {{ lower .Site.Title }} © {{ now.Year }}. All rights reserved.{{ end }}</p>
