@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.1.2...v1.2.0) (2025-06-26)
+
+
+### Features
+
+* **google-analytics:** Add the necessary lines in the head for using google analytics ([49c6691](https://github.com/cloudymountains/cloudymountains-theme/commit/49c66917d31bc5cdd888dc324834160475393112))
+
 ## [1.1.2](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.1.1...v1.1.2) (2025-06-23)
 
 
