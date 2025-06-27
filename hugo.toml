@@ -22,6 +22,21 @@ theme = 'cloudymountains'
   email = "contact@forestdreams.com"
   github = "https://github.com/yourusername"
 
+  # SEO Settings
+  [params.seo]
+    googleAnalytics = "UA-XXXXXXXXX-X"  # Replace with your Google Analytics ID
+    googleSiteVerification = "your-verification-code"  # For Google Search Console
+    keywords = ["cloud", "automation", "devops", "platform engineering"]
+    author = "Your Name"
+    copyright = "© 2024 Cloudy Mountains. All rights reserved."
+    
+    # Iubenda Consent Manager
+    [params.seo.iubenda]
+      enable = false  # Set to true to enable consent manager
+      siteId = "your-site-id"  # Replace with your Iubenda site ID
+      cookiePolicyId = "your-cookie-policy-id"  # Replace with your cookie policy ID
+      lang = "en"
+
 [menu]
   [[menu.main]]
     name = "Home"
