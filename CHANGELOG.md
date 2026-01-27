@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.2.0...v1.3.0) (2025-06-27)
+
+
+### Features
+
+* **google-analytics:** Add Iubenda Consent Manager to comply with regulations ([953717d](https://github.com/cloudymountains/cloudymountains-theme/commit/953717d3e7aa1dfbd44bac95b4f918ba47756fb2))
+
 # [1.2.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.1.2...v1.2.0) (2025-06-26)
 
 
