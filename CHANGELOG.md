@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.3.1...v1.3.2) (2026-01-31)
+
+
+### Bug Fixes
+
+* **single:** Some improvements of the layouts ([840efa8](https://github.com/cloudymountains/cloudymountains-theme/commit/840efa8293cfa1e067d7e71182d1912d1cb49d94))
+
 ## [1.3.1](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.3.0...v1.3.1) (2026-01-27)
 
 
