@@ -1,28 +1,38 @@
 {{ define "main" }}
 {{ $readTime := mul (div (countwords .Content) 220.0) 60 }}
+{{ $readMinutes := math.Floor (div $readTime 60) }}
   <article class="post">
     <div class="single-post-container">
+      <div class="single-post-progress" aria-hidden="true">
+        <div class="single-post-progress-bar"></div>
+      </div>
       <div class="container-fluid px-3 px-lg-4">
         <div class="row gx-4 gx-lg-5 justify-content-center">
           <div class="col-lg-10 col-xl-9">
-            <h1 class="single-post-title">{{ .Title }}</h1>
-            <div class="single-post-meta">
-              <p>By {{ .Params.authors }} on {{ .Date.Format "January 2, 2006" }}. Reading time: {{ math.Floor (div $readTime 60) }} minutes 
-                and {{ mod $readTime 60 }} seconds. </p>
-            </div>
+            <header>
+              <h1 class="single-post-title">{{ .Title }}</h1>
+              <div class="single-post-meta">
+                <p>
+                  {{ with .Params.authors }}<span>By {{ . }}</span>{{ end }}{{ if .Params.authors }}<span class="meta-sep">·</span>{{ end }}
+                  <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+                  <span class="meta-sep">·</span>
+                  <span>{{ if ge $readMinutes 1 }}{{ $readMinutes }} min read{{ else }}1 min read{{ end }}</span>
+                </p>
+              </div>
+            </header>
             <div class="single-post-content">
               {{ with .Resources.Get .Params.image }}
               <div class="image-container">
                 <img class="img-fluid" src="{{ .RelPermalink }}" alt="{{ $.Title }}">
               </div>
               {{ end }}
-              
+
               {{ .Content }}
             </div>
-            
-            <!-- Add sharing buttons -->
+
+            <hr class="single-post-divider" aria-hidden="true">
             {{ partial "share-buttons.html" . }}
-            
+
             <footer class="post-footer">
               {{ partial "terms.html" (dict "taxonomy" "tags" "page" .) }}
             </footer>
@@ -30,5 +40,28 @@
         </div>
       </div>
     </div>
+    <script>
+      (function () {
+        var bar = document.querySelector('.single-post-progress-bar');
+        if (!bar) return;
+        var container = document.querySelector('.single-post-container');
+        function update() {
+          if (!container) return;
+          var top = container.getBoundingClientRect().top;
+          var height = container.offsetHeight;
+          var winHeight = window.innerHeight;
+          if (height <= winHeight) {
+            bar.style.setProperty('--scroll-progress', '100%');
+            return;
+          }
+          var scrolled = -top;
+          var progress = Math.min(100, Math.max(0, (scrolled / (height - winHeight)) * 100));
+          bar.style.setProperty('--scroll-progress', progress + '%');
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        window.addEventListener('resize', update);
+        update();
+      })();
+    </script>
   </article>
 {{ end }}
