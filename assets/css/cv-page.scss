@@ -1,0 +1,647 @@
+// CV page — black page background, white content card, two-column resume layout
+$cv-blue: #2563eb;
+$cv-black: #000;
+$cv-text: #1a1a1a;
+$cv-muted: #444;
+$cv-border: #e5e7eb;
+
+.cv-page {
+  padding: 2rem 1rem 4rem;
+  min-height: 100vh;
+  background: #000;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+
+  @media print {
+    padding: 0;
+    background: #fff;
+  }
+}
+
+.cv-page-card {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 2.5rem;
+  background: #fff;
+  color: $cv-text;
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+
+  @media print {
+    max-width: 100%;
+    padding: 0.5in;
+    box-shadow: none;
+    border-radius: 0;
+  }
+}
+
+// Header: name + contact left, profile photo right
+.cv-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid $cv-border;
+}
+
+.cv-header-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.cv-name {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem 0;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: $cv-black;
+}
+
+.cv-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+  color: $cv-blue;
+}
+
+.cv-contact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: $cv-muted;
+
+  .cv-contact-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  i {
+    font-size: 0.9rem;
+    color: $cv-text;
+  }
+
+  a {
+    color: $cv-text;
+    text-decoration: none;
+
+    &:hover {
+      color: $cv-blue;
+      text-decoration: underline;
+    }
+  }
+}
+
+.cv-header-photo {
+  flex-shrink: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid $cv-black;
+  background: #f3f4f6;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media print {
+    border-color: $cv-black;
+  }
+}
+
+// Two-column layout
+.cv-columns {
+  display: grid;
+  grid-template-columns: 1.65fr 1fr;
+  gap: 2rem;
+  align-items: start;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cv-column-left,
+.cv-column-right {
+  min-width: 0;
+}
+
+// Section titles (uppercase, bold, underlined)
+.cv-section {
+  margin-top: 1.25rem;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.cv-section-title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 0.75rem 0;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid $cv-black;
+  color: $cv-black;
+}
+
+// Summary
+.cv-summary {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: $cv-text;
+}
+
+// Experience — each job as a card
+.cv-job {
+  margin-bottom: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: #f9fafb;
+  border: 1px solid $cv-border;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border-color: #d1d5db;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media print {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    box-shadow: none;
+    break-inside: avoid;
+  }
+}
+
+.cv-job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.cv-job-role {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: $cv-black;
+}
+
+.cv-job-period {
+  font-size: 0.8125rem;
+  color: $cv-muted;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  i {
+    font-size: 0.75rem;
+  }
+}
+
+.cv-job-company {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: $cv-blue;
+  margin-bottom: 0.2rem;
+}
+
+.cv-job-location {
+  font-size: 0.8125rem;
+  color: $cv-muted;
+  margin-bottom: 0.4rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  i {
+    font-size: 0.75rem;
+  }
+}
+
+.cv-job-bullets {
+  margin: 0 0 0 1.25rem;
+  padding: 0;
+  list-style-type: disc;
+
+  li {
+    margin-bottom: 0.25rem;
+    color: $cv-text;
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+}
+
+// Philosophy — quote blue italic, author right-aligned
+.cv-philosophy-quote {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-style: italic;
+  color: $cv-blue;
+}
+
+.cv-philosophy-author {
+  margin: 0.35rem 0 0 0;
+  font-size: 0.875rem;
+  color: $cv-muted;
+  text-align: right;
+}
+
+// Certifications — each item as a card
+.cv-cert {
+  margin-bottom: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: #f9fafb;
+  border: 1px solid $cv-border;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 0.875rem;
+  color: $cv-text;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border-color: #d1d5db;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media print {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    box-shadow: none;
+    break-inside: avoid;
+  }
+}
+
+.cv-cert-name {
+  font-weight: 600;
+  color: $cv-black;
+}
+
+.cv-cert-id {
+  display: block;
+  font-size: 0.8125rem;
+  color: $cv-muted;
+  margin-top: 0.15rem;
+}
+
+// Education — each item as a card
+.cv-edu {
+  margin-bottom: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: #f9fafb;
+  border: 1px solid $cv-border;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border-color: #d1d5db;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media print {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    box-shadow: none;
+    break-inside: avoid;
+  }
+}
+
+.cv-edu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.cv-edu-degree {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: $cv-black;
+}
+
+.cv-edu-gpa {
+  font-size: 0.8125rem;
+  color: $cv-muted;
+}
+
+.cv-edu-school {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: $cv-blue;
+  margin-bottom: 0.2rem;
+}
+
+.cv-edu-period {
+  font-size: 0.8125rem;
+  color: $cv-muted;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  i {
+    font-size: 0.75rem;
+  }
+}
+
+// Projects — each item as a card
+.cv-project {
+  margin-bottom: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: #f9fafb;
+  border: 1px solid $cv-border;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border-color: #d1d5db;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media print {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    box-shadow: none;
+    break-inside: avoid;
+  }
+}
+
+.cv-project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.cv-project-title {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: $cv-black;
+}
+
+.cv-project-period {
+  font-size: 0.8125rem;
+  color: $cv-muted;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  i {
+    font-size: 0.75rem;
+  }
+}
+
+.cv-project-location {
+  font-size: 0.8125rem;
+  color: $cv-muted;
+  margin-bottom: 0.35rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  i {
+    font-size: 0.75rem;
+  }
+}
+
+.cv-project .cv-job-bullets {
+  margin-top: 0.25rem;
+}
+
+// Languages
+.cv-languages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin: 0;
+}
+
+.cv-lang {
+  font-size: 0.875rem;
+  color: $cv-text;
+}
+
+// Hobby
+.cv-hobby {
+  margin: 0;
+  font-size: 0.875rem;
+  color: $cv-text;
+  line-height: 1.5;
+}
+
+// My Time — donut chart + legend
+.cv-mytime {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.cv-mytime-chart-wrap {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  flex-shrink: 0;
+}
+
+.cv-mytime-chart {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: relative;
+  z-index: 1;
+}
+
+.cv-mytime-chart-hole {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 55%;
+  height: 55%;
+  margin: -27.5% 0 0 -27.5%;
+  background: #fff;
+  border-radius: 50%;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+// Invisible wedge overlays for hover (clip-path set per segment from percentages)
+.cv-mytime-segment {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 3;
+  border-radius: 50%;
+}
+
+// Letter shown in center of donut on segment hover
+.cv-mytime-letter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $cv-black;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  border-radius: 50%;
+  z-index: 4;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.cv-mytime-chart-wrap.hover-segment .cv-mytime-letter {
+  opacity: 1;
+}
+
+.cv-mytime-legend-item.highlight {
+  background: #dbeafe;
+  border-radius: 4px;
+  padding: 0.2rem 0.4rem;
+  margin: 0 -0.4rem;
+}
+
+.cv-mytime-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.cv-mytime-legend-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+  font-size: 0.875rem;
+  color: $cv-text;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.cv-mytime-legend-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  min-width: 1.25rem;
+  min-height: 1.25rem;
+  border-radius: 50%;
+  background: $cv-black;
+  color: #fff;
+  font-size: 0.6875rem;
+  font-weight: 700;
+}
+
+.cv-mytime-legend-text {
+  flex: 1;
+}
+
+// Skills (tags) — clickable buttons linking to /tags/<skill>/
+.cv-skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+}
+
+.cv-skill-tag {
+  display: inline-block;
+  padding: 0.35rem 0.65rem;
+  background: #f3f4f6;
+  border: 1px solid $cv-border;
+  border-radius: 4px;
+  font-size: 0.8125rem;
+  color: $cv-text;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background: $cv-blue;
+    border-color: $cv-blue;
+    color: #fff;
+  }
+
+  &:focus {
+    outline: 2px solid $cv-blue;
+    outline-offset: 2px;
+  }
+
+  @media print {
+    background: #f9fafb;
+    border-color: #d1d5db;
+    pointer-events: none;
+  }
+}
+
+// Full-width optional content
+.cv-full-width {
+  grid-column: 1 / -1;
+}
+
+.cv-content {
+  font-size: 0.9375rem;
+
+  h2 {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    margin: 0 0 0.5rem 0;
+  }
+
+  ul {
+    margin: 0 0 0 1.25rem;
+    padding: 0;
+  }
+}

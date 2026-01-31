@@ -22,6 +22,20 @@ theme = 'cloudymountains'
   email = "contact@forestdreams.com"
   github = "https://github.com/yourusername"
 
+  # About section: experience counters + My Skills (override in site config)
+  years_experience = 5
+  companies_count = 3
+  counter_three_label = "Projects"
+  counter_three_value = 20
+  counter_four_label = "Cups of coffee"
+  counter_four_value = 999
+  [[params.skills]]
+    name = "Kubernetes"
+    percent = 80
+  [[params.skills]]
+    name = "Terraform"
+    percent = 85
+
   # SEO Settings
   [params.seo]
     googleAnalytics = "UA-XXXXXXXXX-X"  # Replace with your Google Analytics ID
@@ -51,9 +65,13 @@ theme = 'cloudymountains'
     url = "/#projects"
     weight = 3
   [[menu.main]]
+    name = "CV"
+    url = "/cv/"
+    weight = 4
+  [[menu.main]]
     name = "Contacts"
     url = "/#contacts"
-    weight = 4
+    weight = 5
 
 [module]
   [module.hugoVersion]

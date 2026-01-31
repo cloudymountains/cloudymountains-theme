@@ -1,0 +1,117 @@
+// Counters block inside About section only
+.about-counters {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    margin-top: 1.5rem;
+}
+
+// Separate skills section (sliders only, no header)
+.skills-section {
+    padding: 4rem 2rem;
+    background-color: #0a0a0a;
+    color: #ffffff;
+    margin-top: -2px;
+}
+
+.skills-section-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+// Counters row
+.skills-counters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    justify-items: center;
+    text-align: center;
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+.skills-counter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.skills-counter-number {
+    display: inline-block;
+    line-height: 1;
+}
+
+.skills-counter-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.skills-counter-suffix {
+    font-size: 2rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+    margin-left: -0.1em;
+}
+
+.skills-counter-label {
+    font-size: 0.9rem;
+    color: #999;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+// Skill bars (progress sliders) - inside .skills-section
+.skills-section .skills-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.skills-skill-item {
+    width: 100%;
+}
+
+.skills-skill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.5rem;
+}
+
+.skills-skill-name {
+    font-size: 1rem;
+    color: #e0e0e0;
+}
+
+.skills-skill-percent {
+    font-size: 0.9rem;
+    color: #999;
+    font-weight: 600;
+}
+
+.skills-skill-track {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.skills-skill-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4a9eff 0%, #6bb3ff 100%);
+    border-radius: 4px;
+    transition: width 1s ease-out;
+}
+
+#skills.skills-visible .skills-skill-fill {
+    transition: width 1s ease-out;
+}

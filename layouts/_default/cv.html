@@ -1,0 +1,239 @@
+{{ define "main" }}
+<article class="cv-page">
+  <div class="cv-page-card">
+    <header class="cv-header">
+      <div class="cv-header-left">
+        <h1 class="cv-name">{{ .Params.name | default .Site.Params.cv_name | default .Site.Params.seo.author | default .Title }}</h1>
+        {{ with .Params.professional_title }}
+        <p class="cv-title">{{ . }}</p>
+        {{ end }}
+        <div class="cv-contact">
+          {{ with .Params.phone }}
+          <span class="cv-contact-item"><i class="bi bi-telephone"></i> {{ . }}</span>
+          {{ end }}
+          {{ with .Params.email | default .Site.Params.email }}
+          <span class="cv-contact-item"><i class="bi bi-envelope"></i> <a href="mailto:{{ . }}">{{ . }}</a></span>
+          {{ end }}
+          {{ with .Params.website }}
+          <span class="cv-contact-item"><i class="bi bi-link-45deg"></i> <a href="{{ . }}" target="_blank" rel="noopener">{{ . }}</a></span>
+          {{ end }}
+          {{ with .Params.location }}
+          <span class="cv-contact-item"><i class="bi bi-geo-alt"></i> {{ . }}</span>
+          {{ end }}
+        </div>
+      </div>
+      {{ with .Params.profile_image | default .Site.Params.profile_image }}
+      <div class="cv-header-photo">
+        <img src="{{ . }}" alt="Profile" width="120" height="120">
+      </div>
+      {{ end }}
+    </header>
+
+    <div class="cv-columns">
+      <div class="cv-column-left">
+        {{ with .Params.summary }}
+        <section class="cv-section">
+          <h2 class="cv-section-title">Summary</h2>
+          <p class="cv-summary">{{ . }}</p>
+        </section>
+        {{ end }}
+
+        {{ with .Params.experience }}
+        <section class="cv-section">
+          <h2 class="cv-section-title">Experience</h2>
+          {{ range . }}
+          <div class="cv-job">
+            <div class="cv-job-header">
+              <span class="cv-job-role">{{ .role }}</span>
+              <span class="cv-job-period"><i class="bi bi-calendar3"></i> {{ .period }}</span>
+            </div>
+            <div class="cv-job-company">{{ .company }}{{ with .subtitle }} — {{ . }}{{ end }}</div>
+            {{ with .location }}<div class="cv-job-location"><i class="bi bi-geo-alt"></i> {{ . }}</div>{{ end }}
+            {{ with .bullets }}
+            <ul class="cv-job-bullets">
+              {{ range . }}
+              <li>{{ . }}</li>
+              {{ end }}
+            </ul>
+            {{ end }}
+          </div>
+          {{ end }}
+        </section>
+        {{ end }}
+      </div>
+
+      <div class="cv-column-right">
+        {{ with .Params.philosophy }}
+        <section class="cv-section">
+          <h2 class="cv-section-title">My Life Philosophy</h2>
+          <p class="cv-philosophy-quote"><em>{{ .quote }}</em></p>
+          {{ with .author }}<p class="cv-philosophy-author">{{ . }}</p>{{ end }}
+        </section>
+        {{ end }}
+
+        {{ with .Params.certifications }}
+        <section class="cv-section">
+          <h2 class="cv-section-title">Certification</h2>
+          {{ range . }}
+          <div class="cv-cert">
+            <span class="cv-cert-name">{{ .name }}</span>{{ with .credential_id }}<span class="cv-cert-id">Credential ID {{ . }}</span>{{ end }}
+          </div>
+          {{ end }}
+        </section>
+        {{ end }}
+
+        {{ with .Params.education }}
+        <section class="cv-section">
+          <h2 class="cv-section-title">Education</h2>
+          {{ range . }}
+          <div class="cv-edu">
+            <div class="cv-edu-header">
+              <span class="cv-edu-degree">{{ .degree }}</span>
+              {{ with .gpa }}<span class="cv-edu-gpa">{{ . }}</span>{{ end }}
+            </div>
+            <div class="cv-edu-school">{{ .school }}</div>
+            <div class="cv-edu-period"><i class="bi bi-calendar3"></i> {{ .period }}</div>
+          </div>
+          {{ end }}
+        </section>
+        {{ end }}
+
+        {{ with .Params.projects }}
+        <section class="cv-section">
+          <h2 class="cv-section-title">Projects</h2>
+          {{ range . }}
+          <div class="cv-project">
+            <div class="cv-project-header">
+              <span class="cv-project-title">{{ .title }}</span>
+              <span class="cv-project-period"><i class="bi bi-calendar3"></i> {{ .period }}</span>
+            </div>
+            {{ with .location }}<div class="cv-project-location"><i class="bi bi-geo-alt"></i> {{ . }}</div>{{ end }}
+            {{ with .bullets }}
+            <ul class="cv-job-bullets">
+              {{ range . }}
+              <li>{{ . }}</li>
+              {{ end }}
+            </ul>
+            {{ end }}
+          </div>
+          {{ end }}
+        </section>
+        {{ end }}
+
+        {{ with .Params.languages }}
+        <section class="cv-section">
+          <h2 class="cv-section-title">Languages</h2>
+          <div class="cv-languages">
+            {{ range . }}
+            <span class="cv-lang">{{ .language }} — {{ .level }}</span>
+            {{ end }}
+          </div>
+        </section>
+        {{ end }}
+
+        {{ with .Params.hobby }}
+        <section class="cv-section">
+          <h2 class="cv-section-title">Hobby</h2>
+          <p class="cv-hobby">{{ . }}</p>
+        </section>
+        {{ end }}
+
+        {{ with .Params.skills_list }}
+        <section class="cv-section">
+          <h2 class="cv-section-title">Skills</h2>
+          <div class="cv-skills-list">
+            {{ range . }}
+            <a href="/tags/{{ . | urlize }}/" class="cv-skill-tag">{{ . }}</a>
+            {{ end }}
+          </div>
+        </section>
+        {{ end }}
+
+        {{ with .Params.my_time }}
+        <section class="cv-section">
+          <h2 class="cv-section-title">My Time</h2>
+          {{ $colors := slice "#60a5fa" "#3b82f6" "#2563eb" "#1d4ed8" "#93c5fd" "#1e40af" }}
+          {{ $items := . }}
+          {{ $s := newScratch }}
+          {{ $s.Set "segments" slice }}
+          {{ $s.Set "starts" slice }}
+          {{ $s.Set "ends" slice }}
+          {{ $s.Set "cumul" 0 }}
+          {{ range $i, $item := $items }}
+            {{ $cumul := $s.Get "cumul" }}
+            {{ $pct := default (div 100 (len $items)) $item.percent }}
+            {{ $start := $cumul }}
+            {{ $end := add $cumul $pct }}
+            {{ $s.Set "cumul" $end }}
+            {{ $color := index $colors (mod $i 6) }}
+            {{ $s.Set "segments" ($s.Get "segments" | append (printf "%s %d%% %d%%" $color $start $end)) }}
+            {{ $s.Set "starts" ($s.Get "starts" | append $start) }}
+            {{ $s.Set "ends" ($s.Get "ends" | append $end) }}
+          {{ end }}
+          {{ $gradient := delimit ($s.Get "segments") ", " }}
+          <div class="cv-mytime" data-segments="{{ len $items }}">
+            <div class="cv-mytime-chart-wrap">
+              <div class="cv-mytime-chart" style="background: conic-gradient({{ $gradient }});"></div>
+              <div class="cv-mytime-chart-hole" aria-hidden="true"></div>
+              {{ range $i, $item := $items }}
+              {{ $start := index ($s.Get "starts") $i }}
+              {{ $end := index ($s.Get "ends") $i }}
+              {{ $startDeg := mul $start 3.6 }}
+              {{ $endDeg := mul $end 3.6 }}
+              {{ $startRad := math.ToRadians $startDeg }}
+              {{ $endRad := math.ToRadians $endDeg }}
+              {{ $x1 := add 50 (mul 50 (math.Sin $startRad)) }}
+              {{ $y1 := sub 50 (mul 50 (math.Cos $startRad)) }}
+              {{ $x2 := add 50 (mul 50 (math.Sin $endRad)) }}
+              {{ $y2 := sub 50 (mul 50 (math.Cos $endRad)) }}
+              <div class="cv-mytime-segment" data-label="{{ $item.label }}" data-index="{{ $i }}" aria-label="{{ $item.text }}" style="clip-path: polygon(50% 50%, {{ printf "%g%% %g%%" $x1 $y1 }}, {{ printf "%g%% %g%%" $x2 $y2 }});"></div>
+              {{ end }}
+              <div class="cv-mytime-letter" aria-hidden="true"></div>
+            </div>
+            <ul class="cv-mytime-legend">
+              {{ range $i, $item := . }}
+              <li class="cv-mytime-legend-item cv-mytime-legend-item-{{ $i }}">
+                <span class="cv-mytime-legend-label">{{ .label }}</span>
+                <span class="cv-mytime-legend-text">{{ .text }}</span>
+              </li>
+              {{ end }}
+            </ul>
+          </div>
+        </section>
+        {{ end }}
+      </div>
+    </div>
+
+    {{ with .Content }}
+    <section class="cv-section cv-content cv-full-width">
+      {{ . }}
+    </section>
+    {{ end }}
+  </div>
+</article>
+<script>
+(function () {
+  var mytime = document.querySelector('.cv-mytime');
+  if (!mytime) return;
+  var wrap = mytime.querySelector('.cv-mytime-chart-wrap');
+  var letterEl = mytime.querySelector('.cv-mytime-letter');
+  var segments = mytime.querySelectorAll('.cv-mytime-segment');
+  var legendItems = mytime.querySelectorAll('.cv-mytime-legend-item');
+  function clearHighlight() {
+    wrap.classList.remove('hover-segment');
+    if (letterEl) letterEl.textContent = '';
+    legendItems.forEach(function (el) { el.classList.remove('highlight'); });
+  }
+  segments.forEach(function (seg) {
+    seg.addEventListener('mouseenter', function () {
+      var label = seg.getAttribute('data-label');
+      var index = parseInt(seg.getAttribute('data-index'), 10);
+      if (letterEl) letterEl.textContent = label;
+      wrap.classList.add('hover-segment');
+      if (legendItems[index]) legendItems[index].classList.add('highlight');
+    });
+    seg.addEventListener('mouseleave', clearHighlight);
+  });
+})();
+</script>
+{{ end }}
