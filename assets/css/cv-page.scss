@@ -251,7 +251,35 @@ $cv-border: #e5e7eb;
   }
 }
 
-// Philosophy — quote blue italic, author right-aligned
+// Philosophy — same structure as Certification: section title + card(s)
+.cv-philosophy-card {
+  margin-bottom: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: #f9fafb;
+  border: 1px solid $cv-border;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 0.875rem;
+  color: $cv-text;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border-color: #d1d5db;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @media print {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    box-shadow: none;
+    break-inside: avoid;
+  }
+}
+
 .cv-philosophy-quote {
   margin: 0;
   font-size: 0.9375rem;
