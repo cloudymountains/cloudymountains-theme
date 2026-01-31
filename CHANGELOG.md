@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.3.0...v1.3.1) (2026-01-27)
+
+
+### Bug Fixes
+
+* **single:** How iamges from the markdown are handled ([917ab42](https://github.com/cloudymountains/cloudymountains-theme/commit/917ab429882c264b27bbca799a713755394ca259))
+
 # [1.3.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.2.0...v1.3.0) (2025-06-27)
 
 
