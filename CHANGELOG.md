@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.4.0...v1.4.1) (2026-01-31)
+
+
+### Bug Fixes
+
+* **cv:** CV page layouts ([b71610c](https://github.com/cloudymountains/cloudymountains-theme/commit/b71610c55bd9c6a89d8ee1bc54f5c5634d915c62))
+
 # [1.4.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.3.2...v1.4.0) (2026-01-31)
 
 
