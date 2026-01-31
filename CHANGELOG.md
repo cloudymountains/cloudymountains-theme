@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.3.2...v1.4.0) (2026-01-31)
+
+
+### Features
+
+* **multiple pages:** Changes in the layouts; Added CV section ([ae85b2c](https://github.com/cloudymountains/cloudymountains-theme/commit/ae85b2c7f268d127ffd978f1eca5a5c794691d3b))
+
 ## [1.3.2](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.3.1...v1.3.2) (2026-01-31)
 
 
