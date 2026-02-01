@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.4.1...v1.4.2) (2026-02-01)
+
+
+### Bug Fixes
+
+* **cv:** move languages a bit ([da9a07d](https://github.com/cloudymountains/cloudymountains-theme/commit/da9a07d260fa638a6ef5037dbe8f3329a04fdb6f))
+
 ## [1.4.1](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.4.0...v1.4.1) (2026-01-31)
 
 
