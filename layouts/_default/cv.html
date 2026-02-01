@@ -75,6 +75,30 @@
         </section>
         {{ end }}
 
+        {{ with .Params.languages }}
+        <section class="cv-section">
+          <h2 class="cv-section-title">Languages</h2>
+          <div class="cv-languages">
+            {{ $levelToDots := dict "beginner" 1 "intermediate" 2 "advanced" 3 "mastery" 4 "native" 5 }}
+            {{ range . }}
+            {{ $l := .level | lower }}
+            {{ $n := index $levelToDots $l | default 1 }}
+            <div class="cv-lang-card">
+              <div class="cv-lang-text">
+                <span class="cv-lang-name">{{ .language }}</span>
+                <span class="cv-lang-level">{{ .level }}</span>
+              </div>
+              <div class="cv-lang-dots" aria-hidden="true">
+                {{ range seq 5 }}
+                <span class="cv-lang-dot {{ if le . $n }}cv-lang-dot-filled{{ end }}"></span>
+                {{ end }}
+              </div>
+            </div>
+            {{ end }}
+          </div>
+        </section>
+        {{ end }}
+
         {{ with .Params.certifications }}
         <section class="cv-section">
           <h2 class="cv-section-title">Certification</h2>
@@ -121,17 +145,6 @@
             {{ end }}
           </div>
           {{ end }}
-        </section>
-        {{ end }}
-
-        {{ with .Params.languages }}
-        <section class="cv-section">
-          <h2 class="cv-section-title">Languages</h2>
-          <div class="cv-languages">
-            {{ range . }}
-            <span class="cv-lang">{{ .language }} — {{ .level }}</span>
-            {{ end }}
-          </div>
         </section>
         {{ end }}
 
