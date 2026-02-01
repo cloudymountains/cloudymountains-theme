@@ -32,7 +32,7 @@
             <div class="skills-counters">
                 <div class="skills-counter">
                     <span class="skills-counter-number">
-                        <span class="skills-counter-value" data-target="{{ .Site.Params.years_experience | default 5 }}">0</span><span class="skills-counter-suffix">+</span>
+                        <span class="skills-counter-value" data-target="{{ sub now.Year (.Site.Params.experience_start_year | default 2020) }}">0</span><span class="skills-counter-suffix">+</span>
                     </span>
                     <p class="skills-counter-label">Years of experience</p>
                 </div>

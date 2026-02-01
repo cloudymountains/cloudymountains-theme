@@ -23,7 +23,7 @@ theme = 'cloudymountains'
   github = "https://github.com/yourusername"
 
   # About section: experience counters + My Skills (override in site config)
-  years_experience = 5
+  experience_start_year = 2020  # Years of experience = current year − this year
   companies_count = 3
   counter_three_label = "Projects"
   counter_three_value = 20
