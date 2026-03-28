@@ -30,28 +30,24 @@
         </div>
         <div class="about-counters">
             <div class="skills-counters">
-                <div class="skills-counter">
+                <a href="/cv" class="skills-counter skills-counter-link">
                     <span class="skills-counter-number">
                         <span class="skills-counter-value" data-target="{{ sub now.Year (.Site.Params.experience_start_year | default 2020) }}">0</span><span class="skills-counter-suffix">+</span>
                     </span>
                     <p class="skills-counter-label">Years of experience</p>
-                </div>
-                <div class="skills-counter">
+                </a>
+                <a href="/cv" class="skills-counter skills-counter-link">
                     <span class="skills-counter-value" data-target="{{ .Site.Params.companies_count | default 3 }}">0</span>
                     <p class="skills-counter-label">Companies worked for</p>
-                </div>
-                {{ with .Site.Params.counter_three_value }}
-                <div class="skills-counter">
-                    <span class="skills-counter-value" data-target="{{ . }}">0</span>
-                    <p class="skills-counter-label">{{ $.Site.Params.counter_three_label | default "Projects" }}</p>
-                </div>
-                {{ end }}
-                {{ with .Site.Params.counter_four_value }}
-                <div class="skills-counter">
-                    <span class="skills-counter-value" data-target="{{ . }}">0</span>
-                    <p class="skills-counter-label">{{ $.Site.Params.counter_four_label | default "Cups of coffee" }}</p>
-                </div>
-                {{ end }}
+                </a>
+                <a href="/projects" class="skills-counter skills-counter-link">
+                    <span class="skills-counter-value" data-target="{{ len (where .Site.RegularPages "Section" "projects") }}">0</span>
+                    <p class="skills-counter-label">{{ .Site.Params.counter_three_label | default "Projects" }}</p>
+                </a>
+                <a href="/tags" class="skills-counter skills-counter-link">
+                    <span class="skills-counter-value" data-target="{{ len .Site.Taxonomies.tags }}">0</span>
+                    <p class="skills-counter-label">{{ .Site.Params.counter_four_label | default "Cutting-Edge Technologies" }}</p>
+                </a>
             </div>
         </div>
     </div>
@@ -118,6 +114,10 @@
                 <a href="{{ .Site.Params.github | default "https://github.com/yourusername" }}" target="_blank" class="contact-button">
                     <i class="bi bi-github"></i>
                     <span>GitHub</span>
+                </a>
+                <a href="/cv" class="contact-button">
+                    <i class="bi bi-file-person"></i>
+                    <span>View CV</span>
                 </a>
             </div>
         </div>

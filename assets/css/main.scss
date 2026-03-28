@@ -1,11 +1,23 @@
 $heroBackgroundImage: '';
 
+// Design tokens
+$color-bg: #07090f;
+$color-bg-surface: #0c1018;
+$color-accent: #e8b84b;
+$color-accent-light: #f5cc72;
+$color-text: #ddd8cc;
+$color-muted: #6b7280;
+$font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+$font-body: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+$font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
 body, html {
     height: 100%;
     margin: 0;
-    font-family: Arial, sans-serif;
-    color: #333;
+    font-family: $font-body;
+    color: $color-text;
     scroll-behavior: smooth;
+    background-color: $color-bg;
 }
 
 .hero {
@@ -44,17 +56,33 @@ body, html {
     color: white;
     text-align: center;
     z-index: 1;
-    padding-bottom: 10vh; /* Move content up to make room for gradient */
+    padding-bottom: 10vh;
+    padding: 0 2rem 10vh;
 }
 
 .hero-content h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
+    font-family: $font-display;
+    font-size: clamp(3.5rem, 9vw, 7rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+    color: #fff;
 }
 
 .hero-content p {
-    font-size: 1.5rem;
+    font-family: $font-mono;
+    font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
     margin: 0;
+    color: $color-accent;
+    opacity: 0.9;
+
+    &::before {
+        content: '// ';
+        opacity: 0.5;
+    }
 }
 
 .scroll-down {
@@ -71,8 +99,8 @@ body, html {
     .arrow {
         width: 0.8rem;
         height: 0.8rem;
-        border-right: 2px solid #ffffff;
-        border-bottom: 2px solid #ffffff;
+        border-right: 2px solid $color-accent;
+        border-bottom: 2px solid $color-accent;
         transform: rotate(45deg);
         margin: -0.3rem;
         animation: bounce 2s infinite;
@@ -114,8 +142,8 @@ body, html {
 .about-section {
     min-height: 100vh;
     padding: 4rem 2rem;
-    background-color: #000000;
-    color: #ffffff;
+    background-color: $color-bg;
+    color: $color-text;
     margin-top: -2px;
     position: relative;
     display: flex;
@@ -132,8 +160,8 @@ body, html {
     height: 30vh;
     background: linear-gradient(
         to bottom,
-        rgba(0, 0, 0, 1) 0%,
-        rgba(0, 0, 0, 0.3) 100%
+        rgba(7, 9, 15, 1) 0%,
+        rgba(7, 9, 15, 0.3) 100%
     );
     z-index: 1;
 }
@@ -155,15 +183,17 @@ body, html {
 }
 
 .about-section h2 {
+    font-family: $font-display;
     font-size: 2.5rem;
+    font-weight: 300;
     margin-bottom: 2rem;
     color: #ffffff;
 }
 
 .about-section p {
-    font-size: 1.2rem;
-    line-height: 1.8;
-    color: #cccccc;
+    font-size: 1.1rem;
+    line-height: 1.85;
+    color: $color-text;
     margin-bottom: 1.5rem;
 }
 
@@ -176,10 +206,10 @@ body, html {
 
 .about-item {
     padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(232, 184, 75, 0.04);
     border-radius: 8px;
-    box-shadow: 0 2px 15px rgba(255,255,255,0.1);
-    transition: transform 0.3s ease;
+    border: 1px solid rgba(232, 184, 75, 0.12);
+    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
     backdrop-filter: blur(5px);
     min-height: 120px;
     display: flex;
@@ -188,24 +218,27 @@ body, html {
 
     &:hover {
         transform: translateY(-5px);
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(232, 184, 75, 0.08);
+        border-color: rgba(232, 184, 75, 0.28);
     }
 
     h3 {
-        color: #ffffff;
+        font-family: $font-display;
+        font-weight: 400;
+        color: $color-accent;
         margin-bottom: 0.5rem;
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
 
     p {
-        color: #cccccc;
+        color: $color-text;
         margin: 0;
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 }
 
 .about-item p {
-    color: #cccccc;
+    color: $color-text;
     margin: 0;
 }
 
@@ -275,14 +308,17 @@ body, html {
 
 .contacts-section {
     padding: 6rem 2rem;
-    background-color: #000000;
-    color: #ffffff;
+    background-color: $color-bg;
+    color: $color-text;
     position: relative;
 
     h2 {
+        font-family: $font-display;
         font-size: 2.5rem;
+        font-weight: 300;
         margin-bottom: 3rem;
         text-align: center;
+        color: #fff;
     }
 }
 
@@ -296,30 +332,34 @@ body, html {
 .contact-item {
     text-align: center;
     padding: 2rem;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(232, 184, 75, 0.03);
     border-radius: 8px;
-    transition: transform 0.3s ease;
+    border: 1px solid rgba(232, 184, 75, 0.1);
+    transition: transform 0.3s ease, border-color 0.3s ease;
 
     &:hover {
         transform: translateY(-5px);
+        border-color: rgba(232, 184, 75, 0.25);
     }
 
     h3 {
-        color: #ffffff;
+        font-family: $font-display;
+        font-weight: 400;
+        color: $color-accent;
         margin-bottom: 1rem;
     }
 
     p {
-        color: #cccccc;
+        color: $color-text;
     }
 
     a {
-        color: #cccccc;
+        color: $color-text;
         text-decoration: none;
         transition: color 0.3s ease;
 
         &:hover {
-            color: #ffffff;
+            color: $color-accent;
         }
     }
 }

@@ -169,7 +169,7 @@
         {{ with .Params.my_time }}
         <section class="cv-section">
           <h2 class="cv-section-title">My Time</h2>
-          {{ $colors := slice "#60a5fa" "#3b82f6" "#2563eb" "#1d4ed8" "#93c5fd" "#1e40af" }}
+          {{ $colors := slice "#e8b84b" "#f5cc72" "#4ecdc4" "#d4a020" "#8eccc7" "#b5830e" }}
           {{ $items := . }}
           {{ $s := newScratch }}
           {{ $s.Set "segments" slice }}
@@ -204,6 +204,15 @@
               {{ $x2 := add 50 (mul 50 (math.Sin $endRad)) }}
               {{ $y2 := sub 50 (mul 50 (math.Cos $endRad)) }}
               <div class="cv-mytime-segment" data-label="{{ $item.label }}" data-index="{{ $i }}" aria-label="{{ $item.text }}" style="clip-path: polygon(50% 50%, {{ printf "%g%% %g%%" $x1 $y1 }}, {{ printf "%g%% %g%%" $x2 $y2 }});"></div>
+              {{ if ge (sub $end $start) 8 }}
+              {{ $midPct := div (add $start $end) 2.0 }}
+              {{ $midDeg := mul $midPct 3.6 }}
+              {{ $midRad := math.ToRadians $midDeg }}
+              {{ $r := 38.0 }}
+              {{ $lx := add 50 (mul $r (math.Sin $midRad)) }}
+              {{ $ly := sub 50 (mul $r (math.Cos $midRad)) }}
+              <div class="cv-mytime-seg-label" aria-hidden="true" style="left:{{ printf "%g%%" $lx }};top:{{ printf "%g%%" $ly }};">{{ $item.label }}</div>
+              {{ end }}
               {{ end }}
               <div class="cv-mytime-letter" aria-hidden="true"></div>
             </div>
@@ -228,29 +237,4 @@
     {{ end }}
   </div>
 </article>
-<script>
-(function () {
-  var mytime = document.querySelector('.cv-mytime');
-  if (!mytime) return;
-  var wrap = mytime.querySelector('.cv-mytime-chart-wrap');
-  var letterEl = mytime.querySelector('.cv-mytime-letter');
-  var segments = mytime.querySelectorAll('.cv-mytime-segment');
-  var legendItems = mytime.querySelectorAll('.cv-mytime-legend-item');
-  function clearHighlight() {
-    wrap.classList.remove('hover-segment');
-    if (letterEl) letterEl.textContent = '';
-    legendItems.forEach(function (el) { el.classList.remove('highlight'); });
-  }
-  segments.forEach(function (seg) {
-    seg.addEventListener('mouseenter', function () {
-      var label = seg.getAttribute('data-label');
-      var index = parseInt(seg.getAttribute('data-index'), 10);
-      if (letterEl) letterEl.textContent = label;
-      wrap.classList.add('hover-segment');
-      if (legendItems[index]) legendItems[index].classList.add('highlight');
-    });
-    seg.addEventListener('mouseleave', clearHighlight);
-  });
-})();
-</script>
 {{ end }}

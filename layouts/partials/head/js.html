@@ -40,3 +40,15 @@
   {{ $js := . | resources.Minify | resources.Fingerprint }}
   <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
 {{ end }}
+
+{{/* CV My Time donut chart interactions */}}
+{{ with resources.Get "js/cv-mytime.js" }}
+  {{ $js := . | resources.Minify | resources.Fingerprint }}
+  <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+{{ end }}
+
+{{/* Tags page search/filter */}}
+{{ with resources.Get "js/tags-search.js" }}
+  {{ $js := . | resources.Minify | resources.Fingerprint }}
+  <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+{{ end }}

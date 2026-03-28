@@ -9,8 +9,8 @@
 // Separate skills section (sliders only, no header)
 .skills-section {
     padding: 4rem 2rem;
-    background-color: #0a0a0a;
-    color: #ffffff;
+    background-color: #07090f;
+    color: #ddd8cc;
     margin-top: -2px;
 }
 
@@ -18,6 +18,30 @@
     max-width: 900px;
     margin: 0 auto;
     width: 100%;
+}
+
+// Clickable counter
+.skills-counter-link {
+    text-decoration: none;
+    color: inherit;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.75rem;
+    transition: border-color 0.3s ease, background 0.3s ease;
+
+    &:hover {
+        border-color: rgba(232, 184, 75, 0.25);
+        background: rgba(232, 184, 75, 0.05);
+
+        .skills-counter-value,
+        .skills-counter-suffix {
+            color: #f5cc72;
+        }
+
+        .skills-counter-label {
+            color: rgba(232, 184, 75, 0.7);
+        }
+    }
 }
 
 // Counters row
@@ -48,25 +72,28 @@
 }
 
 .skills-counter-value {
+    font-family: 'Fraunces', Georgia, serif;
     font-size: 2.5rem;
-    font-weight: 700;
-    color: #ffffff;
+    font-weight: 300;
+    color: #e8b84b;
     line-height: 1;
 }
 
 .skills-counter-suffix {
+    font-family: 'Fraunces', Georgia, serif;
     font-size: 2rem;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.9);
+    font-weight: 300;
+    color: rgba(232, 184, 75, 0.7);
     margin-left: -0.1em;
 }
 
 .skills-counter-label {
-    font-size: 0.9rem;
-    color: #999;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.75rem;
+    color: #6b7280;
     margin: 0;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
 }
 
 // Skill bars (progress sliders) - inside .skills-section
@@ -88,28 +115,31 @@
 }
 
 .skills-skill-name {
-    font-size: 1rem;
-    color: #e0e0e0;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: 0.95rem;
+    color: #ddd8cc;
+    font-weight: 400;
 }
 
 .skills-skill-percent {
-    font-size: 0.9rem;
-    color: #999;
-    font-weight: 600;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.8rem;
+    color: #6b7280;
+    font-weight: 500;
 }
 
 .skills-skill-track {
-    height: 8px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
+    height: 3px;
+    background: rgba(232, 184, 75, 0.1);
+    border-radius: 2px;
     overflow: hidden;
 }
 
 .skills-skill-fill {
     height: 100%;
-    background: linear-gradient(90deg, #4a9eff 0%, #6bb3ff 100%);
-    border-radius: 4px;
-    transition: width 1s ease-out;
+    background: linear-gradient(90deg, #e8b84b 0%, #f5cc72 100%);
+    border-radius: 2px;
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #skills.skills-visible .skills-skill-fill {

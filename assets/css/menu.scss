@@ -47,19 +47,24 @@
     }
 }
 
+// Single post light theme: hamburger black for contrast
+body.single-theme-light .hamburger .bar {
+    background-color: #111;
+}
+
 .main-nav {
     position: fixed;
     top: 0;
     left: -100%;
     width: 300px;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(7, 9, 15, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     padding: 4rem 2rem;
     transition: left 0.3s ease-in-out;
     z-index: 999;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid rgba(232, 184, 75, 0.12);
 
     &.active {
         left: 0;
@@ -82,9 +87,11 @@
     }
 
     .nav-link {
-        color: white;
+        font-family: 'IBM Plex Sans', system-ui, sans-serif;
+        color: #ddd8cc;
         text-decoration: none;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+        font-weight: 400;
         transition: all 0.3s ease;
         position: relative;
         padding-bottom: 0.2rem;
@@ -93,19 +100,19 @@
             content: '';
             position: absolute;
             width: 0;
-            height: 2px;
+            height: 1px;
             bottom: 0;
             left: 0;
-            background-color: white;
+            background-color: #e8b84b;
             transition: width 0.3s ease;
         }
 
         &:hover {
-            color: #ffffff;
-            
+            color: #e8b84b;
+
             &::after {
                 width: 100%;
             }
         }
     }
-} 
+}

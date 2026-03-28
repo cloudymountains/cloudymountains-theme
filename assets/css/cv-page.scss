@@ -1,17 +1,26 @@
-// CV page — black page background, white content card, two-column resume layout
-$cv-blue: #2563eb;
-$cv-black: #000;
-$cv-text: #1a1a1a;
-$cv-muted: #444;
-$cv-border: #e5e7eb;
+// CV page — dark theme matching Mountain Terminal design system
+$cv-accent:       #e8b84b;
+$cv-accent-light: #f5cc72;
+$cv-accent-dim:   rgba(232, 184, 75, 0.12);
+$cv-bg:           #07090f;
+$cv-card:         #0c1018;
+$cv-surface:      #111827;
+$cv-text:         #ddd8cc;
+$cv-muted:        #6b7280;
+$cv-border:       rgba(232, 184, 75, 0.1);
+$cv-border-hover: rgba(232, 184, 75, 0.28);
+$font-display:    'Fraunces', Georgia, 'Times New Roman', serif;
+$font-body:       'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+$font-mono:       'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
 
+// ─── Page shell ───────────────────────────────────────────────────────────────
 .cv-page {
-  padding: 2rem 1rem 4rem;
+  padding: 2.5rem 1rem 5rem;
   min-height: 100vh;
-  background: #000;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: $cv-bg;
+  font-family: $font-body;
   font-size: 0.9375rem;
-  line-height: 1.45;
+  line-height: 1.5;
 
   @media print {
     padding: 0;
@@ -20,31 +29,41 @@ $cv-border: #e5e7eb;
 }
 
 .cv-page-card {
-  max-width: 900px;
+  max-width: 920px;
   margin: 0 auto;
-  padding: 2rem 2.5rem;
-  background: #fff;
+  padding: 2.75rem 3rem;
+  background: $cv-card;
   color: $cv-text;
   box-sizing: border-box;
-  border-radius: 4px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  border: 1px solid $cv-border;
+  box-shadow:
+    0 0 80px rgba(232, 184, 75, 0.04),
+    0 4px 48px rgba(0, 0, 0, 0.5);
+
+  @media (max-width: 640px) {
+    padding: 1.75rem 1.5rem;
+  }
 
   @media print {
     max-width: 100%;
     padding: 0.5in;
     box-shadow: none;
     border-radius: 0;
+    background: #fff;
+    color: #1a1a1a;
+    border: none;
   }
 }
 
-// Header: name + contact left, profile photo right
+// ─── Header ───────────────────────────────────────────────────────────────────
 .cv-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 2rem;
   margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
+  padding-bottom: 1.75rem;
   border-bottom: 1px solid $cv-border;
 }
 
@@ -54,28 +73,43 @@ $cv-border: #e5e7eb;
 }
 
 .cv-name {
-  font-size: 1.75rem;
-  font-weight: 700;
-  margin: 0 0 0.25rem 0;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: $cv-black;
+  font-family: $font-display;
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin: 0 0 0.2rem 0;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: #ffffff;
+
+  @media print {
+    color: #1a1a1a;
+    font-size: 2rem;
+  }
 }
 
 .cv-title {
-  font-size: 1rem;
-  font-weight: 600;
-  margin: 0 0 0.75rem 0;
-  color: $cv-blue;
+  font-family: $font-mono;
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin: 0 0 0.9rem 0;
+  color: $cv-accent;
+
+  @media print {
+    color: #b5830e;
+  }
 }
 
 .cv-contact {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem 1rem;
-  font-size: 0.875rem;
+  gap: 0.4rem 1.1rem;
+  font-family: $font-mono;
+  font-size: 0.75rem;
   color: $cv-muted;
+  letter-spacing: 0.02em;
 
   .cv-contact-item {
     display: inline-flex;
@@ -84,29 +118,39 @@ $cv-border: #e5e7eb;
   }
 
   i {
-    font-size: 0.9rem;
-    color: $cv-text;
+    font-size: 0.85rem;
+    color: $cv-accent;
+    opacity: 0.7;
   }
 
   a {
-    color: $cv-text;
+    color: $cv-muted;
     text-decoration: none;
+    transition: color 0.2s;
 
     &:hover {
-      color: $cv-blue;
-      text-decoration: underline;
+      color: $cv-accent;
     }
+  }
+
+  @media print {
+    font-size: 0.7rem;
+    color: #444;
+
+    i { color: #b5830e; opacity: 1; }
+    a { color: #444; }
   }
 }
 
 .cv-header-photo {
   flex-shrink: 0;
-  width: 120px;
-  height: 120px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
   overflow: hidden;
-  border: 3px solid $cv-black;
-  background: #f3f4f6;
+  border: 2px solid rgba(232, 184, 75, 0.4);
+  box-shadow: 0 0 32px rgba(232, 184, 75, 0.1);
+  background: $cv-surface;
 
   img {
     width: 100%;
@@ -115,11 +159,12 @@ $cv-border: #e5e7eb;
   }
 
   @media print {
-    border-color: $cv-black;
+    border-color: #1a1a1a;
+    box-shadow: none;
   }
 }
 
-// Two-column layout
+// ─── Two-column layout ────────────────────────────────────────────────────────
 .cv-columns {
   display: grid;
   grid-template-columns: 1.65fr 1fr;
@@ -136,9 +181,9 @@ $cv-border: #e5e7eb;
   min-width: 0;
 }
 
-// Section titles (uppercase, bold, underlined)
+// ─── Sections ─────────────────────────────────────────────────────────────────
 .cv-section {
-  margin-top: 1.25rem;
+  margin-top: 1.5rem;
 
   &:first-child {
     margin-top: 0;
@@ -146,37 +191,52 @@ $cv-border: #e5e7eb;
 }
 
 .cv-section-title {
-  font-size: 0.8125rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin: 0 0 0.75rem 0;
-  padding-bottom: 0.35rem;
-  border-bottom: 1px solid $cv-black;
-  color: $cv-black;
+  font-family: $font-display;
+  font-size: 1rem;
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.01em;
+  margin: 0 0 0.85rem 0;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid $cv-border;
+  color: $cv-accent;
+
+  @media print {
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    border-bottom-color: #1a1a1a;
+    color: #1a1a1a;
+  }
 }
 
-// Summary
+// ─── Summary ──────────────────────────────────────────────────────────────────
 .cv-summary {
   margin: 0;
   font-size: 0.9375rem;
-  line-height: 1.55;
+  line-height: 1.65;
   color: $cv-text;
+
+  @media print { color: #1a1a1a; }
 }
 
-// Experience — each job as a card
+// ─── Experience ───────────────────────────────────────────────────────────────
 .cv-job {
-  margin-bottom: 1rem;
-  padding: 1.25rem 1.5rem;
-  background: #f9fafb;
+  margin-bottom: 0.85rem;
+  padding: 1.1rem 1.25rem 1.1rem 1.35rem;
+  background: $cv-surface;
   border: 1px solid $cv-border;
-  border-radius: 8px;
+  border-left: 3px solid $cv-accent;
+  border-radius: 6px;
   box-sizing: border-box;
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
   &:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    border-color: #d1d5db;
+    border-color: $cv-border-hover;
+    border-left-color: $cv-accent-light;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
   }
 
   &:last-child {
@@ -186,6 +246,7 @@ $cv-border: #e5e7eb;
   @media print {
     background: #fff;
     border: 1px solid #e5e7eb;
+    border-left: 3px solid #b5830e;
     box-shadow: none;
     break-inside: avoid;
   }
@@ -196,77 +257,85 @@ $cv-border: #e5e7eb;
   justify-content: space-between;
   align-items: baseline;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: 0.3rem;
+  margin-bottom: 0.15rem;
 }
 
 .cv-job-role {
-  font-weight: 700;
+  font-weight: 600;
   font-size: 0.9375rem;
-  color: $cv-black;
+  color: #ffffff;
+
+  @media print { color: #1a1a1a; }
 }
 
 .cv-job-period {
-  font-size: 0.8125rem;
+  font-family: $font-mono;
+  font-size: 0.72rem;
   color: $cv-muted;
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
+  letter-spacing: 0.03em;
 
-  i {
-    font-size: 0.75rem;
-  }
+  i { font-size: 0.7rem; }
 }
 
 .cv-job-company {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  color: $cv-blue;
-  margin-bottom: 0.2rem;
+  color: $cv-accent;
+  margin-bottom: 0.15rem;
+
+  @media print { color: #b5830e; }
 }
 
 .cv-job-location {
-  font-size: 0.8125rem;
+  font-family: $font-mono;
+  font-size: 0.72rem;
   color: $cv-muted;
   margin-bottom: 0.4rem;
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
 
-  i {
-    font-size: 0.75rem;
-  }
+  i { font-size: 0.7rem; }
+
+  @media print { color: #666; }
 }
 
 .cv-job-bullets {
-  margin: 0 0 0 1.25rem;
+  margin: 0.4rem 0 0 1.1rem;
   padding: 0;
   list-style-type: disc;
 
   li {
-    margin-bottom: 0.25rem;
-    color: $cv-text;
+    margin-bottom: 0.2rem;
+    color: #b0a898;
     font-size: 0.875rem;
-    line-height: 1.4;
+    line-height: 1.45;
+
+    &::marker {
+      color: rgba(232, 184, 75, 0.5);
+    }
+
+    @media print {
+      color: #333;
+      &::marker { color: #b5830e; }
+    }
   }
 }
 
-// Philosophy — same structure as Certification: section title + card(s)
+// ─── Philosophy ───────────────────────────────────────────────────────────────
 .cv-philosophy-card {
-  margin-bottom: 1rem;
-  padding: 1.25rem 1.5rem;
-  background: #f9fafb;
+  margin-bottom: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: rgba(232, 184, 75, 0.03);
   border: 1px solid $cv-border;
-  border-radius: 8px;
+  border-left: 3px solid rgba(232, 184, 75, 0.25);
+  border-radius: 6px;
   box-sizing: border-box;
-  font-size: 0.875rem;
-  color: $cv-text;
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
-
-  &:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    border-color: #d1d5db;
-  }
 
   &:last-child {
     margin-bottom: 0;
@@ -275,40 +344,46 @@ $cv-border: #e5e7eb;
   @media print {
     background: #fff;
     border: 1px solid #e5e7eb;
-    box-shadow: none;
+    border-left: 3px solid #b5830e;
     break-inside: avoid;
   }
 }
 
 .cv-philosophy-quote {
   margin: 0;
-  font-size: 0.9375rem;
+  font-family: $font-display;
+  font-size: 0.9rem;
   font-style: italic;
-  color: $cv-blue;
+  font-weight: 300;
+  color: $cv-text;
+  line-height: 1.6;
+
+  @media print { color: #1a1a1a; }
 }
 
 .cv-philosophy-author {
-  margin: 0.35rem 0 0 0;
-  font-size: 0.875rem;
+  margin: 0.4rem 0 0 0;
+  font-family: $font-mono;
+  font-size: 0.7rem;
   color: $cv-muted;
   text-align: right;
+  letter-spacing: 0.05em;
+
+  @media print { color: #666; }
 }
 
-// Certifications — each item as a card
+// ─── Certifications ───────────────────────────────────────────────────────────
 .cv-cert {
-  margin-bottom: 1rem;
-  padding: 1.25rem 1.5rem;
-  background: #f9fafb;
+  margin-bottom: 0.6rem;
+  padding: 0.85rem 1.25rem;
+  background: $cv-surface;
   border: 1px solid $cv-border;
-  border-radius: 8px;
+  border-radius: 6px;
   box-sizing: border-box;
-  font-size: 0.875rem;
-  color: $cv-text;
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: border-color 0.2s;
 
   &:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    border-color: #d1d5db;
+    border-color: $cv-border-hover;
   }
 
   &:last-child {
@@ -324,30 +399,36 @@ $cv-border: #e5e7eb;
 }
 
 .cv-cert-name {
-  font-weight: 600;
-  color: $cv-black;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #ffffff;
+
+  @media print { color: #1a1a1a; }
 }
 
 .cv-cert-id {
   display: block;
-  font-size: 0.8125rem;
+  font-family: $font-mono;
+  font-size: 0.7rem;
   color: $cv-muted;
-  margin-top: 0.15rem;
+  margin-top: 0.2rem;
+  letter-spacing: 0.04em;
+
+  @media print { color: #666; }
 }
 
-// Education — each item as a card
+// ─── Education ────────────────────────────────────────────────────────────────
 .cv-edu {
-  margin-bottom: 1rem;
-  padding: 1.25rem 1.5rem;
-  background: #f9fafb;
+  margin-bottom: 0.6rem;
+  padding: 0.85rem 1.25rem;
+  background: $cv-surface;
   border: 1px solid $cv-border;
-  border-radius: 8px;
+  border-radius: 6px;
   box-sizing: border-box;
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: border-color 0.2s;
 
   &:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    border-color: #d1d5db;
+    border-color: $cv-border-hover;
   }
 
   &:last-child {
@@ -357,7 +438,6 @@ $cv-border: #e5e7eb;
   @media print {
     background: #fff;
     border: 1px solid #e5e7eb;
-    box-shadow: none;
     break-inside: avoid;
   }
 }
@@ -371,48 +451,52 @@ $cv-border: #e5e7eb;
 }
 
 .cv-edu-degree {
-  font-weight: 700;
-  font-size: 0.9375rem;
-  color: $cv-black;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #ffffff;
+
+  @media print { color: #1a1a1a; }
 }
 
 .cv-edu-gpa {
-  font-size: 0.8125rem;
+  font-family: $font-mono;
+  font-size: 0.72rem;
   color: $cv-muted;
 }
 
 .cv-edu-school {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  color: $cv-blue;
-  margin-bottom: 0.2rem;
+  color: $cv-accent;
+  margin-bottom: 0.15rem;
+
+  @media print { color: #b5830e; }
 }
 
 .cv-edu-period {
-  font-size: 0.8125rem;
+  font-family: $font-mono;
+  font-size: 0.72rem;
   color: $cv-muted;
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
+  letter-spacing: 0.03em;
 
-  i {
-    font-size: 0.75rem;
-  }
+  i { font-size: 0.7rem; }
 }
 
-// Projects — each item as a card
+// ─── Projects ─────────────────────────────────────────────────────────────────
 .cv-project {
-  margin-bottom: 1rem;
-  padding: 1.25rem 1.5rem;
-  background: #f9fafb;
+  margin-bottom: 0.6rem;
+  padding: 0.85rem 1.25rem;
+  background: $cv-surface;
   border: 1px solid $cv-border;
-  border-radius: 8px;
+  border-radius: 6px;
   box-sizing: border-box;
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: border-color 0.2s;
 
   &:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    border-color: #d1d5db;
+    border-color: $cv-border-hover;
   }
 
   &:last-child {
@@ -422,7 +506,6 @@ $cv-border: #e5e7eb;
   @media print {
     background: #fff;
     border: 1px solid #e5e7eb;
-    box-shadow: none;
     break-inside: avoid;
   }
 }
@@ -436,45 +519,46 @@ $cv-border: #e5e7eb;
 }
 
 .cv-project-title {
-  font-weight: 700;
-  font-size: 0.9375rem;
-  color: $cv-black;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #ffffff;
+
+  @media print { color: #1a1a1a; }
 }
 
 .cv-project-period {
-  font-size: 0.8125rem;
+  font-family: $font-mono;
+  font-size: 0.72rem;
   color: $cv-muted;
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
+  letter-spacing: 0.03em;
 
-  i {
-    font-size: 0.75rem;
-  }
+  i { font-size: 0.7rem; }
 }
 
 .cv-project-location {
-  font-size: 0.8125rem;
+  font-family: $font-mono;
+  font-size: 0.72rem;
   color: $cv-muted;
   margin-bottom: 0.35rem;
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
 
-  i {
-    font-size: 0.75rem;
-  }
+  i { font-size: 0.7rem; }
 }
 
 .cv-project .cv-job-bullets {
-  margin-top: 0.25rem;
+  margin-top: 0.3rem;
 }
 
-// Languages — card per language with 5-dot proficiency slider
+// ─── Languages ────────────────────────────────────────────────────────────────
 .cv-languages {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.55rem;
   margin: 0;
 }
 
@@ -482,73 +566,93 @@ $cv-border: #e5e7eb;
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 1.25rem 1.5rem;
-  background: #f9fafb;
+  padding: 0.8rem 1.25rem;
+  background: $cv-surface;
   border: 1px solid $cv-border;
-  border-radius: 8px;
+  border-radius: 6px;
   box-sizing: border-box;
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: border-color 0.2s;
 
   &:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    border-color: #d1d5db;
+    border-color: $cv-border-hover;
   }
 
   @media print {
     background: #fff;
     border: 1px solid #e5e7eb;
-    box-shadow: none;
     break-inside: avoid;
-  }
-}
-
-.cv-lang-dots {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  flex-shrink: 0;
-  margin-left: auto;
-}
-
-.cv-lang-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #e5e7eb;
-  transition: background 0.2s ease;
-
-  &.cv-lang-dot-filled {
-    background: $cv-blue;
   }
 }
 
 .cv-lang-text {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.15rem;
   min-width: 0;
 }
 
+.cv-lang-dots {
+  display: flex;
+  align-items: center;
+  gap: 0.32rem;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.cv-lang-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(232, 184, 75, 0.18);
+  transition: background 0.2s ease;
+
+  &.cv-lang-dot-filled {
+    background: $cv-accent;
+    border-color: $cv-accent;
+    box-shadow: 0 0 6px rgba(232, 184, 75, 0.35);
+  }
+
+  @media print {
+    background: #e5e7eb;
+    border: none;
+
+    &.cv-lang-dot-filled {
+      background: #b5830e;
+      box-shadow: none;
+    }
+  }
+}
+
 .cv-lang-name {
-  font-size: 1rem;
-  font-weight: 700;
-  color: $cv-black;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #ffffff;
+
+  @media print { color: #1a1a1a; }
 }
 
 .cv-lang-level {
-  font-size: 0.8125rem;
+  font-family: $font-mono;
+  font-size: 0.68rem;
   color: $cv-muted;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  @media print { color: #666; }
 }
 
-// Hobby
+// ─── Hobby ────────────────────────────────────────────────────────────────────
 .cv-hobby {
   margin: 0;
   font-size: 0.875rem;
   color: $cv-text;
-  line-height: 1.5;
+  line-height: 1.55;
+
+  @media print { color: #333; }
 }
 
-// My Time — donut chart + legend
+// ─── My Time (donut chart + legend) ───────────────────────────────────────────
 .cv-mytime {
   display: flex;
   flex-direction: column;
@@ -558,8 +662,8 @@ $cv-border: #e5e7eb;
 
 .cv-mytime-chart-wrap {
   position: relative;
-  width: 180px;
-  height: 180px;
+  width: 156px;
+  height: 156px;
   flex-shrink: 0;
 }
 
@@ -569,6 +673,7 @@ $cv-border: #e5e7eb;
   border-radius: 50%;
   position: relative;
   z-index: 1;
+  box-shadow: 0 0 32px rgba(232, 184, 75, 0.12);
 }
 
 .cv-mytime-chart-hole {
@@ -578,13 +683,32 @@ $cv-border: #e5e7eb;
   width: 55%;
   height: 55%;
   margin: -27.5% 0 0 -27.5%;
-  background: #fff;
+  background: $cv-card;
   border-radius: 50%;
   z-index: 2;
   box-sizing: border-box;
+
+  @media print { background: #fff; }
 }
 
-// Invisible wedge overlays for hover (clip-path set per segment from percentages)
+// Labels rendered at midpoint of each donut segment
+.cv-mytime-seg-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-family: $font-mono;
+  font-size: 0.58rem;
+  font-weight: 700;
+  color: $cv-bg;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+
+  @media print {
+    color: #fff;
+  }
+}
+
 .cv-mytime-segment {
   position: absolute;
   top: 0;
@@ -596,7 +720,6 @@ $cv-border: #e5e7eb;
   border-radius: 50%;
 }
 
-// Letter shown in center of donut on segment hover
 .cv-mytime-letter {
   position: absolute;
   top: 50%;
@@ -607,9 +730,10 @@ $cv-border: #e5e7eb;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: $cv-black;
-  color: #fff;
-  font-size: 0.875rem;
+  background: $cv-accent;
+  color: $cv-bg;
+  font-family: $font-mono;
+  font-size: 0.7rem;
   font-weight: 700;
   border-radius: 50%;
   z-index: 4;
@@ -623,7 +747,7 @@ $cv-border: #e5e7eb;
 }
 
 .cv-mytime-legend-item.highlight {
-  background: #dbeafe;
+  background: rgba(232, 184, 75, 0.1);
   border-radius: 4px;
   padding: 0.2rem 0.4rem;
   margin: 0 -0.4rem;
@@ -639,36 +763,45 @@ $cv-border: #e5e7eb;
 .cv-mytime-legend-item {
   display: flex;
   align-items: baseline;
-  gap: 0.5rem;
-  margin-bottom: 0.35rem;
-  font-size: 0.875rem;
+  gap: 0.55rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
   color: $cv-text;
 
   &:last-child {
     margin-bottom: 0;
   }
+
+  @media print { color: #333; }
 }
 
 .cv-mytime-legend-label {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.25rem;
-  height: 1.25rem;
-  min-width: 1.25rem;
-  min-height: 1.25rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  min-width: 1.2rem;
+  min-height: 1.2rem;
   border-radius: 50%;
-  background: $cv-black;
-  color: #fff;
-  font-size: 0.6875rem;
+  background: $cv-accent;
+  color: $cv-bg;
+  font-family: $font-mono;
+  font-size: 0.58rem;
   font-weight: 700;
+  flex-shrink: 0;
+
+  @media print {
+    background: #b5830e;
+    color: #fff;
+  }
 }
 
 .cv-mytime-legend-text {
   flex: 1;
 }
 
-// Skills (tags) — clickable buttons linking to /tags/<skill>/
+// ─── Skills tags ──────────────────────────────────────────────────────────────
 .cv-skills-list {
   display: flex;
   flex-wrap: wrap;
@@ -678,35 +811,37 @@ $cv-border: #e5e7eb;
 
 .cv-skill-tag {
   display: inline-block;
-  padding: 0.35rem 0.65rem;
-  background: #f3f4f6;
-  border: 1px solid $cv-border;
+  padding: 0.28rem 0.6rem;
+  background: rgba(232, 184, 75, 0.06);
+  border: 1px solid rgba(232, 184, 75, 0.2);
   border-radius: 4px;
-  font-size: 0.8125rem;
-  color: $cv-text;
+  font-family: $font-mono;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: $cv-accent;
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease;
 
   &:hover {
-    background: $cv-blue;
-    border-color: $cv-blue;
-    color: #fff;
+    background: rgba(232, 184, 75, 0.14);
+    border-color: rgba(232, 184, 75, 0.45);
   }
 
   &:focus {
-    outline: 2px solid $cv-blue;
+    outline: 2px solid rgba(232, 184, 75, 0.5);
     outline-offset: 2px;
   }
 
   @media print {
     background: #f9fafb;
     border-color: #d1d5db;
+    color: #1a1a1a;
     pointer-events: none;
   }
 }
 
-// Full-width optional content
+// ─── Full-width sections ──────────────────────────────────────────────────────
 .cv-full-width {
   grid-column: 1 / -1;
 }

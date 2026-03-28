@@ -34,3 +34,6 @@
 
 {{ $cvPage := resources.Get "css/cv-page.scss" | css.Sass | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $cvPage.RelPermalink }}" integrity="{{ $cvPage.Data.Integrity }}">
+
+{{ $tags := resources.Get "css/tags.scss" | css.Sass | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $tags.RelPermalink }}" integrity="{{ $tags.Data.Integrity }}">
