@@ -865,3 +865,197 @@ $font-mono:       'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
     padding: 0;
   }
 }
+
+// ─── Print ────────────────────────────────────────────────────────────────────
+@media print {
+  // Page setup
+  @page {
+    margin: 1.2cm 1.5cm;
+    size: A4;
+  }
+
+  // Hide site chrome (body > header targets only the site nav, not .cv-header inside the article)
+  body > header,
+  body > footer,
+  .single-post-theme-toggle,
+  .menu-container,
+  #iubenda-cs-banner,
+  .iubenda-cs-container,
+  .iubenda-cookie-solution,
+  [class*="iubenda"] {
+    display: none !important;
+  }
+
+  // Reset body
+  body,
+  html {
+    background: #fff !important;
+    color: #1a1a1a !important;
+    font-size: 10pt;
+  }
+
+  // Page shell — no padding, no background
+  .cv-page {
+    padding: 0 !important;
+    background: #fff !important;
+    background-image: none !important;
+    min-height: unset;
+  }
+
+  // Card — full width, flat, white
+  .cv-page-card {
+    max-width: 100% !important;
+    padding: 0 !important;
+    background: #fff !important;
+    color: #1a1a1a !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+
+  // Header
+  .cv-header {
+    border-bottom-color: #ccc !important;
+  }
+
+  .cv-name {
+    color: #1a1a1a !important;
+    font-size: 22pt !important;
+  }
+
+  .cv-title {
+    color: #7a5c00 !important;
+  }
+
+  .cv-contact {
+    color: #444 !important;
+
+    i { color: #7a5c00 !important; }
+    a { color: #444 !important; }
+  }
+
+  .cv-header-photo {
+    border-color: #333 !important;
+    box-shadow: none !important;
+  }
+
+  // Section titles
+  .cv-section-title {
+    font-style: normal !important;
+    font-weight: 700 !important;
+    font-size: 8pt !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.07em !important;
+    color: #1a1a1a !important;
+    border-bottom-color: #1a1a1a !important;
+  }
+
+  // All cards: white bg, light border, no shadow
+  .cv-job,
+  .cv-cert,
+  .cv-edu,
+  .cv-project,
+  .cv-lang-card,
+  .cv-philosophy-card {
+    background: #fff !important;
+    border: 1px solid #ddd !important;
+    border-left-color: #7a5c00 !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+
+  // Text colours
+  .cv-job-role,
+  .cv-cert-name,
+  .cv-edu-degree,
+  .cv-project-title { color: #1a1a1a !important; }
+
+  .cv-job-company,
+  .cv-edu-school     { color: #7a5c00 !important; }
+
+  .cv-job-period,
+  .cv-job-location,
+  .cv-edu-period,
+  .cv-edu-gpa,
+  .cv-project-period,
+  .cv-project-location,
+  .cv-cert-id,
+  .cv-lang-level     { color: #555 !important; }
+
+  .cv-job-bullets li { color: #333 !important; }
+  .cv-job-bullets li::marker { color: #7a5c00 !important; }
+
+  .cv-philosophy-quote  { color: #1a1a1a !important; }
+  .cv-philosophy-author { color: #555 !important; }
+
+  .cv-summary { color: #1a1a1a !important; }
+  .cv-hobby   { color: #333 !important; }
+
+  // Languages
+  .cv-lang-name { color: #1a1a1a !important; }
+
+  .cv-lang-dot {
+    background: #e0e0e0 !important;
+    border-color: #ccc !important;
+    box-shadow: none !important;
+
+    &.cv-lang-dot-filled {
+      background: #7a5c00 !important;
+      border-color: #7a5c00 !important;
+    }
+  }
+
+  // Skills
+  .cv-skill-tag {
+    background: #f5f5f5 !important;
+    border-color: #ccc !important;
+    color: #1a1a1a !important;
+    pointer-events: none;
+  }
+
+  // My Time chart — force background colors to print (browsers suppress them by default)
+  .cv-mytime-chart {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .cv-mytime-chart-hole { background: #fff !important; }
+  .cv-mytime-letter     { display: none !important; }
+  .cv-mytime-seg-label  { color: #000 !important; }
+
+  .cv-mytime-legend-item  { color: #333 !important; }
+  .cv-mytime-legend-label {
+    background: #7a5c00 !important;
+    color: #fff !important;
+  }
+
+  .cv-mytime-legend-item.highlight {
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  // Keep two-column layout
+  .cv-columns {
+    grid-template-columns: 1.65fr 1fr !important;
+  }
+
+  // Prevent page breaks between header → columns → summary
+  .cv-header {
+    break-after: avoid;
+  }
+
+  .cv-columns {
+    break-before: avoid;
+  }
+
+  // Prevent Summary from sitting alone on its own page
+  .cv-full-width {
+    break-after: avoid;
+  }
+
+  // Links: show URL in brackets for physical copy
+  .cv-contact a::after {
+    content: none;
+  }
+}
