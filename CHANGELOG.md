@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.5.0...v1.5.1) (2026-03-28)
+
+
+### Bug Fixes
+
+* **cv-page:** Printing layout ([abf2a04](https://github.com/cloudymountains/cloudymountains-theme/commit/abf2a0479d8c8e6a4024143d43bacdce5f4911f4))
+
 # [1.5.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.4.3...v1.5.0) (2026-03-28)
 
 
