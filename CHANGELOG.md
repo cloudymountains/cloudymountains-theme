@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.4.3...v1.5.0) (2026-03-28)
+
+
+### Features
+
+* **improvements:** Add CV section, Improve the UI - fonts, etc. Overall UI experiance ([36b6489](https://github.com/cloudymountains/cloudymountains-theme/commit/36b6489483259fa4521636a40330cdb61753ace6))
+
 ## [1.4.3](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.4.2...v1.4.3) (2026-02-01)
 
 
