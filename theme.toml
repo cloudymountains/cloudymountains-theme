@@ -1,7 +1,7 @@
 name = 'CloudyMountains'
 license = 'MIT'
-licenselink = 'https://github.com/cloudymountains/cloudymountains-theme/LICENSE'
-description = 'Theme description'
+licenselink = 'https://github.com/cloudymountains/cloudymountains-theme/blob/main/LICENSE'
+description = 'A clean, minimal Hugo theme for personal portfolio and blog sites. Built for tech professionals with a hero section, about, animated skills bars, projects showcase, a dedicated CV page, dark/light mode toggle, full-text search, and SEO support.'
 
 # The home page of the theme, where the source can be found
 homepage = 'https://github.com/cloudymountains/cloudymountains-theme'
@@ -9,11 +9,9 @@ homepage = 'https://github.com/cloudymountains/cloudymountains-theme'
 # If you have a running demo of the theme
 demosite = 'https://cloudymountains.cloud'
 
-# Taxonomy terms
-tags = ['blog', 'company']
-features = ['some', 'awesome', 'features']
+tags = ['blog', 'portfolio', 'personal', 'responsive', 'dark-mode', 'search', 'minimal']
+features = ['responsive', 'dark-mode', 'light-mode', 'search', 'cv-page', 'skills', 'projects', 'seo', 'google-analytics', 'syntax-highlighting', 'tags', 'rss']
 
-# If the theme has a single author
 [author]
   name = 'Denislav Tsonev'
   homepage = 'https://cloudymountains.cloud'
