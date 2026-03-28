@@ -1,3 +1,10 @@
+## [1.4.3](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.4.2...v1.4.3) (2026-02-01)
+
+
+### Bug Fixes
+
+* **home:** Calculate Years of experience ([a0fb7f0](https://github.com/cloudymountains/cloudymountains-theme/commit/a0fb7f09b81962da977ce59019cf750ec49ce9e6))
+
 ## [1.4.2](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.4.1...v1.4.2) (2026-02-01)
 
 
