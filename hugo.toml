@@ -1,7 +1,6 @@
 baseURL = 'http://example.org/'
 languageCode = 'en-us'
 title = 'Cloudy Mountains'
-theme = 'cloudymountains'
 
 [params]
   description = "Welcome to Cloudy Mountains - Your Journey to the Clouds"
