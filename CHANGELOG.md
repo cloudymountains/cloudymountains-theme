@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.5.1...v1.5.2) (2026-03-30)
+
+
+### Bug Fixes
+
+* **favicon:** Update head.html to reflect favicons ([19ae275](https://github.com/cloudymountains/cloudymountains-theme/commit/19ae27531053e3d5b0f508651c6d1bc3b3f8894d))
+
 ## [1.5.1](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.5.0...v1.5.1) (2026-03-28)
 
 
