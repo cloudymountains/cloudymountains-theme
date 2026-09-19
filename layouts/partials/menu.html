@@ -1,20 +1,43 @@
+{{- /*
+Site navigation: a sticky top bar with the brand, the links from the given
+menu and an optional call-to-action button (params.nav_cta). Below 900px the
+links and CTA collapse into a slide-out panel behind a hamburger button.
+
+On pages with a hero (home, 404) the bar starts transparent over the hero and
+turns frosted once scrolled past it (menu.js adds .is-scrolled).
+*/ -}}
 {{- $page := .page }}
 {{- $menuID := .menuID }}
+{{- $overlay := or $page.IsHome (eq $page.Kind "404") }}
 
-{{- with index site.Menus $menuID }}
-  <div class="menu-container">
-    <button class="hamburger" onclick="toggleMenu()">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<nav class="site-nav{{ if $overlay }} is-overlay{{ end }}" id="site-nav" aria-label="Main">
+  <div class="site-nav-inner">
+    <a class="site-nav-brand" href="{{ "/" | relURL }}">
+      {{- with site.Params.logo }}<img src="{{ . | relURL }}" alt="" width="28" height="28">{{ end -}}
+      <span>{{ site.Title }}</span>
+    </a>
+
+    <button class="hamburger" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Open menu">
       <span class="bar"></span>
       <span class="bar"></span>
       <span class="bar"></span>
     </button>
-    
-    <nav class="main-nav" id="main-nav">
+
+    <div class="main-nav" id="main-nav">
+      {{- with index site.Menus $menuID }}
       <ul>
         {{- range . }}
-          <li><a href="{{ .URL }}" class="nav-link">{{ .Name }}</a></li>
+          {{- /* Active by page: "/#projects" is active on pages in the projects section */}}
+          {{- $section := strings.TrimPrefix "/#" .URL }}
+          {{- $active := or (and $page.IsHome (eq .URL "/")) (and (not $page.IsHome) (ne $section .URL) (eq $section $page.Section)) }}
+          <li><a href="{{ .URL }}" class="nav-link{{ if $active }} is-active{{ end }}"{{ if $active }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
         {{- end }}
       </ul>
-    </nav>
+      {{- end }}
+      {{- with site.Params.nav_cta }}
+      <a class="nav-cta" href="{{ .url | default "/#contacts" }}">{{ .text | default "Work with me" }}</a>
+      {{- end }}
+    </div>
   </div>
-{{- end }}
+</nav>

@@ -84,6 +84,8 @@ theme = 'cloudymountains-theme'
   heroTitle = "Hello, I'm Your Name"
   heroSubtitle = "Cloud · DevOps · Platform Engineering"
   heroClouds = true                       # drifting clouds with mouse parallax over the hero (default true)
+  availability = "Available for fractional DevOps engagements"  # optional pill above the hero title
+  logo = "/images/logo.svg"               # optional icon next to the site title in the navigation bar
 
   # About section
   about_title = "About Me"
@@ -102,6 +104,28 @@ theme = 'cloudymountains-theme'
   email = "you@example.com"
   github = "https://github.com/yourusername"
 
+  # Contact topics grid (links to tag pages; replaced by the bookshelf when [params.books] is set)
+  first_title = "Cloud"
+  first_text = "Expertise in cloud infrastructure and services"
+  second_title = "Automation"
+  second_text = "Streamlining processes through automation"
+  third_title = "DevOps"
+  third_text = "Bridging development and operations"
+  fourth_title = "Platform Engineering"
+  fourth_text = "Building robust and scalable platforms"
+
+  # Tables go after all plain [params] keys (TOML puts later plain keys inside the table)
+  # Optional call-to-action buttons: in the navigation bar and under the hero subtitle
+  [params.nav_cta]
+    text = "Work with me"
+    url = "/#contacts"
+  [params.hero_cta_primary]
+    text = "Work with me"
+    url = "/#contacts"
+  [params.hero_cta_secondary]
+    text = "Read the articles"
+    url = "/projects/"
+
   # Skills bars (shown on home and CV pages). A bar links to its tag page
   # (/tags/<name>/) when posts use that tag; set `tag` if the tag is named differently.
   [[params.skills]]
@@ -111,16 +135,6 @@ theme = 'cloudymountains-theme'
   [[params.skills]]
     name = "Terraform"
     percent = 90
-
-  # Contact topics grid (links to tag pages)
-  first_title = "Cloud"
-  first_text = "Expertise in cloud infrastructure and services"
-  second_title = "Automation"
-  second_text = "Streamlining processes through automation"
-  third_title = "DevOps"
-  third_text = "Bridging development and operations"
-  fourth_title = "Platform Engineering"
-  fourth_text = "Building robust and scalable platforms"
 
   [params.seo]
     googleAnalytics = "G-XXXXXXXXXX"

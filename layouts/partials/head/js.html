@@ -17,6 +17,12 @@
   <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
 {{ end }}
 
+{{/* Reveal on scroll ([data-reveal]) */}}
+{{ with resources.Get "js/reveal.js" }}
+  {{ $js := . | resources.Minify | resources.Fingerprint }}
+  <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+{{ end }}
+
 {{/* Menu JavaScript */}}
 {{ with resources.Get "js/menu.js" }}
   {{ $js := . | resources.Minify | resources.Fingerprint }}

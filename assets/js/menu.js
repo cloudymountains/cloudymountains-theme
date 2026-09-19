@@ -1,29 +1,81 @@
-function toggleMenu() {
-    const nav = document.getElementById('main-nav');
-    const hamburger = document.querySelector('.hamburger');
-    nav.classList.toggle('active');
-    hamburger.classList.toggle('active');
-}
+// Site navigation (layouts/partials/menu.html):
+// - hamburger toggles the slide-out panel on small screens
+// - over a hero, the bar turns frosted once the hero scrolls out of view
+// - on the home page, the link for the section in view is highlighted
+(function () {
+  var nav = document.getElementById('site-nav');
+  if (!nav) return;
+  var panel = document.getElementById('main-nav');
+  var burger = nav.querySelector('.hamburger');
 
-// Close menu when clicking a link
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-            document.getElementById('main-nav').classList.remove('active');
-            document.querySelector('.hamburger').classList.remove('active');
-        });
+  function setOpen(open) {
+    panel.classList.toggle('active', open);
+    burger.classList.toggle('active', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+
+  burger.addEventListener('click', function () {
+    setOpen(!panel.classList.contains('active'));
+  });
+  panel.addEventListener('click', function (e) {
+    if (e.target.closest('a')) setOpen(false);
+  });
+  document.addEventListener('click', function (e) {
+    if (panel.classList.contains('active') && !nav.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && panel.classList.contains('active')) {
+      setOpen(false);
+      burger.focus();
+    }
+  });
+
+  if (!('IntersectionObserver' in window)) {
+    nav.classList.add('is-scrolled');
+    return;
+  }
+
+  // Frosted once the hero has scrolled under the bar
+  var hero = document.querySelector('.hero');
+  if (hero && nav.classList.contains('is-overlay')) {
+    new IntersectionObserver(function (entries) {
+      nav.classList.toggle('is-scrolled', !entries[0].isIntersecting);
+    }, { rootMargin: '-' + nav.offsetHeight + 'px 0px 0px 0px' }).observe(hero);
+  }
+
+  // Home page: highlight the link whose section is in view
+  var links = Array.prototype.filter.call(nav.querySelectorAll('.nav-link'), function (a) {
+    var url = new URL(a.href, location.href);
+    return url.pathname === location.pathname && url.hash;
+  });
+  if (!links.length) return;
+  var homeLink = nav.querySelector('.nav-link[href="/"]');
+  var byId = {};
+  links.forEach(function (a) { byId[new URL(a.href).hash.slice(1)] = a; });
+
+  function activate(link) {
+    nav.querySelectorAll('.nav-link').forEach(function (a) {
+      var on = a === link;
+      a.classList.toggle('is-active', on);
+      if (on) a.setAttribute('aria-current', 'location');
+      else a.removeAttribute('aria-current');
     });
+  }
 
-    // Close menu when clicking outside
-    document.addEventListener('click', (event) => {
-        const nav = document.getElementById('main-nav');
-        const hamburger = document.querySelector('.hamburger');
-        const isClickInsideMenu = nav.contains(event.target);
-        const isClickOnHamburger = hamburger.contains(event.target);
-
-        if (nav.classList.contains('active') && !isClickInsideMenu && !isClickOnHamburger) {
-            nav.classList.remove('active');
-            hamburger.classList.remove('active');
-        }
+  var visible = {};
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) { visible[entry.target.id] = entry.isIntersecting; });
+    // The first section (in page order) that is in the middle band wins
+    var current = null;
+    Object.keys(byId).forEach(function (id) {
+      if (!current && visible[id]) current = byId[id];
     });
-}); 
+    activate(current || homeLink);
+  }, { rootMargin: '-45% 0px -45% 0px' });
+
+  Object.keys(byId).forEach(function (id) {
+    var section = document.getElementById(id);
+    if (section) observer.observe(section);
+  });
+})();

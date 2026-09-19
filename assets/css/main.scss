@@ -11,8 +11,14 @@ $font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
 $font-body: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
 $font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
 
-body, html {
+html {
     height: 100%;
+}
+
+// min-height (not height): a fixed body height would stop the sticky header
+// from sticking past the first screen
+body, html {
+    min-height: 100%;
     margin: 0;
     font-family: $font-body;
     color: $color-text;
@@ -82,6 +88,147 @@ body, html {
     &::before {
         content: '// ';
         opacity: 0.5;
+    }
+}
+
+// Availability pill above the hero title
+.hero-content .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0 1.75rem;
+    padding: 0.45rem 1rem 0.45rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid rgba(232, 184, 75, 0.3);
+    background: rgba(7, 9, 15, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-family: $font-body;
+    font-size: 0.85rem;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    color: $color-text;
+    opacity: 1;
+
+    &::before {
+        content: none;
+    }
+}
+
+.hero-badge-dot {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4ade80;
+    flex-shrink: 0;
+
+    // Soft pulse ring
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: #4ade80;
+        animation: hero-badge-pulse 2s ease-out infinite;
+    }
+}
+
+@keyframes hero-badge-pulse {
+    0%   { transform: scale(1); opacity: 0.7; }
+    100% { transform: scale(3); opacity: 0; }
+}
+
+// Call-to-action buttons under the subtitle
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2.5rem;
+}
+
+.hero-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.6rem;
+    border-radius: 999px;
+    font-family: $font-body;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+
+    i {
+        transition: transform 0.25s ease;
+    }
+
+    &:hover {
+        transform: translateY(-2px);
+
+        i {
+            transform: translateX(3px);
+        }
+    }
+
+    &:focus-visible {
+        outline: 2px solid $color-accent;
+        outline-offset: 3px;
+    }
+}
+
+.hero-btn-primary {
+    background: $color-accent;
+    color: $color-bg;
+    font-weight: 600;
+    box-shadow: 0 8px 30px rgba(232, 184, 75, 0.2);
+
+    &:hover {
+        background: $color-accent-light;
+        box-shadow: 0 12px 40px rgba(232, 184, 75, 0.35);
+    }
+}
+
+.hero-btn-secondary {
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(7, 9, 15, 0.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #fff;
+
+    &:hover {
+        border-color: rgba(255, 255, 255, 0.7);
+        background: rgba(7, 9, 15, 0.55);
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content .hero-badge {
+        font-size: 0.74rem;
+        padding: 0.4rem 0.8rem 0.4rem 0.7rem;
+        white-space: nowrap;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 1rem;
+    }
+
+    .hero-btn {
+        justify-content: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-badge-dot::after {
+        animation: none;
+    }
+
+    .hero-btn,
+    .hero-btn i {
+        transition: none;
     }
 }
 
@@ -435,3 +582,4 @@ body, html {
 @import "skills";
 @import "code";
 @import "single";
+@import "motion";

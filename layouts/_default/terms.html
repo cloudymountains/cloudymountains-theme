@@ -19,9 +19,9 @@
     </div>
 
     <div class="tags-grid" id="tagsGrid">
-      {{ range .Data.Terms.ByCount.Reverse }}
+      {{ range $i, $t := .Data.Terms.ByCount.Reverse }}
         {{ $count := len .Pages }}
-        <a href="{{ .Page.RelPermalink }}" class="tag-card" data-title="{{ .Page.Title | lower }}">
+        <a href="{{ .Page.RelPermalink }}" class="tag-card" data-reveal style="--i: {{ math.Min $i 7 }}" data-title="{{ .Page.Title | lower }}">
           <span class="tag-card-ambient">{{ $count }}</span>
           <div class="tag-card-body">
             <h2 class="tag-card-name">{{ .Page.Title }}</h2>

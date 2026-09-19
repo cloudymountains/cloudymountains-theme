@@ -15,7 +15,7 @@ $single-prose-width: 70rem; // wider content area
 // Theme toggle button
 .single-post-theme-toggle {
     position: fixed;
-    top: 1rem;
+    top: calc(var(--nav-h, 0px) + 1rem);
     right: 1rem;
     z-index: 101;
     width: 2.5rem;

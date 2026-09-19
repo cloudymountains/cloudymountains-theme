@@ -12,10 +12,10 @@
       </div>
     </div>
     <div class="list-container" id="postsList">
-      {{ range .Pages.ByDate.Reverse }}
+      {{ range $i, $p := .Pages.ByDate.Reverse }}
         {{ $readTime := mul (div (countwords .Content) 220.0) 60 }}
         {{ $post := . }}
-        <a class="container-link" href="{{ .RelPermalink }}" data-title="{{ .Title }}" data-description="{{ .Params.description }}" data-content="{{ .Summary | plainify }}">
+        <a class="container-link" data-reveal style="--i: {{ math.Min $i 3 }}" href="{{ .RelPermalink }}" data-title="{{ .Title }}" data-description="{{ .Params.description }}" data-content="{{ .Summary | plainify }}">
           <div class="full-width-container">
             {{ with .Params.image }}
             <div class="image-side">

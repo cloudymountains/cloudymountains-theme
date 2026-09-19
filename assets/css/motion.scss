@@ -1,0 +1,61 @@
+// Motion: cross-page transitions and reveal-on-scroll.
+
+// Smooth fade between pages (browsers without View Transitions just navigate)
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root) {
+    animation: vt-fade-out 160ms ease-in both;
+}
+
+::view-transition-new(root) {
+    animation: vt-fade-in 320ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes vt-fade-out {
+    to { opacity: 0; }
+}
+
+@keyframes vt-fade-in {
+    from { opacity: 0; translate: 0 10px; }
+}
+
+// Reveal on scroll: elements with data-reveal fade and rise into place when
+// reveal.js marks them .is-revealed. Hidden only when JS runs (html.js), so
+// content is never lost without it. Uses an animation on `translate`, so it
+// never fights an element's own `transform` hover effects or transitions.
+// Stagger with style="--i: N".
+.js [data-reveal]:not(.is-revealed) {
+    opacity: 0;
+}
+
+.js [data-reveal].is-revealed {
+    animation: reveal-in 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    animation-delay: calc(var(--i, 0) * 80ms);
+}
+
+@keyframes reveal-in {
+    from {
+        opacity: 0;
+        translate: 0 28px;
+    }
+    to {
+        opacity: 1;
+        translate: 0 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
+    }
+
+    .js [data-reveal]:not(.is-revealed),
+    .js [data-reveal].is-revealed {
+        opacity: 1;
+        animation: none;
+    }
+}

@@ -10,9 +10,20 @@
     </div>
     {{ end }}
     <div class="hero-content">
+        {{ with .Site.Params.availability }}
+        <p class="hero-badge"><span class="hero-badge-dot" aria-hidden="true"></span>{{ . }}</p>
+        {{ end }}
         <h1>{{ .Site.Title }}</h1>
         {{ with .Site.Params.description }}
-        <p>{{ . }}</p>
+        <p class="hero-subtitle">{{ . }}</p>
+        {{ end }}
+        {{ $primary := .Site.Params.hero_cta_primary }}
+        {{ $secondary := .Site.Params.hero_cta_secondary }}
+        {{ if or $primary $secondary }}
+        <div class="hero-actions">
+            {{ with $primary }}<a class="hero-btn hero-btn-primary" href="{{ .url }}">{{ .text }} <i class="bi bi-arrow-right" aria-hidden="true"></i></a>{{ end }}
+            {{ with $secondary }}<a class="hero-btn hero-btn-secondary" href="{{ .url }}">{{ .text }}</a>{{ end }}
+        </div>
         {{ end }}
     </div>
     <div class="scroll-down" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">
@@ -23,11 +34,11 @@
 </div>
 
 <section class="about-section" id="about">
-    <div class="about-title">
+    <div class="about-title" data-reveal>
         <h2>{{ .Site.Params.about_title | default "About Me" }}</h2>
     </div>
     <div class="about-content">
-        <div class="about-text-image">
+        <div class="about-text-image" data-reveal style="--i: 1">
             <div class="about-text">
                 <p>{{ .Site.Params.about_text | default "I am passionate about connecting people with the beauty and serenity of nature. My mission is to inspire and educate while preserving the natural wonders around us." }}</p>
             </div>
@@ -39,21 +50,21 @@
         </div>
         <div class="about-counters">
             <div class="skills-counters">
-                <a href="/cv" class="skills-counter skills-counter-link">
+                <a href="/cv" class="skills-counter skills-counter-link" data-reveal style="--i: 0">
                     <span class="skills-counter-number">
                         <span class="skills-counter-value" data-target="{{ sub now.Year (.Site.Params.experience_start_year | default 2020) }}">0</span><span class="skills-counter-suffix">+</span>
                     </span>
                     <p class="skills-counter-label">Years of experience</p>
                 </a>
-                <a href="/cv" class="skills-counter skills-counter-link">
+                <a href="/cv" class="skills-counter skills-counter-link" data-reveal style="--i: 1">
                     <span class="skills-counter-value" data-target="{{ .Site.Params.companies_count | default 3 }}">0</span>
                     <p class="skills-counter-label">Companies worked for</p>
                 </a>
-                <a href="/projects" class="skills-counter skills-counter-link">
+                <a href="/projects" class="skills-counter skills-counter-link" data-reveal style="--i: 2">
                     <span class="skills-counter-value" data-target="{{ len (where .Site.RegularPages "Section" "projects") }}">0</span>
                     <p class="skills-counter-label">{{ .Site.Params.counter_three_label | default "Projects" }}</p>
                 </a>
-                <a href="/tags" class="skills-counter skills-counter-link">
+                <a href="/tags" class="skills-counter skills-counter-link" data-reveal style="--i: 3">
                     <span class="skills-counter-value" data-target="{{ len .Site.Taxonomies.tags }}">0</span>
                     <p class="skills-counter-label">{{ .Site.Params.counter_four_label | default "Cutting-Edge Technologies" }}</p>
                 </a>
@@ -66,14 +77,14 @@
     <div class="skills-section-inner">
         {{ with .Site.Params.skills }}
         <div class="skills-list">
-            {{ range . }}
+            {{ range $i, $skill := . }}
             {{/* Link to the skill's tag page when posts use that tag; `tag` overrides the name */}}
             {{/* Look up the term page by URL path, so multi-word tags like "Platform Engineering" match */}}
             {{ $tag := site.GetPage (printf "/tags/%s" (.tag | default .name | urlize)) }}
             {{ if $tag }}
-            <a href="{{ $tag.RelPermalink }}" class="skills-skill-item skills-skill-link" aria-label="{{ .name }} — see posts tagged {{ $tag.Title }}">
+            <a href="{{ $tag.RelPermalink }}" class="skills-skill-item skills-skill-link" data-reveal style="--i: {{ $i }}" aria-label="{{ .name }} — see posts tagged {{ $tag.Title }}">
             {{ else }}
-            <div class="skills-skill-item">
+            <div class="skills-skill-item" data-reveal style="--i: {{ $i }}">
             {{ end }}
                 <div class="skills-skill-header">
                     <span class="skills-skill-name">{{ .name }}{{ if $tag }} <i class="bi bi-arrow-right-short skills-skill-arrow" aria-hidden="true"></i>{{ end }}</span>
@@ -91,8 +102,8 @@
 
 <section class="projects-section" id="projects">
     <div class="projects-grid">
-        {{ range first 3 (where .Site.RegularPages "Section" "projects").ByDate.Reverse }}
-        <a href="{{ .RelPermalink }}" class="project-item">
+        {{ range $i, $p := first 3 (where .Site.RegularPages "Section" "projects").ByDate.Reverse }}
+        <a href="{{ .RelPermalink }}" class="project-item" data-reveal style="--i: {{ $i }}">
             <div class="project-image">
             {{ $post := . }}
             {{ with .Params.image }}
@@ -106,15 +117,15 @@
         </a>
         {{ end }}
     </div>
-    <div class="more-projects-button">
+    <div class="more-projects-button" data-reveal>
         <a href="/projects" class="btn-more">More Projects</a>
     </div>
 </section>
 
 <section class="contacts-section" id="contacts">
     <div class="container">
-        <h2>Get in Touch</h2>
-        <div class="contacts-buttons">
+        <h2 data-reveal>Get in Touch</h2>
+        <div class="contacts-buttons" data-reveal style="--i: 1">
             <div class="contacts-buttons-container">
                 <a href="{{ .Site.Params.linkedin | default "https://linkedin.com/in/yourusername" }}" target="_blank" class="contact-button">
                     <i class="bi bi-linkedin"></i>
@@ -136,7 +147,7 @@
         </div>
         {{ $books := site.Params.books }}
         {{ if and $books $books.items (ne $books.enable false) }}
-        <div class="contacts-books">
+        <div class="contacts-books" data-reveal>
             <p class="books-eyebrow">{{ $books.eyebrow | default "Reading list" }}</p>
             {{ partial "bookshelf.html" . }}
         </div>
