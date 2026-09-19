@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.7.0...v1.7.1) (2026-09-19)
+
+
+### Bug Fixes
+
+* **skills:** link skills to multi-word tags ([d2b374f](https://github.com/cloudymountains/cloudymountains-theme/commit/d2b374f02fc12619039234bebf80a9ce26e4e9e3))
+
 # [1.7.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.6.0...v1.7.0) (2026-09-19)
 
 
