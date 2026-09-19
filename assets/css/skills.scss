@@ -107,6 +107,48 @@
     width: 100%;
 }
 
+// Skill bar linking to its tag page
+.skills-skill-link {
+    display: block;
+    box-sizing: border-box;
+    // Negative margin = padding + border, so the bar lines up with plain rows
+    margin: calc(-0.5rem - 1px) calc(-0.75rem - 1px);
+    padding: 0.5rem 0.75rem;
+    width: calc(100% + 1.5rem + 2px);
+    border-radius: 6px;
+    border: 1px solid transparent;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 0.3s ease, background 0.3s ease;
+
+    .skills-skill-arrow {
+        display: inline-block;
+        color: #e8b84b;
+        opacity: 0.5;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    &:hover,
+    &:focus-visible {
+        border-color: rgba(232, 184, 75, 0.25);
+        background: rgba(232, 184, 75, 0.05);
+
+        .skills-skill-name {
+            color: #f5cc72;
+        }
+
+        .skills-skill-arrow {
+            opacity: 1;
+            transform: translateX(3px);
+        }
+    }
+
+    &:focus-visible {
+        outline: 2px solid #e8b84b;
+        outline-offset: 2px;
+    }
+}
+
 .skills-skill-header {
     display: flex;
     justify-content: space-between;

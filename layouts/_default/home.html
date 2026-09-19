@@ -58,15 +58,22 @@
         {{ with .Site.Params.skills }}
         <div class="skills-list">
             {{ range . }}
+            {{/* Link to the skill's tag page when posts use that tag; `tag` overrides the name */}}
+            {{ $tagKey := .tag | default .name | urlize }}
+            {{ $tag := index site.Taxonomies.tags $tagKey }}
+            {{ if $tag }}
+            <a href="{{ $tag.Page.RelPermalink }}" class="skills-skill-item skills-skill-link" aria-label="{{ .name }} — see posts tagged {{ $tag.Page.Title }}">
+            {{ else }}
             <div class="skills-skill-item">
+            {{ end }}
                 <div class="skills-skill-header">
-                    <span class="skills-skill-name">{{ .name }}</span>
+                    <span class="skills-skill-name">{{ .name }}{{ if $tag }} <i class="bi bi-arrow-right-short skills-skill-arrow" aria-hidden="true"></i>{{ end }}</span>
                     <span class="skills-skill-percent">{{ .percent }}%</span>
                 </div>
                 <div class="skills-skill-track">
                     <div class="skills-skill-fill" data-percent="{{ .percent }}" style="width: 0%"></div>
                 </div>
-            </div>
+            {{ if $tag }}</a>{{ else }}</div>{{ end }}
             {{ end }}
         </div>
         {{ end }}

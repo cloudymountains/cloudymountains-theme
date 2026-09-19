@@ -101,10 +101,12 @@ theme = 'cloudymountains-theme'
   email = "you@example.com"
   github = "https://github.com/yourusername"
 
-  # Skills bars (shown on home and CV pages)
+  # Skills bars (shown on home and CV pages). A bar links to its tag page
+  # (/tags/<name>/) when posts use that tag; set `tag` if the tag is named differently.
   [[params.skills]]
     name = "Kubernetes"
     percent = 85
+    # tag = "k8s"                  # optional
   [[params.skills]]
     name = "Terraform"
     percent = 90
