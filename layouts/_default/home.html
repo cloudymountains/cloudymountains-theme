@@ -59,10 +59,10 @@
         <div class="skills-list">
             {{ range . }}
             {{/* Link to the skill's tag page when posts use that tag; `tag` overrides the name */}}
-            {{ $tagKey := .tag | default .name | urlize }}
-            {{ $tag := index site.Taxonomies.tags $tagKey }}
+            {{/* Look up the term page by URL path, so multi-word tags like "Platform Engineering" match */}}
+            {{ $tag := site.GetPage (printf "/tags/%s" (.tag | default .name | urlize)) }}
             {{ if $tag }}
-            <a href="{{ $tag.Page.RelPermalink }}" class="skills-skill-item skills-skill-link" aria-label="{{ .name }} — see posts tagged {{ $tag.Page.Title }}">
+            <a href="{{ $tag.RelPermalink }}" class="skills-skill-item skills-skill-link" aria-label="{{ .name }} — see posts tagged {{ $tag.Title }}">
             {{ else }}
             <div class="skills-skill-item">
             {{ end }}
