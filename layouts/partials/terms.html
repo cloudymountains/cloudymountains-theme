@@ -1,5 +1,5 @@
 {{- /*
-For a given taxonomy, renders a list of terms assigned to the page.
+Renders the page's terms for a taxonomy as chip links.
 
 @context {page} page The current page.
 @context {string} taxonomy The taxonomy.
@@ -11,12 +11,11 @@ For a given taxonomy, renders a list of terms assigned to the page.
 {{- $taxonomy := .taxonomy }}
 
 {{- with $page.GetTerms $taxonomy }}
-  {{- $label := (index . 0).Parent.LinkTitle }}
-  <div>
-    <div>{{ $label }}:</div>
-    <ul>
+  <div class="post-terms">
+    <span class="post-terms-label">Tagged</span>
+    <ul class="post-terms-list">
       {{- range . }}
-        <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
+        <li><a class="chip" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
       {{- end }}
     </ul>
   </div>

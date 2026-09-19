@@ -1,6 +1,28 @@
 {{ define "main" }}
-{{ $readTime := mul (div (countwords .Content) 220.0) 60 }}
-{{ $readMinutes := math.Floor (div $readTime 60) }}
+{{- /* Table of contents only for posts with 3+ section headings */}}
+{{- $headingCount := len (findRE `<h[23][\s>]` .Content) }}
+{{- $showToc := ge $headingCount 3 }}
+
+{{- /* Older / newer posts in the same section, by date */}}
+{{- $section := where site.RegularPages "Section" .Section }}
+{{- $older := false }}
+{{- with first 1 (where $section "Date" "lt" .Date).ByDate.Reverse }}{{ $older = index . 0 }}{{ end }}
+{{- $newer := false }}
+{{- with first 1 (where $section "Date" "gt" .Date).ByDate }}{{ $newer = index . 0 }}{{ end }}
+
+{{- /* Related: posts sharing the most tags, newest first on ties */}}
+{{- $related := slice }}
+{{- with .Params.tags }}
+  {{- $mine := . }}
+  {{- range $section.ByDate.Reverse }}
+    {{- if ne .Permalink $.Permalink }}
+      {{- $shared := len (intersect $mine (.Params.tags | default slice)) }}
+      {{- if gt $shared 0 }}{{ $related = $related | append (dict "page" . "score" $shared) }}{{ end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- $related = first 3 (sort $related "score" "desc") }}
+
   <article class="post">
     <div class="single-post-container" id="single-post-container" data-theme="dark">
       <button type="button" class="single-post-theme-toggle" id="single-post-theme-toggle" aria-label="Toggle dark/light mode" title="Toggle dark/light mode">
@@ -14,24 +36,26 @@
       <div class="single-post-progress" aria-hidden="true">
         <div class="single-post-progress-bar"></div>
       </div>
-      <div class="container-fluid px-3 px-lg-4">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-          <div class="col-12">
-            <header>
-              <h1 class="single-post-title">{{ .Title }}</h1>
-              <div class="single-post-meta">
-                <p>
-                  {{ with .Params.authors }}<span>By {{ . }}</span>{{ end }}{{ if .Params.authors }}<span class="meta-sep">·</span>{{ end }}
-                  <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
-                  <span class="meta-sep">·</span>
-                  <span>{{ if ge $readMinutes 1 }}{{ $readMinutes }} min read{{ else }}1 min read{{ end }}</span>
-                </p>
-              </div>
-            </header>
+
+      <div class="post-shell">
+        <header class="post-header">
+          <h1 class="single-post-title">{{ .Title }}</h1>
+          <div class="single-post-meta">
+            <p>
+              {{- with .Params.authors }}<span>By {{ if reflect.IsSlice . }}{{ delimit . ", " }}{{ else }}{{ . }}{{ end }}</span><span class="meta-sep">·</span>{{ end }}
+              <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+              <span class="meta-sep">·</span>
+              <span>{{ .ReadingTime }} min read</span>
+            </p>
+          </div>
+        </header>
+
+        <div class="post-layout{{ if $showToc }} has-toc{{ end }}">
+          <div class="post-main">
             <div class="single-post-content">
               {{ with .Resources.Get .Params.image }}
               <div class="image-container">
-                {{ partial "responsive-image.html" (dict "res" . "alt" $.Title "widths" (slice 800 1200 1600) "sizes" "(min-width: 1200px) 1100px, 100vw" "class" "content-image" "eager" true) }}
+                {{ partial "responsive-image.html" (dict "res" . "alt" $.Title "widths" (slice 800 1200 1600) "sizes" "(min-width: 1200px) 800px, 100vw" "class" "content-image" "eager" true) }}
               </div>
               {{ end }}
 
@@ -44,8 +68,48 @@
             <footer class="post-footer">
               {{ partial "terms.html" (dict "taxonomy" "tags" "page" .) }}
             </footer>
+
+            {{ if or $older $newer }}
+            <nav class="post-pager" aria-label="More articles">
+              {{ with $older }}
+              <a class="post-pager-link post-pager-prev card-spotlight" href="{{ .RelPermalink }}" rel="prev">
+                <span class="post-pager-label"><i class="bi bi-arrow-left" aria-hidden="true"></i> Previous article</span>
+                <span class="post-pager-title">{{ .Title }}</span>
+              </a>
+              {{ end }}
+              {{ with $newer }}
+              <a class="post-pager-link post-pager-next card-spotlight" href="{{ .RelPermalink }}" rel="next">
+                <span class="post-pager-label">Next article <i class="bi bi-arrow-right" aria-hidden="true"></i></span>
+                <span class="post-pager-title">{{ .Title }}</span>
+              </a>
+              {{ end }}
+            </nav>
+            {{ end }}
           </div>
+
+          {{ if $showToc }}
+          <aside class="post-toc" aria-label="On this page">
+            <p class="post-toc-title">On this page</p>
+            {{ .TableOfContents }}
+          </aside>
+          {{ end }}
         </div>
+
+        {{ with $related }}
+        <section class="post-related" aria-labelledby="related-heading">
+          <header class="section-header">
+            <div>
+              <p class="section-eyebrow">// Keep reading</p>
+              <h2 class="section-title" id="related-heading">Related articles</h2>
+            </div>
+          </header>
+          <div class="post-grid">
+            {{ range $i, $r := . }}
+              {{ partial "post-card.html" (dict "page" $r.page "i" $i "level" "h3") }}
+            {{ end }}
+          </div>
+        </section>
+        {{ end }}
       </div>
     </div>
     {{ with resources.Get "js/single-progress.js" }}

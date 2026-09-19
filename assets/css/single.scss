@@ -10,7 +10,7 @@ $single-text: #ddd8cc;
 $single-text-muted: #6b7280;
 $single-accent: rgba(232, 184, 75, 0.06);
 $single-border: rgba(232, 184, 75, 0.1);
-$single-prose-width: 70rem; // wider content area
+$single-prose-width: 50rem; // comfortable reading measure (~75 characters)
 
 // Theme toggle button
 .single-post-theme-toggle {
@@ -71,7 +71,7 @@ $single-prose-width: 70rem; // wider content area
 
     background: linear-gradient(180deg, $single-bg 0%, $single-bg-soft 50%, $single-bg 100%);
 
-    .container-fluid {
+    .post-shell {
         padding-left: 1.5rem;
         padding-right: 1.5rem;
         max-width: 78rem;
@@ -276,45 +276,177 @@ $single-prose-width: 70rem; // wider content area
     margin-top: 2rem;
     padding-top: 2rem;
     border-top: 1px solid $single-border;
+}
 
-    div {
-        display: inline-block;
-        margin-right: 0.75rem;
-        color: $single-text-muted;
-        font-size: 0.9375rem;
+.post-terms {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.post-terms-label {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: $single-text-muted;
+}
+
+.post-terms-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    .chip {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.75rem;
+    }
+}
+
+// ——— Layout: reading column + table of contents ———
+.post-header {
+    max-width: $single-prose-width;
+}
+
+@media (min-width: 1200px) {
+    .post-layout.has-toc {
+        display: grid;
+        grid-template-columns: minmax(0, $single-prose-width) 15rem;
+        justify-content: space-between;
+        gap: 4rem;
+    }
+}
+
+.post-toc {
+    display: none;
+
+    @media (min-width: 1200px) {
+        display: block;
+        position: sticky;
+        top: calc(var(--nav-h, 64px) + 2rem);
+        align-self: start;
+        max-height: calc(100vh - var(--nav-h, 64px) - 4rem);
+        overflow-y: auto;
+        padding-left: 1.25rem;
+        border-left: 1px solid $single-border;
     }
 
     ul {
-        display: inline-flex;
-        flex-wrap: wrap;
         list-style: none;
+        margin: 0;
         padding: 0;
-        margin: 0.5rem 0 0;
-        gap: 0.5rem;
+
+        ul {
+            padding-left: 0.9rem;
+        }
     }
 
     li {
-        display: inline-block;
-        margin-right: 0;
+        margin: 0.15rem 0;
+    }
 
-        a {
+    a {
+        display: block;
+        padding: 0.3rem 0;
+        font-size: 0.85rem;
+        line-height: 1.4;
+        color: $single-text-muted;
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: $single-text;
+        }
+
+        &.is-active {
             color: #e8b84b;
-            text-decoration: none;
-            padding: 0.35rem 0.75rem;
-            background: rgba(232, 184, 75, 0.06);
-            border: 1px solid rgba(232, 184, 75, 0.2);
-            border-radius: 4px;
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
-            font-size: 0.8rem;
-            letter-spacing: 0.04em;
-            transition: background 0.2s ease, border-color 0.2s ease;
-
-            &:hover {
-                background: rgba(232, 184, 75, 0.12);
-                border-color: rgba(232, 184, 75, 0.4);
-            }
         }
     }
+}
+
+.post-toc-title {
+    margin: 0 0 0.75rem;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: $single-text-muted;
+}
+
+// Headings clear the sticky navigation when jumped to from the TOC
+.single-post-content :is(h2, h3, h4) {
+    scroll-margin-top: calc(var(--nav-h, 64px) + 1.5rem);
+}
+
+// ——— Previous / next article ———
+.post-pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    max-width: $single-prose-width;
+    margin-top: 2.5rem;
+
+    @media (max-width: 640px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.post-pager-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 1.1rem 1.25rem;
+    border-radius: 12px;
+    border: 1px solid $single-border;
+    background: rgba(12, 16, 24, 0.7);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 0.25s ease, transform 0.25s ease;
+
+    &:hover {
+        border-color: rgba(232, 184, 75, 0.45);
+        transform: translateY(-2px);
+
+        .post-pager-title {
+            color: #f5cc72;
+        }
+    }
+}
+
+.post-pager-next {
+    grid-column: 2;
+    text-align: right;
+
+    @media (max-width: 640px) {
+        grid-column: 1;
+    }
+}
+
+.post-pager-label {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: $single-text-muted;
+}
+
+.post-pager-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.3;
+    color: #fff;
+    transition: color 0.25s ease;
+}
+
+// ——— Related articles ———
+.post-related {
+    margin-top: 5rem;
+    padding: 3rem 0 4rem;
+    border-top: 1px solid $single-border;
 }
 
 // ——— Light theme ———
@@ -414,23 +546,52 @@ $single-prose-width: 70rem; // wider content area
     }
 }
 
-// Tags (post-footer) in light theme
-.single-post-container[data-theme="light"] .post-footer {
-    border-top-color: rgba(0, 0, 0, 0.1);
-    & > div {
-        color: #333;
+// Tags, TOC, pager and related articles in light theme
+.single-post-container[data-theme="light"] {
+    .post-footer,
+    .post-related {
+        border-top-color: rgba(0, 0, 0, 0.1);
     }
-    div {
-        color: #555;
+
+    .post-terms-label,
+    .post-toc-title,
+    .post-pager-label {
+        color: #5a5e64;
     }
-    ul li a {
+
+    .chip {
+        color: #7a5a0a;
+        background: rgba(181, 131, 14, 0.08);
+        border-color: rgba(181, 131, 14, 0.3);
+    }
+
+    .post-toc {
+        border-left-color: rgba(0, 0, 0, 0.1);
+
+        a { color: #5a5e64; }
+        a:hover { color: #1a1a1a; }
+        a.is-active { color: #b5830e; }
+    }
+
+    .post-pager-link,
+    .post-card {
+        background: #fff;
+        border-color: rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .post-pager-title,
+    .post-card-title,
+    .section-title {
         color: #1a1a1a;
-        background: rgba(0, 0, 0, 0.06);
-        border: 1px solid rgba(0, 0, 0, 0.12);
-        &:hover {
-            background: rgba(0, 0, 0, 0.1);
-            border-color: rgba(0, 0, 0, 0.18);
-        }
+    }
+
+    .post-card-excerpt {
+        color: #4a4e55;
+    }
+
+    .post-card-media::after {
+        background: none;
     }
 }
 

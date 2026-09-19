@@ -16,7 +16,7 @@ A clean, minimal Hugo theme for personal portfolio and blog sites. Built for tec
 - **Projects showcase** — card grid of recent projects from the `projects/` section, plus full listing and tag pages with live filtering, reading time, topic chips and a cursor spotlight on cards
 - **CV page** — dedicated layout with experience, education, certifications, languages, skills, projects, philosophy and a "My Time" donut chart
 - **Bookshelf** — optional reading list in the contacts section: books that turn to show their cover and link to Amazon, configured in `hugo.toml`
-- **Blog** — posts with reading progress bar, code copy button, syntax highlighting (Monokai), and share buttons
+- **Blog** — posts with reading progress bar, table of contents (posts with 3+ headings), previous/next and related articles, code copy button, syntax highlighting (Monokai), and share buttons
 - **Full-text search** — client-side search powered by a JSON index
 - **Dark / Light mode** — toggle persisted in localStorage
 - **Tags & taxonomy** — tag pages with tag-search filtering
@@ -141,7 +141,7 @@ theme = 'cloudymountains-theme'
     googleSiteVerification = "your-verification-code"
     keywords = ["cloud", "devops", "platform engineering"]
     author = "Your Name"
-    copyright = "© 2024 Your Name. All rights reserved."
+    copyright = "© {year} Your Name. All rights reserved."   # {year} = current year at build time
 
     # Optional: Iubenda cookie consent
     [params.seo.iubenda]

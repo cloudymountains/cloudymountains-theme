@@ -1,1 +1,42 @@
-<p>{{ with .Site.Params.seo.copyright }}{{ . }}{{ else }}Copyright {{ lower .Site.Title }} © {{ now.Year }}. All rights reserved.{{ end }}</p>
+{{- /*
+Site footer: brand and tagline, the main menu, contact links and an optional
+call-to-action (params.nav_cta). params.seo.copyright may contain "{year}",
+which is replaced with the current year at build time.
+*/ -}}
+{{- $p := site.Params }}
+<div class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-brand">
+      <a class="site-footer-title" href="{{ "/" | relURL }}">{{ site.Title }}</a>
+      {{ with $p.description }}<p class="site-footer-tagline">{{ . }}</p>{{ end }}
+      {{ with $p.nav_cta }}
+      <a class="site-footer-cta" href="{{ .url | default "/#contacts" }}">{{ .text | default "Work with me" }} <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+      {{ end }}
+    </div>
+
+    {{ with site.Menus.main }}
+    <nav class="site-footer-col" aria-label="Footer">
+      <p class="site-footer-heading">Navigate</p>
+      <ul>
+        {{ range . }}<li><a href="{{ .URL }}">{{ .Name }}</a></li>{{ end }}
+      </ul>
+    </nav>
+    {{ end }}
+
+    {{ if or $p.linkedin $p.github $p.email }}
+    <div class="site-footer-col">
+      <p class="site-footer-heading">Connect</p>
+      <ul>
+        {{ with $p.linkedin }}<li><a href="{{ . }}" target="_blank" rel="noopener"><i class="bi bi-linkedin" aria-hidden="true"></i> LinkedIn</a></li>{{ end }}
+        {{ with $p.github }}<li><a href="{{ . }}" target="_blank" rel="noopener"><i class="bi bi-github" aria-hidden="true"></i> GitHub</a></li>{{ end }}
+        {{ with $p.email }}<li><a href="mailto:{{ . }}"><i class="bi bi-envelope" aria-hidden="true"></i> Email</a></li>{{ end }}
+      </ul>
+    </div>
+    {{ end }}
+  </div>
+
+  <div class="site-footer-bottom">
+    <p>{{ with $p.seo.copyright }}{{ replace . "{year}" (string now.Year) }}{{ else }}© {{ now.Year }} {{ site.Title }}. All rights reserved.{{ end }}</p>
+    <a class="site-footer-top" href="#main-content">Back to top <i class="bi bi-arrow-up" aria-hidden="true"></i></a>
+  </div>
+</div>
