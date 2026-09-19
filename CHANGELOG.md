@@ -1,3 +1,19 @@
+# [2.0.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.8.1...v2.0.0) (2026-09-19)
+
+
+* feat(nav)!: sticky top navigation, hero CTAs, page transitions, reveal on scroll ([8291760](https://github.com/cloudymountains/cloudymountains-theme/commit/8291760c64f43adf9dac31366b08a99ccdb50999))
+
+
+### BREAKING CHANGES
+
+* the navigation markup is replaced. The old fixed
+hamburger (.menu-container, global toggleMenu()) is gone in favour of
+nav.site-nav with .site-nav-inner, .main-nav, .nav-link and .nav-cta.
+Sites that styled or scripted the old menu need to update, and
+.hero now has a negative top margin equal to the bar height.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+
 ## [1.8.1](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.8.0...v1.8.1) (2026-09-19)
 
 
