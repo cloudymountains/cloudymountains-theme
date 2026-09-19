@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.6.0...v1.7.0) (2026-09-19)
+
+
+### Features
+
+* **skills:** link skill bars to their tag pages ([479fc4f](https://github.com/cloudymountains/cloudymountains-theme/commit/479fc4f4ce90122d9e3ad828c681d232e6a73bad))
+
 # [1.6.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.5.2...v1.6.0) (2026-09-19)
 
 
