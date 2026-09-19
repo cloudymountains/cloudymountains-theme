@@ -391,7 +391,6 @@ body, html {
     margin-top: -2px;
     padding: 6rem 2rem;
     color: #ffffff;
-    filter: grayscale(100%);
 }
 
 .projects-section::before {
@@ -406,43 +405,6 @@ body, html {
         rgba(0, 0, 0, 0.3) 0%,
         rgba(0, 0, 0, 0.7) 100%
     );
-}
-
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    position: relative;
-    z-index: 2;
-}
-
-.project-item {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    backdrop-filter: blur(5px);
-}
-
-.project-item:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.15);
-}
-
-.project-content {
-    padding: 1.5rem;
-}
-
-.project-content h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: #ffffff;
-}
-
-.project-content p {
-    color: #cccccc;
-    line-height: 1.6;
-    margin-bottom: 1rem;
 }
 
 .contacts-section {
@@ -577,9 +539,9 @@ body, html {
 @import "projects";
 @import "contacts";
 @import "footer";
-@import "search";
 @import "about";
 @import "skills";
 @import "code";
 @import "single";
+@import "cards";
 @import "motion";

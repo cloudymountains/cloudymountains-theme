@@ -1,14 +1,6 @@
 {{ define "main" }}
 <div class="hero" id="home">
-    {{/* Drifting clouds with mouse parallax; disable with heroClouds = false */}}
-    {{ if ne site.Params.heroClouds false }}
-    <div class="hero-clouds" aria-hidden="true">
-        <div class="hero-cloud-layer hero-cloud-far"><div class="hero-cloud-drift"></div></div>
-        <div class="hero-cloud-layer hero-cloud-mid"><div class="hero-cloud-drift"></div></div>
-        <div class="hero-cloud-layer hero-cloud-near"><div class="hero-cloud-drift"></div></div>
-        <div class="hero-cloud-glow"></div>
-    </div>
-    {{ end }}
+    {{ partial "hero-clouds.html" . }}
     <div class="hero-content">
         {{ with .Site.Params.availability }}
         <p class="hero-badge"><span class="hero-badge-dot" aria-hidden="true"></span>{{ . }}</p>
@@ -101,24 +93,19 @@
 </section>
 
 <section class="projects-section" id="projects">
-    <div class="projects-grid">
-        {{ range $i, $p := first 3 (where .Site.RegularPages "Section" "projects").ByDate.Reverse }}
-        <a href="{{ .RelPermalink }}" class="project-item" data-reveal style="--i: {{ $i }}">
-            <div class="project-image">
-            {{ $post := . }}
-            {{ with .Params.image }}
-              {{ partial "responsive-image.html" (dict "res" ($post.Resources.Get .) "src" (printf "%s%s" $post.RelPermalink .) "alt" $post.Title "widths" (slice 400 800) "sizes" "(min-width: 1000px) 33vw, (min-width: 700px) 50vw, 100vw") }}
+    <div class="section-inner">
+        <header class="section-header" data-reveal>
+            <div>
+                <p class="section-eyebrow">// Latest work</p>
+                <h2 class="section-title">Recent projects</h2>
+            </div>
+            <a href="{{ "projects/" | relURL }}" class="section-link">View all projects <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+        </header>
+        <div class="post-grid">
+            {{ range $i, $p := first 3 (where .Site.RegularPages "Section" "projects").ByDate.Reverse }}
+            {{ partial "post-card.html" (dict "page" $p "i" $i "level" "h3") }}
             {{ end }}
-            </div>
-            <div class="project-content">
-                <h3>{{ .Title }}</h3>
-                <p>{{ .Description | default .Summary }}</p>
-            </div>
-        </a>
-        {{ end }}
-    </div>
-    <div class="more-projects-button" data-reveal>
-        <a href="/projects" class="btn-more">More Projects</a>
+        </div>
     </div>
 </section>
 

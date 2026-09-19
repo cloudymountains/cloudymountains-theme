@@ -1,49 +1,21 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const searchContainer = document.getElementById('searchContainer');
-  const searchInput = document.getElementById('searchInput');
-  const postsList = document.getElementById('postsList');
-  const posts = document.querySelectorAll('.container-link');
-  if (!searchContainer || !searchInput) return;  // only on list pages
+// Live filter for post listings (layouts/partials/post-listing.html):
+// matches the query against each card's data-search text.
+(function () {
+  var input = document.getElementById('postSearch');
+  if (!input) return;
+  var cards = document.querySelectorAll('#postsList .post-card');
+  var countEl = document.getElementById('postCount');
+  var noResults = document.getElementById('postsNoResults');
 
-  // Toggle search container active state and focus input
-  searchContainer.addEventListener('click', function(e) {
-    e.stopPropagation();
-    searchContainer.classList.add('active');
-    searchInput.focus();
-  });
-
-  // Close search and clear input when clicking outside
-  document.addEventListener('click', function(e) {
-    if (!searchContainer.contains(e.target)) {
-      searchContainer.classList.remove('active');
-      searchInput.value = '';
-      // Reset all posts to be visible
-      posts.forEach(post => {
-        post.style.display = '';
-      });
-    }
-  });
-
-  // Prevent closing when clicking inside the input
-  searchInput.addEventListener('click', function(e) {
-    e.stopPropagation();
-  });
-
-  searchInput.addEventListener('input', function(e) {
-    const searchTerm = e.target.value.toLowerCase();
-    
-    posts.forEach(post => {
-      const title = post.getAttribute('data-title').toLowerCase();
-      const description = post.getAttribute('data-description').toLowerCase();
-      const content = post.getAttribute('data-content').toLowerCase();
-      
-      if (title.includes(searchTerm) || 
-          description.includes(searchTerm) || 
-          content.includes(searchTerm)) {
-        post.style.display = '';
-      } else {
-        post.style.display = 'none';
-      }
+  input.addEventListener('input', function () {
+    var q = this.value.toLowerCase().trim();
+    var visible = 0;
+    cards.forEach(function (card) {
+      var match = !q || card.dataset.search.indexOf(q) !== -1;
+      card.hidden = !match;
+      if (match) visible++;
     });
+    countEl.textContent = visible;
+    noResults.hidden = visible !== 0;
   });
-}); 
+})();

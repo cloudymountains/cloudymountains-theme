@@ -1,0 +1,9 @@
+{{- /* Drifting cloud layers with mouse parallax (hero-clouds.scss / hero-clouds.js). Disable with heroClouds = false. */ -}}
+{{- if ne site.Params.heroClouds false }}
+<div class="hero-clouds" aria-hidden="true">
+    <div class="hero-cloud-layer hero-cloud-far"><div class="hero-cloud-drift"></div></div>
+    <div class="hero-cloud-layer hero-cloud-mid"><div class="hero-cloud-drift"></div></div>
+    <div class="hero-cloud-layer hero-cloud-near"><div class="hero-cloud-drift"></div></div>
+    <div class="hero-cloud-glow"></div>
+</div>
+{{- end }}

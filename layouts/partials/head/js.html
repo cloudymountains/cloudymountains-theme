@@ -23,6 +23,12 @@
   <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
 {{ end }}
 
+{{/* Cursor spotlight on cards (.card-spotlight) */}}
+{{ with resources.Get "js/spotlight.js" }}
+  {{ $js := . | resources.Minify | resources.Fingerprint }}
+  <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+{{ end }}
+
 {{/* Menu JavaScript */}}
 {{ with resources.Get "js/menu.js" }}
   {{ $js := . | resources.Minify | resources.Fingerprint }}

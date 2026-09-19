@@ -1,171 +1,112 @@
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    color: #333;
+// 404 page — the home hero (clouds included) with three destination cards.
+// Loaded after the site stylesheet, so .hero and .hero-content come from main.scss.
+
+.notfound {
+    // Content is taller than the home hero; don't clip it on short screens
+    height: auto;
+    min-height: 100vh;
+    padding: calc(var(--nav-h, 64px) + 3rem) 1.5rem 4rem;
+    box-sizing: border-box;
 }
 
-.container {
-    text-align: center;
-    padding: 2rem;
-    max-width: 600px;
-    position: relative;
-    z-index: 2;
-    color: white;
+.notfound-content {
+    width: 100%;
+    max-width: 960px;
+    padding: 0;
 
     h1 {
-        font-size: 4rem;
-        margin-bottom: 1rem;
-        color: white;
+        font-size: clamp(2.75rem, 7vw, 5rem);
+        margin: 0 0 1rem;
+    }
+
+    .notfound-eyebrow {
+        margin-bottom: 1.25rem;
+        font-size: 0.9rem;
+
+        // The eyebrow text already starts with "//"
+        &::before {
+            content: none;
+        }
+    }
+
+    .notfound-text {
+        font-family: 'IBM Plex Sans', system-ui, sans-serif;
+        font-size: 1.1rem;
+        letter-spacing: normal;
+        text-transform: none;
+        color: #ddd8cc;
+
+        &::before {
+            content: none;
+        }
+    }
+}
+
+.notfound-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-top: 3rem;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.notfound-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(232, 184, 75, 0.16);
+    background: rgba(7, 9, 15, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: inherit;
+    text-align: left;
+    text-decoration: none;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+
+    i {
+        font-size: 1.3rem;
+        color: #e8b84b;
+    }
+
+    h2 {
+        margin: 0.4rem 0 0;
+        font-family: 'Fraunces', Georgia, serif;
+        font-size: 1.35rem;
+        font-weight: 400;
+        color: #fff;
     }
 
     p {
-        font-size: 1.2rem;
-        margin-bottom: 2rem;
-        color: #ffffff;
-    }
+        margin: 0;
+        font-family: 'IBM Plex Sans', system-ui, sans-serif;
+        font-size: 0.92rem;
+        letter-spacing: normal;
+        text-transform: none;
+        color: rgba(221, 216, 204, 0.75);
 
-    a {
-        display: inline-block;
-        padding: 0.8rem 1.5rem;
-        background-color: rgba(255, 255, 255, 0.2);
-        color: white;
-        text-decoration: none;
-        border-radius: 4px;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(5px);
-
-        &:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-    }
-}
-
-.hero {
-    height: 100vh;
-    width: 100%;
-    background-image: url('../images/forest-background.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(
-            to bottom,
-            rgba(0, 0, 0, 0.3) 0%,
-            rgba(0, 0, 0, 0.3) 70%,
-            rgba(0, 0, 0, 1) 100%
-        );
-        z-index: 1;
-    }
-
-    .hero-content {
-        position: relative;
-        color: white;
-        text-align: center;
-        z-index: 2;
-        margin-bottom: 2rem;
-
-        h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        p {
-            font-size: 1.5rem;
-            margin: 0;
+        &::before {
+            content: none;
         }
     }
 
-    .notfound-content {
-        position: relative;
-        z-index: 2;
-        width: 100%;
-        max-width: 1200px;
-        padding: 0 2rem;
-        margin-top: 2rem;
+    &:hover {
+        transform: translateY(-4px);
+        border-color: rgba(232, 184, 75, 0.45);
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
 
-        .notfound-title {
-            h2 {
-                font-size: 2.5rem;
-                margin-bottom: 1.5rem;
-                color: #ffffff;
-                text-align: center;
-            }
+        h2 {
+            color: #f5cc72;
         }
+    }
 
-        .notfound-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 1rem;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-
-            @media (max-width: 1024px) {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            @media (max-width: 768px) {
-                grid-template-columns: 1fr;
-            }
-
-            .notfound-item {
-                padding: 2rem;
-                background: rgba(255, 255, 255, 0.05);
-                border-radius: 12px;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-                transition: all 0.3s ease;
-                backdrop-filter: blur(5px);
-                min-height: 180px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                text-decoration: none;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-
-                &:hover {
-                    transform: translateY(-8px);
-                    background: rgba(255, 255, 255, 0.1);
-                    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-                    border-color: rgba(255, 255, 255, 0.2);
-                }
-
-                h3 {
-                    color: #ffffff;
-                    margin-bottom: 1rem;
-                    font-size: 1.8rem;
-                    font-weight: 600;
-                }
-
-                p {
-                    color: #cccccc;
-                    margin: 0;
-                    font-size: 1.1rem;
-                    line-height: 1.6;
-                }
-            }
-        }
+    &:focus-visible {
+        outline: 2px solid #e8b84b;
+        outline-offset: 3px;
     }
 }
-
-// Remove the old about-section styles since we've moved them into the hero
-.about-section {
-    display: none;
-} 

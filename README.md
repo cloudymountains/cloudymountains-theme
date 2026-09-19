@@ -13,7 +13,7 @@ A clean, minimal Hugo theme for personal portfolio and blog sites. Built for tec
 - **Hero section** — full-screen hero with configurable background image, title and subtitle, and drifting cloud layers that react to the mouse (respects reduced-motion)
 - **About section** — animated counters for years of experience, companies, projects, and technologies
 - **Skills section** — animated progress bars for each skill
-- **Projects showcase** — grid of recent projects pulled from the `projects/` content section
+- **Projects showcase** — card grid of recent projects from the `projects/` section, plus full listing and tag pages with live filtering, reading time, topic chips and a cursor spotlight on cards
 - **CV page** — dedicated layout with experience, education, certifications, languages, skills, projects, philosophy and a "My Time" donut chart
 - **Bookshelf** — optional reading list in the contacts section: books that turn to show their cover and link to Amazon, configured in `hugo.toml`
 - **Blog** — posts with reading progress bar, code copy button, syntax highlighting (Monokai), and share buttons

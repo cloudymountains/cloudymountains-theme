@@ -1,0 +1,41 @@
+{{- /*
+Post card: cover image, date and reading time, title, excerpt and up to three
+tags. The whole card is one link, so tags are plain chips (no nested links).
+
+@context {page}   page   The post.
+@context {int}    i      Position in the list (staggers the reveal animation).
+@context {string} level  Heading tag for the title: "h2" (default) or "h3".
+@context {string} sizes  sizes attribute for the image.
+*/ -}}
+{{- $p := .page }}
+{{- $level := .level | default "h2" }}
+{{- $excerpt := $p.Description | default ($p.Summary | plainify) }}
+{{- $tags := $p.GetTerms "tags" }}
+{{- $tagNames := slice }}
+{{- range $tags }}{{ $tagNames = $tagNames | append .Title }}{{ end }}
+<a class="post-card card-spotlight" href="{{ $p.RelPermalink }}" data-reveal style="--i: {{ math.Min (.i | default 0) 3 }}"
+   data-search="{{ lower (printf "%s %s %s" $p.Title $excerpt (delimit $tagNames " ")) }}">
+  <div class="post-card-media">
+    {{- with $p.Params.image }}
+      {{- partial "responsive-image.html" (dict "res" ($p.Resources.Get .) "src" (printf "%s%s" $p.RelPermalink .) "alt" "" "widths" (slice 480 800) "sizes" ($.sizes | default "(min-width: 1100px) 360px, (min-width: 700px) 50vw, 100vw")) }}
+    {{- end }}
+  </div>
+  <div class="post-card-body">
+    <p class="post-card-meta">
+      <time datetime="{{ $p.Date.Format "2006-01-02" }}">{{ $p.Date.Format "Jan 2, 2006" }}</time>
+      <span aria-hidden="true">·</span>
+      <span>{{ $p.ReadingTime }} min read</span>
+    </p>
+    {{- if eq $level "h3" }}
+    <h3 class="post-card-title">{{ $p.Title }}</h3>
+    {{- else }}
+    <h2 class="post-card-title">{{ $p.Title }}</h2>
+    {{- end }}
+    <p class="post-card-excerpt">{{ $excerpt | truncate 220 }}</p>
+    {{- with first 3 $tags }}
+    <div class="post-card-tags">
+      {{- range . }}<span class="chip">{{ .Title }}</span>{{ end }}
+    </div>
+    {{- end }}
+  </div>
+</a>

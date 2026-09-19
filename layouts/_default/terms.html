@@ -4,7 +4,7 @@
   <div class="tags-page-header">
     <p class="tags-page-eyebrow">// knowledge index</p>
     <h1 class="tags-page-title">Technologies</h1>
-    <p class="tags-page-subtitle">{{ len .Site.Taxonomies.tags }} topics · {{ len .Site.RegularPages }} articles</p>
+    <p class="tags-page-subtitle">{{ len .Site.Taxonomies.tags }} topics · {{ len (where .Site.RegularPages "Params.tags" "!=" nil) }} articles</p>
   </div>
 
   <div class="tags-page-content">
@@ -19,9 +19,9 @@
     </div>
 
     <div class="tags-grid" id="tagsGrid">
-      {{ range $i, $t := .Data.Terms.ByCount.Reverse }}
+      {{ range $i, $t := .Data.Terms.ByCount }}
         {{ $count := len .Pages }}
-        <a href="{{ .Page.RelPermalink }}" class="tag-card" data-reveal style="--i: {{ math.Min $i 7 }}" data-title="{{ .Page.Title | lower }}">
+        <a href="{{ .Page.RelPermalink }}" class="tag-card card-spotlight" data-reveal style="--i: {{ math.Min $i 7 }}" data-title="{{ .Page.Title | lower }}">
           <span class="tag-card-ambient">{{ $count }}</span>
           <div class="tag-card-body">
             <h2 class="tag-card-name">{{ .Page.Title }}</h2>

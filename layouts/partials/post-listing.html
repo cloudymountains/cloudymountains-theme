@@ -1,0 +1,44 @@
+{{- /*
+A page of post cards with a header (and optional live search).
+Shared by section lists (list.html) and single-tag pages (taxonomy.html).
+
+@context {page}   page      The list page.
+@context {string} eyebrow   Small label above the title.
+@context {bool}   search    Show the filter box.
+@context {string} back      Optional { url, text } link above the grid.
+*/ -}}
+{{- $page := .page }}
+{{- $pages := $page.Pages.ByDate.Reverse }}
+{{- $count := len $pages }}
+<section class="tags-page listing-page">
+  <header class="tags-page-header">
+    <p class="tags-page-eyebrow">// {{ .eyebrow }}</p>
+    <h1 class="tags-page-title">{{ $page.Title }}</h1>
+    <p class="tags-page-subtitle">{{ $count }} {{ cond (eq $count 1) "article" "articles" }}</p>
+  </header>
+
+  <div class="tags-page-content listing-content">
+    {{- with .back }}
+    <a class="listing-back" href="{{ .url }}"><i class="bi bi-arrow-left" aria-hidden="true"></i> {{ .text }}</a>
+    {{- end }}
+
+    {{- if .search }}
+    <div class="tags-search-wrap">
+      <svg class="tags-search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="search" id="postSearch" placeholder="filter articles..." class="tags-search-input" autocomplete="off" aria-label="Filter articles">
+      <span class="tags-search-count" id="postCount" aria-live="polite">{{ $count }}</span>
+    </div>
+    {{- end }}
+
+    <div class="post-grid" id="postsList">
+      {{- range $i, $p := $pages }}
+        {{ partial "post-card.html" (dict "page" $p "i" $i) }}
+      {{- end }}
+    </div>
+
+    <p class="tags-no-results" id="postsNoResults" hidden>No articles match your filter.</p>
+  </div>
+</section>
