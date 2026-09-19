@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v2.1.0...v2.2.0) (2026-09-19)
+
+
+### Features
+
+* **post:** table of contents, prev/next and related articles, new footer ([f516f64](https://github.com/cloudymountains/cloudymountains-theme/commit/f516f647ff9fd3bfb0c870e1bc41c69c5b078dbd))
+
 # [2.1.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v2.0.0...v2.1.0) (2026-09-19)
 
 
