@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v2.0.0...v2.1.0) (2026-09-19)
+
+
+### Features
+
+* **cards:** card grid for projects, tag and 404 pages with cursor spotlight ([714fde8](https://github.com/cloudymountains/cloudymountains-theme/commit/714fde8d034a1f4f9a6051e8769544e984d0a055))
+
 # [2.0.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.8.1...v2.0.0) (2026-09-19)
 
 
