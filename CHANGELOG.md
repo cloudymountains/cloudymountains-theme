@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.7.1...v1.8.0) (2026-09-19)
+
+
+### Features
+
+* **hero:** drifting cloud layers with mouse parallax ([318b5cf](https://github.com/cloudymountains/cloudymountains-theme/commit/318b5cfd830ecdcbb751d02ba21b264a9dda6b17))
+
 ## [1.7.1](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.7.0...v1.7.1) (2026-09-19)
 
 
