@@ -35,5 +35,10 @@
 {{ $cvPage := resources.Get "css/cv-page.scss" | css.Sass | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $cvPage.RelPermalink }}" integrity="{{ $cvPage.Data.Integrity }}">
 
+{{ with site.Params.books }}{{ if and .items (ne .enable false) }}
+{{ $books := resources.Get "css/books.scss" | css.Sass | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $books.RelPermalink }}" integrity="{{ $books.Data.Integrity }}">
+{{ end }}{{ end }}
+
 {{ $tags := resources.Get "css/tags.scss" | css.Sass | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $tags.RelPermalink }}" integrity="{{ $tags.Data.Integrity }}">

@@ -15,6 +15,7 @@ A clean, minimal Hugo theme for personal portfolio and blog sites. Built for tec
 - **Skills section** — animated progress bars for each skill
 - **Projects showcase** — grid of recent projects pulled from the `projects/` content section
 - **CV page** — dedicated layout with experience, education, certifications, languages, skills, projects, philosophy and a "My Time" donut chart
+- **Bookshelf** — optional reading list in the contacts section: books that turn to show their cover and link to Amazon, configured in `hugo.toml`
 - **Blog** — posts with reading progress bar, code copy button, syntax highlighting (Monokai), and share buttons
 - **Full-text search** — client-side search powered by a JSON index
 - **Dark / Light mode** — toggle persisted in localStorage
@@ -230,6 +231,28 @@ my_time:
     percent: 15
 ---
 ```
+
+## Bookshelf
+
+An optional reading list shown in the home page's contacts section, under the contact buttons. Books stand spine-out on glass shelves and turn to reveal their covers. It is driven entirely by config: when `[params.books]` has at least one item, the shelf replaces the four topic tiles (`first_title` … `fourth_text`). Remove the section (or set `enable = false`) and the tiles come back.
+
+```toml
+[params.books]
+  # eyebrow = "Reading list"      # optional: label above the shelf
+  # enable = false                # optional: hide the shelf without deleting the list
+
+  [[params.books.items]]
+    title = "The Phoenix Project"
+    author = "Gene Kim, Kevin Behr, George Spafford"
+    cover = "/images/books/the-phoenix-project.jpg"   # in static/, or a full URL
+    url = "https://www.amazon.com/dp/1942788290"      # optional: the cover links here
+    # spine_color = "#1f2a3d"   # optional: spine colour (defaults cycle through a palette)
+    # spine_text = "#ddd8cc"    # optional: spine text colour
+    # spine_author = "Kim"      # optional: name on the spine (default: first author's surname)
+    # thickness = 42            # optional: spine width in px (default: 30–50, derived from the title)
+```
+
+Books stand spine-out on the shelf. Hovering (or keyboard focus) turns a book to show its cover, and clicking the book opens its `url`. On touch screens, the first tap opens a book and the second follows the link. Covers display at a 2:3 ratio (150×225 on desktop). A book without a `cover` shows a styled title card in its spine colour. A book without a `url` is not clickable.
 
 ## Content Structure
 

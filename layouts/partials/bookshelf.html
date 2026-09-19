@@ -1,0 +1,58 @@
+{{/* Bookshelf from [params.books].items — shown in the home contacts section */}}
+{{ $books := site.Params.books }}
+{{/* Default spine colours, cycled per book; override per book with spine_color / spine_text */}}
+{{ $palette := slice
+  (dict "bg" "#1f2a3d" "fg" "#ddd8cc")
+  (dict "bg" "#e8b84b" "fg" "#07090f")
+  (dict "bg" "#243328" "fg" "#ddd8cc")
+  (dict "bg" "#3a2c20" "fg" "#f5cc72")
+  (dict "bg" "#16323a" "fg" "#ddd8cc")
+  (dict "bg" "#ddd8cc" "fg" "#07090f")
+  (dict "bg" "#34222c" "fg" "#f5cc72")
+}}
+<div class="bookshelf">
+  <ul class="bookshelf-row">
+    {{ range $i, $b := $books.items }}
+    {{ $label := .title }}{{ with .author }}{{ $label = printf "%s by %s" $label . }}{{ end }}
+    {{ $c := index $palette (mod $i (len $palette)) }}
+    {{ $style := printf "--spine-bg: %s; --spine-fg: %s;" (.spine_color | default $c.bg) (.spine_text | default $c.fg) }}
+    {{/* Spine width: 30–50px, derived from the title so it stays stable between builds */}}
+    {{ $thick := .thickness | default (add 30 (mod (hash.FNV32a .title) 21)) }}
+    {{ $style = printf "%s --thick: %v;" $style $thick }}
+    <li class="book" style="{{ $style | safeCSS }}">
+      {{ if .url }}
+      <a class="book-3d" href="{{ .url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ $label }} — buy on Amazon (opens in a new tab)">
+      {{ else }}
+      <div class="book-3d" tabindex="0" aria-label="{{ $label }}">
+      {{ end }}
+        <span class="book-spine" aria-hidden="true">
+          <span class="book-spine-title">{{ .title }}</span>
+          {{/* Spines carry just the first author's surname, like real books */}}
+          {{ $spineAuthor := .spine_author }}
+          {{ if and (not $spineAuthor) .author }}
+            {{ $names := split (index (split .author ",") 0 | strings.TrimSpace) " " }}
+            {{ $spineAuthor = index $names (sub (len $names) 1) }}
+          {{ end }}
+          {{ with $spineAuthor }}<span class="book-spine-author">{{ . }}</span>{{ end }}
+        </span>
+        <span class="book-pages" aria-hidden="true"></span>
+        <span class="book-front">
+          {{ with .cover }}
+          <img src="{{ . | relURL }}" alt="Cover of {{ $label }}" loading="lazy" decoding="async" width="150" height="225">
+          {{ else }}
+          <span class="book-placeholder">
+            <span class="book-placeholder-title">{{ .title }}</span>
+            {{ with .author }}<span class="book-placeholder-author">{{ . }}</span>{{ end }}
+          </span>
+          {{ end }}
+        </span>
+      {{ if .url }}</a>{{ else }}</div>{{ end }}
+    </li>
+    {{ end }}
+  </ul>
+</div>
+
+{{ with resources.Get "js/books.js" }}
+  {{ $js := . | resources.Minify | resources.Fingerprint }}
+  <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+{{ end }}
