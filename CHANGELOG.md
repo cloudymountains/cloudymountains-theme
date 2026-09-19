@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.5.2...v1.6.0) (2026-09-19)
+
+
+### Features
+
+* **books:** add bookshelf reading list to the contacts section ([9444dd6](https://github.com/cloudymountains/cloudymountains-theme/commit/9444dd6e28a525eedf48aa852e617408b5dc2d8d))
+
 ## [1.5.2](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.5.1...v1.5.2) (2026-03-30)
 
 
