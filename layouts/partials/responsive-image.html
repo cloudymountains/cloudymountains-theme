@@ -1,0 +1,42 @@
+{{- /*
+Responsive <img>: resizes a raster image to WebP at several widths and lets the
+browser pick one via srcset/sizes.
+
+@context {resource} res     Image resource (page resource or from assets/). Optional.
+@context {string}   src     Fallback URL when there is no processable resource.
+@context {string}   alt     Alt text.
+@context {slice}    widths  Target widths in px (default 480, 800, 1200).
+@context {string}   sizes   The sizes attribute (default "100vw").
+@context {string}   class   Optional class.
+@context {bool}     eager   Load immediately instead of lazily (above-the-fold images).
+
+@example: {{ partial "responsive-image.html" (dict "res" (.Resources.Get .Params.image) "alt" .Title "sizes" "(min-width: 768px) 33vw, 100vw") }}
+*/ -}}
+{{- $res := .res }}
+{{- $alt := .alt | default "" }}
+{{- $sizes := .sizes | default "100vw" }}
+{{- $widths := .widths | default (slice 480 800 1200) }}
+{{- $loading := cond (eq .eager true) "eager" "lazy" }}
+{{- $class := .class }}
+
+{{- if and $res (in (slice "jpeg" "png" "webp") $res.MediaType.SubType) }}
+  {{- $srcset := slice }}
+  {{- $largest := false }}
+  {{- range $widths }}
+    {{- if le . $res.Width }}
+      {{- $img := $res.Resize (printf "%dx webp q80" .) }}
+      {{- $srcset = $srcset | append (printf "%s %dw" $img.RelPermalink $img.Width) }}
+      {{- $largest = $img }}
+    {{- end }}
+  {{- end }}
+  {{- if not $largest }}
+    {{- /* Source is narrower than every target width: convert at its own size */}}
+    {{- $largest = $res.Process "webp q80" }}
+    {{- $srcset = slice (printf "%s %dw" $largest.RelPermalink $largest.Width) }}
+  {{- end }}
+  <img src="{{ $largest.RelPermalink }}" srcset="{{ delimit $srcset ", " }}" sizes="{{ $sizes }}" width="{{ $largest.Width }}" height="{{ $largest.Height }}" alt="{{ $alt }}" loading="{{ $loading }}" decoding="async"{{ with $class }} class="{{ . }}"{{ end }}>
+{{- else if $res }}
+  <img src="{{ $res.RelPermalink }}" alt="{{ $alt }}" loading="{{ $loading }}" decoding="async"{{ with $class }} class="{{ . }}"{{ end }}>
+{{- else if .src }}
+  <img src="{{ .src }}" alt="{{ $alt }}" loading="{{ $loading }}" decoding="async"{{ with $class }} class="{{ . }}"{{ end }}>
+{{- end }}

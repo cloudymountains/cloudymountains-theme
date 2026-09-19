@@ -88,7 +88,7 @@ theme = 'cloudymountains-theme'
   # About section
   about_title = "About Me"
   about_text = "Your bio goes here."
-  profile_image = "/images/profile.jpg"   # optional
+  profile_image = "/images/profile.jpg"   # optional; place it in assets/images/ (not static/) to get resized WebP versions
 
   # Animated counters
   experience_start_year = 2018   # years of experience = current year − this

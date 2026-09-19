@@ -31,9 +31,9 @@
             <div class="about-text">
                 <p>{{ .Site.Params.about_text | default "I am passionate about connecting people with the beauty and serenity of nature. My mission is to inspire and educate while preserving the natural wonders around us." }}</p>
             </div>
-            {{ if .Site.Params.profile_image }}
+            {{ with .Site.Params.profile_image }}
             <div class="profile-image">
-                <img src="{{ .Site.Params.profile_image }}" alt="Profile Picture" width="250" height="250">
+                {{ partial "responsive-image.html" (dict "res" (resources.Get (strings.TrimPrefix "/" .)) "src" . "alt" "Profile picture" "widths" (slice 250 500) "sizes" "250px") }}
             </div>
             {{ end }}
         </div>
@@ -94,12 +94,9 @@
         {{ range first 3 (where .Site.RegularPages "Section" "projects").ByDate.Reverse }}
         <a href="{{ .RelPermalink }}" class="project-item">
             <div class="project-image">
-            {{ if .Params.image }}
-              {{ if eq .File.Dir "projects/" }}
-                <img src="../projects/{{ .Params.image }}" alt="{{ .Title }}" width="400" height="300">
-              {{ else }}
-                <img src="{{ .RelPermalink }}{{ .Params.image }}" alt="{{ .Title }}" width="400" height="300">
-              {{ end }}
+            {{ $post := . }}
+            {{ with .Params.image }}
+              {{ partial "responsive-image.html" (dict "res" ($post.Resources.Get .) "src" (printf "%s%s" $post.RelPermalink .) "alt" $post.Title "widths" (slice 400 800) "sizes" "(min-width: 1000px) 33vw, (min-width: 700px) 50vw, 100vw") }}
             {{ end }}
             </div>
             <div class="project-content">

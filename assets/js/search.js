@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const searchInput = document.getElementById('searchInput');
   const postsList = document.getElementById('postsList');
   const posts = document.querySelectorAll('.container-link');
+  if (!searchContainer || !searchInput) return;  // only on list pages
 
   // Toggle search container active state and focus input
   searchContainer.addEventListener('click', function(e) {

@@ -24,7 +24,7 @@
       </div>
       {{ with .Params.profile_image | default .Site.Params.profile_image }}
       <div class="cv-header-photo">
-        <img src="{{ . }}" alt="Profile" width="120" height="120">
+        {{ partial "responsive-image.html" (dict "res" (resources.Get (strings.TrimPrefix "/" .)) "src" . "alt" "Profile" "widths" (slice 120 240) "sizes" "120px" "eager" true) }}
       </div>
       {{ end }}
     </header>

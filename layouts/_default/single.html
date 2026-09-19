@@ -31,7 +31,7 @@
             <div class="single-post-content">
               {{ with .Resources.Get .Params.image }}
               <div class="image-container">
-                <img class="img-fluid" src="{{ .RelPermalink }}" alt="{{ $.Title }}">
+                {{ partial "responsive-image.html" (dict "res" . "alt" $.Title "widths" (slice 800 1200 1600) "sizes" "(min-width: 1200px) 1100px, 100vw" "class" "content-image" "eager" true) }}
               </div>
               {{ end }}
 

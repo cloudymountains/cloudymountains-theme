@@ -129,16 +129,7 @@ body, html {
     }
 }
 
-// Import about styles
 @import "hero-clouds";
-@import "about";
-@import "projects";
-@import "contacts";
-@import "menu";
-@import "footer";
-@import "search";
-@import "single";
-@import "code";
 
 .about-section {
     min-height: 100vh;
@@ -432,3 +423,15 @@ body, html {
     }
 }
 
+// Section styles. Imported last, in this order, so they override the older
+// rules above — this matches the cascade from when each file was also loaded
+// as its own stylesheet after main.css.
+@import "menu";
+@import "projects";
+@import "contacts";
+@import "footer";
+@import "search";
+@import "about";
+@import "skills";
+@import "code";
+@import "single";

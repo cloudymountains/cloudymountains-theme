@@ -1,1 +1,7 @@
-<img src="{{ .Destination | safeURL }}"{{- with .PlainText }} alt="{{ . }}"{{ end -}}{{- with .Title }} title="{{ . }}"{{ end }} class="content-image img-fluid">
+{{- /* Images in Markdown: page-bundle images get a responsive WebP srcset; anything else is rendered as-is */ -}}
+{{- $res := .Page.Resources.Get (strings.TrimPrefix "./" .Destination) -}}
+{{- if and $res (in (slice "jpeg" "png" "webp") $res.MediaType.SubType) -}}
+  {{- partial "responsive-image.html" (dict "res" $res "alt" .PlainText "widths" (slice 800 1200 1600) "sizes" "(min-width: 1200px) 1100px, 100vw" "class" "content-image img-fluid") -}}
+{{- else -}}
+<img src="{{ .Destination | safeURL }}"{{- with .PlainText }} alt="{{ . }}"{{ end -}}{{- with .Title }} title="{{ . }}"{{ end }} class="content-image img-fluid" loading="lazy" decoding="async">
+{{- end -}}

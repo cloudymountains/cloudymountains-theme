@@ -14,25 +14,22 @@
     <div class="list-container" id="postsList">
       {{ range .Pages.ByDate.Reverse }}
         {{ $readTime := mul (div (countwords .Content) 220.0) 60 }}
-        <div class="container-link" data-href="{{ .RelPermalink }}" data-title="{{ .Title }}" data-description="{{ .Params.description }}" data-content="{{ .Summary }}">
+        {{ $post := . }}
+        <a class="container-link" href="{{ .RelPermalink }}" data-title="{{ .Title }}" data-description="{{ .Params.description }}" data-content="{{ .Summary | plainify }}">
           <div class="full-width-container">
-            {{ if .Params.image }}
+            {{ with .Params.image }}
             <div class="image-side">
-              {{ if eq .File.Dir "projects/" }}
-                <img src="../projects/{{ .Params.image }}" alt="{{ .Title }}" width="300" height="250">
-              {{ else }}
-                <img src="{{ .RelPermalink }}{{ .Params.image }}" alt="{{ .Title }}" width="300" height="250">
-              {{ end }}
+              {{ partial "responsive-image.html" (dict "res" ($post.Resources.Get .) "src" (printf "%s%s" $post.RelPermalink .) "alt" $post.Title "widths" (slice 480 800) "sizes" "(min-width: 768px) 40vw, 100vw") }}
             </div>
             {{ end }}
             <div class="text-side">
               <h3>{{ .Title }}</h3>
               <p class="description">Reading time: {{ math.Floor (div $readTime 60) }} minutes and {{ mod $readTime 60 }} seconds</p>
               <hr class="post-divider">
-              <div class="content-preview">{{ .Summary | markdownify }}</div>
+              <div class="content-preview">{{ .Summary | plainify }}</div>
             </div>
           </div>
-        </div>
+        </a>
       {{ end }}
     </div>
   </section>

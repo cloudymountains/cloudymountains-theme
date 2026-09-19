@@ -1,44 +1,10 @@
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{ .Site.Title }}</title>
-
-{{ $style := resources.Get "css/main.scss" | css.Sass | resources.Minify | resources.Fingerprint }}
-<link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
-
-{{ $menu := resources.Get "css/menu.scss" | css.Sass | resources.Minify | resources.Fingerprint }}
-<link rel="stylesheet" href="{{ $menu.RelPermalink }}" integrity="{{ $menu.Data.Integrity }}">
-
-{{ $projects := resources.Get "css/projects.scss" | css.Sass | resources.Minify | resources.Fingerprint }}
-<link rel="stylesheet" href="{{ $projects.RelPermalink }}" integrity="{{ $projects.Data.Integrity }}">
-
-{{ $contacts := resources.Get "css/contacts.scss" | css.Sass | resources.Minify | resources.Fingerprint }}
-<link rel="stylesheet" href="{{ $contacts.RelPermalink }}" integrity="{{ $contacts.Data.Integrity }}">
-
-{{ $footer := resources.Get "css/footer.scss" | css.Sass | resources.Minify | resources.Fingerprint }}
-<link rel="stylesheet" href="{{ $footer.RelPermalink }}" integrity="{{ $footer.Data.Integrity }}">
-
-{{ $search := resources.Get "css/search.scss" | css.Sass | resources.Minify | resources.Fingerprint }}
-<link rel="stylesheet" href="{{ $search.RelPermalink }}" integrity="{{ $search.Data.Integrity }}">
-
-{{ $about := resources.Get "css/about.scss" | css.Sass | resources.Minify | resources.Fingerprint }}
-<link rel="stylesheet" href="{{ $about.RelPermalink }}" integrity="{{ $about.Data.Integrity }}">
-
-{{ $skills := resources.Get "css/skills.scss" | css.Sass | resources.Minify | resources.Fingerprint }}
-<link rel="stylesheet" href="{{ $skills.RelPermalink }}" integrity="{{ $skills.Data.Integrity }}">
-
-{{ $code := resources.Get "css/code.scss" | css.Sass | resources.Minify | resources.Fingerprint }}
-<link rel="stylesheet" href="{{ $code.RelPermalink }}" integrity="{{ $code.Data.Integrity }}">
-
-{{ $single := resources.Get "css/single.scss" | css.Sass | resources.Minify | resources.Fingerprint }}
-<link rel="stylesheet" href="{{ $single.RelPermalink }}" integrity="{{ $single.Data.Integrity }}">
-
-{{ $cvPage := resources.Get "css/cv-page.scss" | css.Sass | resources.Minify | resources.Fingerprint }}
-<link rel="stylesheet" href="{{ $cvPage.RelPermalink }}" integrity="{{ $cvPage.Data.Integrity }}">
-
+{{/* One stylesheet for the whole site. main.scss imports the section styles in
+     cascade order; cv-page, books and tags come after it, as before. */}}
+{{ $sheets := slice (resources.Get "css/main.scss" | css.Sass) }}
+{{ $sheets = $sheets | append (resources.Get "css/cv-page.scss" | css.Sass) }}
 {{ with site.Params.books }}{{ if and .items (ne .enable false) }}
-{{ $books := resources.Get "css/books.scss" | css.Sass | resources.Minify | resources.Fingerprint }}
-<link rel="stylesheet" href="{{ $books.RelPermalink }}" integrity="{{ $books.Data.Integrity }}">
+  {{ $sheets = $sheets | append (resources.Get "css/books.scss" | css.Sass) }}
 {{ end }}{{ end }}
-
-{{ $tags := resources.Get "css/tags.scss" | css.Sass | resources.Minify | resources.Fingerprint }}
-<link rel="stylesheet" href="{{ $tags.RelPermalink }}" integrity="{{ $tags.Data.Integrity }}">
+{{ $sheets = $sheets | append (resources.Get "css/tags.scss" | css.Sass) }}
+{{ $style := $sheets | resources.Concat "css/site.css" | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
