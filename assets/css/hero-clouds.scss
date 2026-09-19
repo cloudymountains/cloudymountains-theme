@@ -1,0 +1,132 @@
+// Hero clouds — drifting cloud layers over the hero image, with mouse parallax.
+// Each layer: an outer wrapper moved by the pointer (--mx / --my, set by
+// hero-clouds.js) and an inner 200%-wide strip of a tileable SVG texture that
+// drifts left forever. Only transforms animate, so it stays on the compositor.
+
+.hero-clouds {
+    position: absolute;
+    inset: 0;
+    // Below the hero's ::before overlay (z-index 1), so its bottom fade covers the mist
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.hero-cloud-layer {
+    --depth: 20px;
+
+    position: absolute;
+    // Bleed past the edges so parallax never reveals a gap
+    inset: -6%;
+    transform: translate3d(
+        calc(var(--mx, 0) * var(--depth) * -1),
+        calc(var(--my, 0) * var(--depth) * -0.6),
+        0
+    );
+    will-change: transform;
+}
+
+.hero-cloud-drift {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background-repeat: repeat-x;
+    // Two tiles across the 200% strip; moving by -50% lands on an identical frame
+    background-size: 50% 100%;
+    animation: hero-cloud-drift var(--speed, 120s) linear infinite;
+    will-change: transform;
+}
+
+@keyframes hero-cloud-drift {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-50%, 0, 0); }
+}
+
+// Far: large, slow, faint — high in the sky
+.hero-cloud-far {
+    --depth: 10px;
+    opacity: 0.45;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 80%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 80%);
+
+    .hero-cloud-drift {
+        --speed: 240s;
+        background-image: url('../images/clouds/far.svg');
+    }
+}
+
+// Mid: the main cloud band across the middle
+.hero-cloud-mid {
+    --depth: 24px;
+    opacity: 0.55;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 10%, #000 40%, #000 70%, transparent 95%);
+    mask-image: linear-gradient(to bottom, transparent 10%, #000 40%, #000 70%, transparent 95%);
+
+    .hero-cloud-drift {
+        --speed: 150s;
+        background-image: url('../images/clouds/mid.svg');
+    }
+}
+
+// Near: low mist rolling over the tree line, fastest and most responsive
+.hero-cloud-near {
+    --depth: 48px;
+    opacity: 0.75;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 45%, #000 75%, #000 100%);
+    mask-image: linear-gradient(to bottom, transparent 45%, #000 75%, #000 100%);
+
+    .hero-cloud-drift {
+        --speed: 90s;
+        background-image: url('../images/clouds/near.svg');
+        animation-direction: reverse;
+    }
+}
+
+// Soft warm light that follows the cursor, like sun breaking through
+.hero-cloud-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 900px;
+    height: 900px;
+    margin: -450px 0 0 -450px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245, 204, 114, 0.22) 0%, rgba(245, 204, 114, 0.07) 35%, transparent 65%);
+    mix-blend-mode: screen;
+    opacity: 0;
+    transform: translate3d(var(--px, 50vw), var(--py, 50vh), 0);
+    transition: opacity 0.8s ease;
+    will-change: transform;
+
+    .hero-clouds.is-pointer & {
+        opacity: 1;
+    }
+}
+
+// Title floats slightly against the clouds
+.hero-clouds ~ .hero-content {
+    transform: translate3d(calc(var(--mx, 0) * 8px), calc(var(--my, 0) * 6px), 0);
+    will-change: transform;
+}
+
+// Paused while the hero is off screen (class set by hero-clouds.js)
+.hero.clouds-paused .hero-cloud-drift {
+    animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-cloud-drift {
+        animation: none;
+    }
+
+    .hero-cloud-layer,
+    .hero-clouds ~ .hero-content {
+        transform: none;
+    }
+
+    .hero-cloud-glow {
+        display: none;
+    }
+}

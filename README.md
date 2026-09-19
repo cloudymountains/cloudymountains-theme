@@ -10,7 +10,7 @@ A clean, minimal Hugo theme for personal portfolio and blog sites. Built for tec
 
 ## Features
 
-- **Hero section** — full-screen hero with configurable background image, title and subtitle
+- **Hero section** — full-screen hero with configurable background image, title and subtitle, and drifting cloud layers that react to the mouse (respects reduced-motion)
 - **About section** — animated counters for years of experience, companies, projects, and technologies
 - **Skills section** — animated progress bars for each skill
 - **Projects showcase** — grid of recent projects pulled from the `projects/` content section
@@ -83,6 +83,7 @@ theme = 'cloudymountains-theme'
   heroBackgroundImage = "/images/your-hero.jpg"
   heroTitle = "Hello, I'm Your Name"
   heroSubtitle = "Cloud · DevOps · Platform Engineering"
+  heroClouds = true                       # drifting clouds with mouse parallax over the hero (default true)
 
   # About section
   about_title = "About Me"

@@ -11,6 +11,12 @@
   {{- end }}
 {{- end }}
 
+{{/* Hero clouds: mouse parallax + cursor glow (no-op without .hero-clouds) */}}
+{{ with resources.Get "js/hero-clouds.js" }}
+  {{ $js := . | resources.Minify | resources.Fingerprint }}
+  <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+{{ end }}
+
 {{/* Menu JavaScript */}}
 {{ with resources.Get "js/menu.js" }}
   {{ $js := . | resources.Minify | resources.Fingerprint }}
