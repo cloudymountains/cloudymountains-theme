@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.8.0...v1.8.1) (2026-09-19)
+
+
+### Performance Improvements
+
+* bundle CSS, responsive images, real links, instant navigation ([d9d0e97](https://github.com/cloudymountains/cloudymountains-theme/commit/d9d0e9729fa1c1dedcfc1abd6e776f370b56598c))
+
 # [1.8.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v1.7.1...v1.8.0) (2026-09-19)
 
 
