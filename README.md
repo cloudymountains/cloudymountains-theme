@@ -20,7 +20,7 @@ A clean, minimal Hugo theme for personal portfolio and blog sites. Built for tec
 - **Full-text search** — client-side search powered by a JSON index
 - **Dark / Light mode** — toggle persisted in localStorage
 - **Tags & taxonomy** — tag pages with tag-search filtering
-- **SEO** — Open Graph, meta description, Google Analytics, Google Search Console verification, and optional Iubenda cookie consent manager
+- **SEO** — Open Graph, meta description, JSON-LD structured data (Person, TechArticle, ProfilePage), Google Analytics, Google Search Console verification, and optional Iubenda cookie consent manager
 - **Responsive** — mobile-first layout
 - **RSS feed** — auto-generated
 
@@ -149,6 +149,17 @@ theme = 'cloudymountains-theme'
       siteId = "your-site-id"
       cookiePolicyId = "your-cookie-policy-id"
       lang = "en"
+
+    # Optional: JSON-LD structured data (schema.org). Every page gets a Person
+    # (from `author`, profile_image, email, linkedin, github) and a WebSite; posts
+    # get a TechArticle and the CV page a ProfilePage. All keys below are optional.
+    [params.seo.schema]
+      jobTitle = "Senior DevOps Engineer"
+      description = "What you do and for whom, in one or two sentences."
+      addressLocality = "Your City"
+      addressCountry = "BG"               # ISO 3166-1 alpha-2
+      knowsAbout = ["AWS", "Terraform"]   # defaults to the [[params.skills]] names
+      businessType = "ProfessionalService"  # adds a business node founded by you and makes it the publisher
 
 [menu]
   [[menu.main]]

@@ -1,0 +1,85 @@
+{{- /* JSON-LD structured data as one linked @graph per page.
+     Person, WebSite and the optional business are on every page so each page
+     stands on its own; posts in main sections add a TechArticle, the CV page a ProfilePage.
+     Configured by [params.seo] author and [params.seo.schema]. */ -}}
+{{- $home := site.Home.Permalink }}
+{{- $seo := site.Params.seo | default dict }}
+{{- $cfg := $seo.schema | default dict }}
+{{- $lang := or site.Language.LanguageCode site.Language.Lang }}
+{{- $graph := slice }}
+
+{{- $address := dict }}
+{{- if or $cfg.addressLocality $cfg.addressCountry }}
+  {{- $address = dict "@type" "PostalAddress" }}
+  {{- with $cfg.addressLocality }}{{ $address = merge $address (dict "addressLocality" .) }}{{ end }}
+  {{- with $cfg.addressCountry }}{{ $address = merge $address (dict "addressCountry" .) }}{{ end }}
+{{- end }}
+
+{{- /* Person: the author, linked from every other node */ -}}
+{{- $person := dict }}
+{{- with $seo.author }}
+  {{- $person = dict "@type" "Person" "@id" (printf "%s#person" $home) "name" . "url" $home }}
+  {{- with site.Params.profile_image }}
+    {{- $src := . | absURL }}
+    {{- with resources.Get (strings.TrimPrefix "/" .) }}{{ $src = .Permalink }}{{ end }}
+    {{- $person = merge $person (dict "image" $src) }}
+  {{- end }}
+  {{- with $cfg.jobTitle }}{{ $person = merge $person (dict "jobTitle" .) }}{{ end }}
+  {{- with $cfg.description }}{{ $person = merge $person (dict "description" .) }}{{ end }}
+  {{- with site.Params.email }}{{ $person = merge $person (dict "email" .) }}{{ end }}
+  {{- with $address }}{{ $person = merge $person (dict "address" .) }}{{ end }}
+  {{- $sameAs := slice }}
+  {{- range slice site.Params.linkedin site.Params.github }}{{ with . }}{{ $sameAs = $sameAs | append . }}{{ end }}{{ end }}
+  {{- with $sameAs }}{{ $person = merge $person (dict "sameAs" .) }}{{ end }}
+  {{- $knows := $cfg.knowsAbout }}
+  {{- if not $knows }}{{ range site.Params.skills }}{{ $knows = $knows | append .name }}{{ end }}{{ end }}
+  {{- with $knows }}{{ $person = merge $person (dict "knowsAbout" .) }}{{ end }}
+  {{- $graph = $graph | append $person }}
+{{- end }}
+
+{{- /* Optional business (e.g. ProfessionalService) run by the person */ -}}
+{{- $business := dict }}
+{{- with $cfg.businessType }}
+  {{- $business = dict "@type" . "@id" (printf "%s#business" $home) "name" site.Title "url" $home }}
+  {{- with $cfg.description }}{{ $business = merge $business (dict "description" .) }}{{ end }}
+  {{- with site.Params.email }}{{ $business = merge $business (dict "email" .) }}{{ end }}
+  {{- with $address }}{{ $business = merge $business (dict "address" .) }}{{ end }}
+  {{- with site.Params.logo }}{{ $business = merge $business (dict "logo" (. | absURL)) }}{{ end }}
+  {{- with $person }}{{ $business = merge $business (dict "founder" (dict "@id" (index . "@id"))) }}{{ end }}
+  {{- $graph = $graph | append $business }}
+{{- end }}
+
+{{- $publisher := dict }}
+{{- with $person }}{{ $publisher = dict "@id" (index . "@id") }}{{ end }}
+{{- with $business }}{{ $publisher = dict "@id" (index . "@id") }}{{ end }}
+
+{{- $website := dict "@type" "WebSite" "@id" (printf "%s#website" $home) "name" site.Title "url" $home "inLanguage" $lang }}
+{{- with site.Params.description }}{{ $website = merge $website (dict "description" .) }}{{ end }}
+{{- with $publisher }}{{ $website = merge $website (dict "publisher" .) }}{{ end }}
+{{- $graph = $graph | append $website }}
+
+{{- if and .IsPage (eq .Layout "cv") }}
+  {{- $profile := dict "@type" "ProfilePage" "@id" .Permalink "url" .Permalink "name" .Title "isPartOf" (dict "@id" (printf "%s#website" $home)) }}
+  {{- with $person }}{{ $profile = merge $profile (dict "mainEntity" (dict "@id" (index . "@id"))) }}{{ end }}
+  {{- $graph = $graph | append $profile }}
+{{- else if and .IsPage (in site.MainSections .Section) }}
+  {{- $article := dict
+      "@type" "TechArticle"
+      "@id" (printf "%s#article" .Permalink)
+      "headline" .Title
+      "url" .Permalink
+      "mainEntityOfPage" .Permalink
+      "datePublished" (.Date.Format "2006-01-02T15:04:05Z07:00")
+      "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")
+      "wordCount" .WordCount
+      "inLanguage" $lang
+      "isPartOf" (dict "@id" (printf "%s#website" $home))
+  }}
+  {{- with .Description | default (.Summary | plainify | truncate 160) }}{{ $article = merge $article (dict "description" .) }}{{ end }}
+  {{- with .Params.image }}{{ with $.Resources.Get . }}{{ $article = merge $article (dict "image" .Permalink) }}{{ end }}{{ end }}
+  {{- with .Params.tags }}{{ $article = merge $article (dict "keywords" (delimit . ", ")) }}{{ end }}
+  {{- with $person }}{{ $article = merge $article (dict "author" (dict "@id" (index . "@id"))) }}{{ end }}
+  {{- with $publisher }}{{ $article = merge $article (dict "publisher" .) }}{{ end }}
+  {{- $graph = $graph | append $article }}
+{{- end }}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify | safeJS }}</script>
