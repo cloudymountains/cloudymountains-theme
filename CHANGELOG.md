@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v2.2.0...v2.3.0) (2026-09-22)
+
+
+### Features
+
+* **seo:** JSON-LD structured data for people, articles and the CV ([a2571d1](https://github.com/cloudymountains/cloudymountains-theme/commit/a2571d18254ae0d4ef710a179b93a05be8ed056f))
+
 # [2.2.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v2.1.0...v2.2.0) (2026-09-19)
 
 
