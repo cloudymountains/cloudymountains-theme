@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/cloudymountains/cloudymountains-theme/compare/v2.3.0...v2.3.1) (2026-10-09)
+
+
+### Bug Fixes
+
+* **seo:** link to trailing-slash URLs from the homepage ([dfee8bd](https://github.com/cloudymountains/cloudymountains-theme/commit/dfee8bd991b7066ade0ecea86395547a3af59c4e))
+
 # [2.3.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v2.2.0...v2.3.0) (2026-09-22)
 
 
