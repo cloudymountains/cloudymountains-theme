@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v2.3.1...v2.4.0) (2026-10-09)
+
+
+### Features
+
+* **seo:** per-page descriptions, article social tags and noindex kinds ([f488798](https://github.com/cloudymountains/cloudymountains-theme/commit/f488798b148df762d5b5ffc762c3795ac43802af))
+
 ## [2.3.1](https://github.com/cloudymountains/cloudymountains-theme/compare/v2.3.0...v2.3.1) (2026-10-09)
 
 
