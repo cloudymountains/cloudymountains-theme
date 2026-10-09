@@ -142,6 +142,9 @@ theme = 'cloudymountains-theme'
     keywords = ["cloud", "devops", "platform engineering"]
     author = "Your Name"
     copyright = "© {year} Your Name. All rights reserved."   # {year} = current year at build time
+    homeTitle = "Your Site | What you do"          # optional: <title> of the homepage (default: site title)
+    description = "One or two sentences for search results."  # optional: meta description fallback (default: params.description)
+    noindexKinds = ["taxonomy", "term"]            # optional: page kinds marked noindex and left out of the sitemap
 
     # Optional: Iubenda cookie consent
     [params.seo.iubenda]
