@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v2.4.0...v2.5.0) (2026-10-31)
+
+
+### Features
+
+* **seo:** series section pages and CV skill links that resolve ([67aeb4f](https://github.com/cloudymountains/cloudymountains-theme/commit/67aeb4f628d7f93f1956431ff96f101b6a0099bc))
+
 # [2.4.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v2.3.1...v2.4.0) (2026-10-09)
 
 
