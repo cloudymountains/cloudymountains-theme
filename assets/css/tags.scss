@@ -56,6 +56,26 @@ $border-hover: rgba(232, 184, 75, 0.35);
   text-transform: uppercase;
 }
 
+// Series intro on a section page (the section's own content)
+.listing-intro {
+  max-width: 44rem;
+  margin: 1.75rem auto 0;
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: $text;
+
+  p { margin: 0 0 1rem; }
+  p:last-child { margin-bottom: 0; }
+
+  a {
+    color: $accent;
+    text-decoration: none;
+    border-bottom: 1px solid $border-hover;
+    &:hover { color: $accent-light; border-bottom-color: $accent-light; }
+  }
+}
+
 // ─── Content wrapper ──────────────────────────────────────────────────────────
 .tags-page-content {
   max-width: 1100px;

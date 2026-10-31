@@ -46,6 +46,11 @@
               <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
               <span class="meta-sep">·</span>
               <span>{{ .ReadingTime }} min read</span>
+              {{- /* Posts in a series section (below the top-level section) link to the series page */}}
+              {{- with .Parent }}{{ if not (.Eq $.FirstSection) }}
+              <span class="meta-sep">·</span>
+              <a class="single-post-series" href="{{ .RelPermalink }}">{{ .Title }}</a>
+              {{- end }}{{ end }}
             </p>
           </div>
         </header>

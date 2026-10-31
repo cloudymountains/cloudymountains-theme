@@ -146,6 +146,13 @@ $single-prose-width: 50rem; // comfortable reading measure (~75 characters)
         color: $single-border;
         user-select: none;
     }
+
+    // Link to the series (section) page the post belongs to
+    .single-post-series {
+        color: #e8b84b;
+        text-decoration: none;
+        &:hover { text-decoration: underline; }
+    }
 }
 
 .single-post-content {
@@ -482,6 +489,9 @@ $single-prose-width: 50rem; // comfortable reading measure (~75 characters)
     color: #555;
     .meta-sep {
         color: rgba(0, 0, 0, 0.2);
+    }
+    .single-post-series {
+        color: #b5830e;
     }
 }
 

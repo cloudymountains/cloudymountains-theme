@@ -160,7 +160,13 @@
           <h2 class="cv-section-title">Skills</h2>
           <div class="cv-skills-list">
             {{ range . }}
-            <a href="/tags/{{ . | urlize }}/" class="cv-skill-tag">{{ . }}</a>
+            {{- /* Link a skill only when articles are tagged with it; a missing tag page is a 404 */}}
+            {{ $skill := . }}
+            {{ with site.GetPage (printf "/tags/%s" (urlize .)) }}
+            <a href="{{ .RelPermalink }}" class="cv-skill-tag">{{ $skill }}</a>
+            {{ else }}
+            <span class="cv-skill-tag">{{ $skill }}</span>
+            {{ end }}
             {{ end }}
           </div>
         </section>
