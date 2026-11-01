@@ -1,3 +1,10 @@
+## [2.5.1](https://github.com/cloudymountains/cloudymountains-theme/compare/v2.5.0...v2.5.1) (2026-11-01)
+
+
+### Performance Improvements
+
+* **head:** drop highlight.js and the blocking consent and main.js scripts ([9e05678](https://github.com/cloudymountains/cloudymountains-theme/commit/9e05678f3059c2283cb8352112c50987c8dabab3))
+
 # [2.5.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v2.4.0...v2.5.0) (2026-10-31)
 
 
