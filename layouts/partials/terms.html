@@ -12,7 +12,7 @@ Renders the page's terms for a taxonomy as chip links.
 
 {{- with $page.GetTerms $taxonomy }}
   <div class="post-terms">
-    <span class="post-terms-label">Tagged</span>
+    <span class="post-terms-label">{{ T "tagged" }}</span>
     <ul class="post-terms-list">
       {{- range . }}
         <li><a class="chip" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>

@@ -21,6 +21,16 @@
     from { opacity: 0; translate: 0 10px; }
 }
 
+// Language switch: the same page in another language, so a plain cross-fade
+// in place (html.lang-switched is set in head.html)
+.lang-switched::view-transition-new(root) {
+    animation: vt-fade-in-place 240ms ease-out both;
+}
+
+@keyframes vt-fade-in-place {
+    from { opacity: 0; }
+}
+
 // Reveal on scroll: elements with data-reveal fade and rise into place when
 // reveal.js marks them .is-revealed. Hidden only when JS runs (html.js), so
 // content is never lost without it. Uses an animation on `translate`, so it
@@ -44,6 +54,13 @@
         opacity: 1;
         translate: 0 0;
     }
+}
+
+// Language switch: content is already in place, with no entrance animations
+.lang-switched.js [data-reveal]:not(.is-revealed),
+.lang-switched.js [data-reveal].is-revealed {
+    opacity: 1;
+    animation: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

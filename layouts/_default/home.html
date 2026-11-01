@@ -1,4 +1,12 @@
 {{ define "main" }}
+{{- /* Links to pages that may not be translated fall back to the default language's page */}}
+{{- $cvURL := "cv/" | relLangURL }}{{ with partial "i18n/get-page.html" "/cv" }}{{ $cvURL = .RelPermalink }}{{ end }}
+{{- $projectsURL := "projects/" | relLangURL }}{{ with partial "i18n/get-page.html" "/projects" }}{{ $projectsURL = .RelPermalink }}{{ end }}
+{{- $tagsURL := "tags/" | relLangURL }}
+{{- $projects := where .Site.RegularPages "Section" "projects" }}
+{{- with partial "i18n/fallback-site.html" . }}
+  {{- $projects = partial "i18n/merge-untranslated.html" (dict "pages" $projects "fallback" (where .RegularPages "Section" "projects")) }}
+{{- end }}
 <div class="hero" id="home">
     {{ partial "hero-clouds.html" . }}
     <div class="hero-content">
@@ -13,8 +21,8 @@
         {{ $secondary := .Site.Params.hero_cta_secondary }}
         {{ if or $primary $secondary }}
         <div class="hero-actions">
-            {{ with $primary }}<a class="hero-btn hero-btn-primary" href="{{ .url }}">{{ .text }} <i class="bi bi-arrow-right" aria-hidden="true"></i></a>{{ end }}
-            {{ with $secondary }}<a class="hero-btn hero-btn-secondary" href="{{ .url }}">{{ .text }}</a>{{ end }}
+            {{ with $primary }}<a class="hero-btn hero-btn-primary" href="{{ relLangURL .url }}">{{ .text }} <i class="bi bi-arrow-right" aria-hidden="true"></i></a>{{ end }}
+            {{ with $secondary }}<a class="hero-btn hero-btn-secondary" href="{{ relLangURL .url }}">{{ .text }}</a>{{ end }}
         </div>
         {{ end }}
     </div>
@@ -27,7 +35,7 @@
 
 <section class="about-section" id="about">
     <div class="about-title" data-reveal>
-        <h2>{{ .Site.Params.about_title | default "About Me" }}</h2>
+        <h2>{{ .Site.Params.about_title | default (T "aboutMe") }}</h2>
     </div>
     <div class="about-content">
         <div class="about-text-image" data-reveal style="--i: 1">
@@ -36,29 +44,29 @@
             </div>
             {{ with .Site.Params.profile_image }}
             <div class="profile-image">
-                {{ partial "responsive-image.html" (dict "res" (resources.Get (strings.TrimPrefix "/" .)) "src" . "alt" "Profile picture" "widths" (slice 250 500) "sizes" "250px") }}
+                {{ partial "responsive-image.html" (dict "res" (resources.Get (strings.TrimPrefix "/" .)) "src" . "alt" (T "profilePicture") "widths" (slice 250 500) "sizes" "250px") }}
             </div>
             {{ end }}
         </div>
         <div class="about-counters">
             <div class="skills-counters">
-                <a href="/cv/" class="skills-counter skills-counter-link" data-reveal style="--i: 0">
+                <a href="{{ $cvURL }}" class="skills-counter skills-counter-link" data-reveal style="--i: 0">
                     <span class="skills-counter-number">
                         <span class="skills-counter-value" data-target="{{ sub now.Year (.Site.Params.experience_start_year | default 2020) }}">0</span><span class="skills-counter-suffix">+</span>
                     </span>
-                    <p class="skills-counter-label">Years of experience</p>
+                    <p class="skills-counter-label">{{ T "yearsOfExperience" }}</p>
                 </a>
-                <a href="/cv/" class="skills-counter skills-counter-link" data-reveal style="--i: 1">
+                <a href="{{ $cvURL }}" class="skills-counter skills-counter-link" data-reveal style="--i: 1">
                     <span class="skills-counter-value" data-target="{{ .Site.Params.companies_count | default 3 }}">0</span>
-                    <p class="skills-counter-label">Companies worked for</p>
+                    <p class="skills-counter-label">{{ T "companiesWorkedFor" }}</p>
                 </a>
-                <a href="/projects/" class="skills-counter skills-counter-link" data-reveal style="--i: 2">
-                    <span class="skills-counter-value" data-target="{{ len (where .Site.RegularPages "Section" "projects") }}">0</span>
-                    <p class="skills-counter-label">{{ .Site.Params.counter_three_label | default "Projects" }}</p>
+                <a href="{{ $projectsURL }}" class="skills-counter skills-counter-link" data-reveal style="--i: 2">
+                    <span class="skills-counter-value" data-target="{{ len $projects }}">0</span>
+                    <p class="skills-counter-label">{{ .Site.Params.counter_three_label | default (T "projects") }}</p>
                 </a>
-                <a href="/tags/" class="skills-counter skills-counter-link" data-reveal style="--i: 3">
-                    <span class="skills-counter-value" data-target="{{ len .Site.Taxonomies.tags }}">0</span>
-                    <p class="skills-counter-label">{{ .Site.Params.counter_four_label | default "Cutting-Edge Technologies" }}</p>
+                <a href="{{ $tagsURL }}" class="skills-counter skills-counter-link" data-reveal style="--i: 3">
+                    <span class="skills-counter-value" data-target="{{ len (partial "i18n/terms.html" "tags") }}">0</span>
+                    <p class="skills-counter-label">{{ .Site.Params.counter_four_label | default (T "cuttingEdgeTechnologies") }}</p>
                 </a>
             </div>
         </div>
@@ -72,9 +80,9 @@
             {{ range $i, $skill := . }}
             {{/* Link to the skill's tag page when posts use that tag; `tag` overrides the name */}}
             {{/* Look up the term page by URL path, so multi-word tags like "Platform Engineering" match */}}
-            {{ $tag := site.GetPage (printf "/tags/%s" (.tag | default .name | urlize)) }}
+            {{ $tag := partial "i18n/get-page.html" (printf "/tags/%s" (.tag | default .name | urlize)) }}
             {{ if $tag }}
-            <a href="{{ $tag.RelPermalink }}" class="skills-skill-item skills-skill-link" data-reveal style="--i: {{ $i }}" aria-label="{{ .name }} — see posts tagged {{ $tag.Title }}">
+            <a href="{{ $tag.RelPermalink }}" class="skills-skill-item skills-skill-link" data-reveal style="--i: {{ $i }}" aria-label="{{ T "skillLinkLabel" (dict "Skill" .name "Tag" $tag.Title) }}">
             {{ else }}
             <div class="skills-skill-item" data-reveal style="--i: {{ $i }}">
             {{ end }}
@@ -96,13 +104,13 @@
     <div class="section-inner">
         <header class="section-header" data-reveal>
             <div>
-                <p class="section-eyebrow">// Latest work</p>
-                <h2 class="section-title">Recent projects</h2>
+                <p class="section-eyebrow">// {{ T "latestWork" }}</p>
+                <h2 class="section-title">{{ T "recentProjects" }}</h2>
             </div>
-            <a href="{{ "projects/" | relURL }}" class="section-link">View all projects <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+            <a href="{{ $projectsURL }}" class="section-link">{{ T "viewAllProjects" }} <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
         </header>
         <div class="post-grid">
-            {{ range $i, $p := first 3 (where .Site.RegularPages "Section" "projects").ByDate.Reverse }}
+            {{ range $i, $p := first 3 (sort $projects "Date" "desc") }}
             {{ partial "post-card.html" (dict "page" $p "i" $i "level" "h3") }}
             {{ end }}
         </div>
@@ -111,7 +119,7 @@
 
 <section class="contacts-section" id="contacts">
     <div class="container">
-        <h2 data-reveal>Get in Touch</h2>
+        <h2 data-reveal>{{ T "getInTouch" }}</h2>
         <div class="contacts-buttons" data-reveal style="--i: 1">
             <div class="contacts-buttons-container">
                 <a href="{{ .Site.Params.linkedin | default "https://linkedin.com/in/yourusername" }}" target="_blank" class="contact-button">
@@ -120,22 +128,22 @@
                 </a>
                 <a href="mailto:{{ .Site.Params.email | default "contact@forestdreams.com" }}" class="contact-button">
                     <i class="bi bi-envelope"></i>
-                    <span>Email</span>
+                    <span>{{ T "email" }}</span>
                 </a>
                 <a href="{{ .Site.Params.github | default "https://github.com/yourusername" }}" target="_blank" class="contact-button">
                     <i class="bi bi-github"></i>
                     <span>GitHub</span>
                 </a>
-                <a href="/cv/" class="contact-button">
+                <a href="{{ $cvURL }}" class="contact-button">
                     <i class="bi bi-file-person"></i>
-                    <span>View CV</span>
+                    <span>{{ T "viewCV" }}</span>
                 </a>
             </div>
         </div>
         {{ $books := site.Params.books }}
         {{ if and $books $books.items (ne $books.enable false) }}
         <div class="contacts-books" data-reveal>
-            <p class="books-eyebrow">{{ $books.eyebrow | default "Reading list" }}</p>
+            <p class="books-eyebrow">{{ $books.eyebrow | default (T "readingList") }}</p>
             {{ partial "bookshelf.html" . }}
         </div>
         {{ else }}

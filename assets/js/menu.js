@@ -12,7 +12,8 @@
     panel.classList.toggle('active', open);
     burger.classList.toggle('active', open);
     burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    // Labels come from the page language (data-label-open / data-label-close)
+    burger.setAttribute('aria-label', open ? burger.dataset.labelClose : burger.dataset.labelOpen);
   }
 
   burger.addEventListener('click', function () {
@@ -30,6 +31,41 @@
       burger.focus();
     }
   });
+
+  // Language switcher: keep the reader's place on the other language's page.
+  // A translation has the same structure, so the place is the Nth block at the
+  // top of the viewport plus how far it is scrolled into it; when the other page
+  // has a different number of blocks, the scroll position in proportion to the
+  // page height. The stored place also tells that page (head.html) it was reached
+  // from the switcher, so it skips its entrance animations (.lang-switched).
+  var SWITCH_KEY = 'lang-switch';
+  var BLOCKS = 'main section, main h1, main h2, main h3, main p, main li';
+  var line = function () { return nav.getBoundingClientRect().bottom; };
+  nav.querySelectorAll('.lang-switch a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var blocks = document.querySelectorAll(BLOCKS);
+      var place = { ratio: window.scrollY / document.documentElement.scrollHeight, count: blocks.length };
+      // The visible block starting closest above the line (works across columns, as on the CV)
+      var y = line(), closest = -Infinity;
+      for (var i = 0; i < blocks.length; i++) {
+        var rect = blocks[i].getBoundingClientRect();
+        if (rect.height && rect.top <= y && rect.top >= closest) { closest = rect.top; place.index = i; place.offset = y - rect.top; }
+      }
+      try { sessionStorage.setItem(SWITCH_KEY, JSON.stringify(place)); } catch (e) {}
+    });
+  });
+  try {
+    var place = JSON.parse(sessionStorage.getItem(SWITCH_KEY));
+    if (place) {
+      sessionStorage.removeItem(SWITCH_KEY);
+      var blocks = document.querySelectorAll(BLOCKS);
+      var y = place.ratio * document.documentElement.scrollHeight;
+      if (place.index != null && blocks.length === place.count) {
+        y = blocks[place.index].getBoundingClientRect().top + window.scrollY - line() + place.offset;
+      }
+      window.scrollTo({ top: y, behavior: 'instant' });
+    }
+  } catch (e) {}
 
   if (!('IntersectionObserver' in window)) {
     nav.classList.add('is-scrolled');
@@ -50,7 +86,11 @@
     return url.pathname === location.pathname && url.hash;
   });
   if (!links.length) return;
-  var homeLink = nav.querySelector('.nav-link[href="/"]');
+  // The link to this page itself ("/" or a language's home, e.g. "/bg/")
+  var homeLink = Array.prototype.find.call(nav.querySelectorAll('.nav-link'), function (a) {
+    var url = new URL(a.href, location.href);
+    return url.pathname === location.pathname && !url.hash;
+  }) || null;
   var byId = {};
   links.forEach(function (a) { byId[new URL(a.href).hash.slice(1)] = a; });
 

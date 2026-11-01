@@ -20,6 +20,7 @@ A clean, minimal Hugo theme for personal portfolio and blog sites. Built for tec
 - **Full-text search** — client-side search powered by a JSON index
 - **Dark / Light mode** — toggle persisted in localStorage
 - **Tags & taxonomy** — tag pages with tag-search filtering
+- **Multilingual** — English and Bulgarian UI strings, a language switcher, hreflang links, localized dates, and listings that include articles not translated yet
 - **SEO** — Open Graph, meta description, JSON-LD structured data (Person, TechArticle, ProfilePage), Google Analytics, Google Search Console verification, and optional Iubenda cookie consent manager
 - **Responsive** — mobile-first layout
 - **RSS feed** — auto-generated
@@ -242,12 +243,16 @@ languages:
     level: "Native"
   - language: "German"
     level: "Intermediate"
+  - language: "Немски"            # a level that isn't an English name (beginner …
+    level: "Средно ниво"          # native) needs `dots`, 1–5
+    dots: 2
 
 skills_list:
   - Kubernetes
   - Terraform
   - AWS
   - Python
+  - { name: "Автоматизация", tag: "Automation" }   # links to the tag page of `tag`
 
 my_time:
   - label: "Work"
@@ -286,6 +291,53 @@ An optional reading list shown in the home page's contacts section, under the co
 ```
 
 Books stand spine-out on the shelf. Hovering (or keyboard focus) turns a book to show its cover, and clicking the book opens its `url`. On touch screens, the first tap opens a book and the second follows the link. Covers display at a 2:3 ratio (150×225 on desktop). A book without a `cover` shows a styled title card in its spine colour. A book without a `url` is not clickable.
+
+## Multilingual Sites
+
+The theme's text comes from `i18n/en.yaml` and `i18n/bg.yaml`. For another language, copy `i18n/en.yaml` to `i18n/<lang>.yaml` in your site and translate it; a language without a file shows empty labels.
+
+Configure the languages in `hugo.toml`. Each language's `params` are merged over the top-level `[params]`, so a language lists only what differs (arrays such as `skills` are replaced as a whole). Give every language its own menu:
+
+```toml
+defaultContentLanguage = 'en'
+defaultContentLanguageInSubdir = false   # the default language stays at the site root
+
+[languages]
+  [languages.en]
+    languageCode = 'en-us'   # `locale` from Hugo 0.158
+    languageName = 'English' # `label` from Hugo 0.158
+    weight = 1
+    [[languages.en.menus.main]]
+      name = "About"
+      url = "/#about"
+  [languages.bg]
+    languageCode = 'bg-BG'
+    languageName = 'Български'
+    weight = 2
+    [[languages.bg.menus.main]]
+      name = "За мен"
+      url = "/#about"        # becomes /bg/#about
+    [languages.bg.params]
+      description = "Вашето пътешествие към облаците"
+      [languages.bg.params.nav_cta]
+        text = "Работете с мен"
+```
+
+Translate a page with a file next to it named with the language code: `cv.bg.md`, `index.bg.md` in a page bundle (it shares the bundle's images), `_index.bg.md` for a section.
+
+What the theme does on a multilingual site:
+
+- **URLs** — site-relative URLs in menus and the call-to-action buttons (`/#about`, `/projects/`) get the language prefix, so every language can use the same URLs.
+- **Language switcher** — in the navigation bar; it links to the page's translation. A language the page isn't translated into is shown disabled, with a tooltip.
+- **SEO** — `<html lang>`, `og:locale`, and `hreflang` links between translations (with `x-default` for the default language) in the page head and the sitemap.
+- **Untranslated articles** — in a translation, lists (home, sections, tags, previous/next and related articles) also show the default language's articles that aren't translated yet. Their cards link to the original and carry its language code. Set `params.showUntranslated = false` to list only translated articles.
+- **Dates** — formatted with `dateFormatLong` and `dateFormatShort` from the i18n file, with month names in the page language.
+
+In a translation, link to other articles with `langref` instead of `relref`. It returns the translated page when there is one and the original otherwise, and like `relref` it fails the build when neither exists:
+
+```markdown
+[The first policy]({{</* langref "/projects/policy-as-code/policy-as-code-opa-terraform" */>}})
+```
 
 ## Content Structure
 

@@ -1,0 +1,14 @@
+{{- /*
+relref for translations: the URL of a page in the current language, else of the
+default language's original (an article not translated yet), so a translation can
+link to every article. Fails the build when neither exists, like relref.
+
+@example: [The first policy]({{< langref "/projects/policy-as-code/policy-as-code-opa-terraform" >}})
+@example: [Setup]({{< langref "/projects/static-site-s3-cloudfront#setup" >}})
+*/ -}}
+{{- $ref := .Get 0 }}
+{{- $path := index (split $ref "#") 0 }}
+{{- $fragment := strings.TrimPrefix $path $ref }}
+{{- $page := .Page.GetPage $path }}
+{{- if not $page }}{{ $page = (partial "i18n/default-site.html" .).GetPage $path }}{{ end }}
+{{- with $page }}{{ .RelPermalink }}{{ $fragment }}{{ else }}{{ errorf "langref: %q not found in %s" $ref .Page.File.Path }}{{ end -}}

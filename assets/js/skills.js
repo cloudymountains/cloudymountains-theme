@@ -6,6 +6,8 @@
 
   var countersAnimated = false;
   var skillBarsAnimated = false;
+  // Reached from the language switcher (head.html): show the final values at once
+  var instant = document.documentElement.classList.contains('lang-switched');
 
   function animateCounters() {
     if (!aboutSection) return;
@@ -13,6 +15,7 @@
     counters.forEach(function (el) {
       var target = parseInt(el.getAttribute('data-target'), 10);
       if (isNaN(target)) return;
+      if (instant) { el.textContent = target; return; }
       var duration = 1500;
       var startTime = null;
 
@@ -37,6 +40,7 @@
     var fills = skillsSection.querySelectorAll('.skills-skill-fill[data-percent]');
     fills.forEach(function (el) {
       var percent = el.getAttribute('data-percent');
+      if (instant) el.style.transition = 'none';
       if (percent != null) el.style.width = percent + '%';
     });
   }
@@ -65,6 +69,14 @@
     },
     { threshold: 0.2, rootMargin: '0px' }
   );
+
+  if (instant) {
+    countersAnimated = skillBarsAnimated = true;
+    animateCounters();
+    if (skillsSection) skillsSection.classList.add('skills-visible');
+    animateSkillBars();
+    return;
+  }
 
   if (aboutSection) aboutObserver.observe(aboutSection);
   if (skillsSection) skillsObserver.observe(skillsSection);

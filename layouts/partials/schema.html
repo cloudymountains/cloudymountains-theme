@@ -1,11 +1,14 @@
 {{- /* JSON-LD structured data as one linked @graph per page.
      Person, WebSite and the optional business are on every page so each page
      stands on its own; posts in main sections add a TechArticle, the CV page a ProfilePage.
-     Configured by [params.seo] author and [params.seo.schema]. */ -}}
+     Configured by [params.seo] author and [params.seo.schema].
+     The person and business are one entity in every language, so their @id and url
+     use the default language's home page; the WebSite is the current language's. */ -}}
 {{- $home := site.Home.Permalink }}
+{{- $root := (partial "i18n/default-site.html" .).Home.Permalink }}
 {{- $seo := site.Params.seo | default dict }}
 {{- $cfg := $seo.schema | default dict }}
-{{- $lang := or site.Language.LanguageCode site.Language.Lang }}
+{{- $lang := (partial "i18n/language.html" site.Language).code }}
 {{- $graph := slice }}
 
 {{- $address := dict }}
@@ -18,7 +21,7 @@
 {{- /* Person: the author, linked from every other node */ -}}
 {{- $person := dict }}
 {{- with $seo.author }}
-  {{- $person = dict "@type" "Person" "@id" (printf "%s#person" $home) "name" . "url" $home }}
+  {{- $person = dict "@type" "Person" "@id" (printf "%s#person" $root) "name" . "url" $root }}
   {{- with site.Params.profile_image }}
     {{- $src := . | absURL }}
     {{- with resources.Get (strings.TrimPrefix "/" .) }}{{ $src = .Permalink }}{{ end }}
@@ -40,7 +43,7 @@
 {{- /* Optional business (e.g. ProfessionalService) run by the person */ -}}
 {{- $business := dict }}
 {{- with $cfg.businessType }}
-  {{- $business = dict "@type" . "@id" (printf "%s#business" $home) "name" site.Title "url" $home }}
+  {{- $business = dict "@type" . "@id" (printf "%s#business" $root) "name" site.Title "url" $root }}
   {{- with $cfg.description }}{{ $business = merge $business (dict "description" .) }}{{ end }}
   {{- with site.Params.email }}{{ $business = merge $business (dict "email" .) }}{{ end }}
   {{- with $address }}{{ $business = merge $business (dict "address" .) }}{{ end }}

@@ -1,0 +1,105 @@
+# Theme strings. To add a language, copy this file to i18n/<lang>.yaml (in the
+# theme or your site) and translate the values; keep the {{ .Placeholders }}.
+
+# Navigation and footer
+skipToContent: "Skip to content"
+navMain: "Main"
+navFooter: "Footer"
+openMenu: "Open menu"
+closeMenu: "Close menu"
+language: "Language"
+workWithMe: "Work with me"
+footerNavigate: "Navigate"
+footerConnect: "Connect"
+email: "Email"
+backToTop: "Back to top"
+copyright: "© {{ .Year }} {{ .Title }}. All rights reserved."
+
+# Go date layouts; month names are translated for the page language
+dateFormatLong: "January 2, 2006"
+dateFormatShort: "Jan 2, 2006"
+
+# Language names, used for articles listed in another language
+language_en: "English"
+language_bg: "Bulgarian"
+inLanguage: "This article is in {{ .Language }}"
+notTranslated: "This page isn't available in {{ .Language }} yet"
+
+# Articles
+readingTime:
+  one: "{{ .Count }} min read"
+  other: "{{ .Count }} min read"
+byAuthors: "By {{ .Authors }}"
+toggleTheme: "Toggle dark/light mode"
+moreArticles: "More articles"
+previousArticle: "Previous article"
+nextArticle: "Next article"
+onThisPage: "On this page"
+keepReading: "Keep reading"
+relatedArticles: "Related articles"
+tagged: "Tagged"
+shareEmailBody: "Check out this article:"
+termDescription: "Articles about {{ .Term }} on {{ .Site }}."
+
+# Listings and tag pages
+eyebrowWriting: "writing"
+eyebrowTag: "tag"
+articleCount:
+  one: "{{ .Count }} article"
+  other: "{{ .Count }} articles"
+articleLabel:
+  one: "article"
+  other: "articles"
+topicCount:
+  one: "{{ .Count }} topic"
+  other: "{{ .Count }} topics"
+allTechnologies: "All technologies"
+filterArticles: "Filter articles"
+filterArticlesPlaceholder: "filter articles..."
+noArticlesMatch: "No articles match your filter."
+knowledgeIndex: "knowledge index"
+technologies: "Technologies"
+filterTechnologiesPlaceholder: "filter technologies..."
+noTechnologiesMatch: "No technologies match your filter."
+
+# Home page
+aboutMe: "About Me"
+profilePicture: "Profile picture"
+yearsOfExperience: "Years of experience"
+companiesWorkedFor: "Companies worked for"
+projects: "Projects"
+cuttingEdgeTechnologies: "Cutting-Edge Technologies"
+skillLinkLabel: "{{ .Skill }} — see posts tagged {{ .Tag }}"
+latestWork: "Latest work"
+recentProjects: "Recent projects"
+viewAllProjects: "View all projects"
+getInTouch: "Get in Touch"
+viewCV: "View CV"
+readingList: "Reading list"
+bookLabel: "{{ .Title }} by {{ .Author }}"
+bookBuyLabel: "{{ .Label }} — buy on Amazon (opens in a new tab)"
+bookCover: "Cover of {{ .Label }}"
+
+# CV page
+cvPhoto: "Profile"
+cvSummary: "Summary"
+cvExperience: "Experience"
+cvPhilosophy: "My Life Philosophy"
+cvLanguages: "Languages"
+cvCertification: "Certification"
+cvCredentialID: "Credential ID {{ .ID }}"
+cvEducation: "Education"
+cvProjects: "Projects"
+cvHobby: "Hobby"
+cvSkills: "Skills"
+cvMyTime: "My Time"
+
+# 404 page
+notFoundTitle: "Lost in the clouds"
+notFoundText: "The page you're looking for doesn't exist or has moved."
+notFoundHome: "Home"
+notFoundHomeText: "Back to the start"
+notFoundProjects: "Projects"
+notFoundProjectsText: "Articles and write-ups"
+notFoundTags: "Technologies"
+notFoundTagsText: "Browse by topic"

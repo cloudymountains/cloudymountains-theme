@@ -1,0 +1,102 @@
+# Bulgarian theme strings (see en.yaml)
+
+# Navigation and footer
+skipToContent: "Към съдържанието"
+navMain: "Основна навигация"
+navFooter: "Навигация в долната част"
+openMenu: "Отвори менюто"
+closeMenu: "Затвори менюто"
+language: "Език"
+workWithMe: "Работете с мен"
+footerNavigate: "Навигация"
+footerConnect: "Връзка"
+email: "Имейл"
+backToTop: "Нагоре"
+copyright: "© {{ .Year }} {{ .Title }}. Всички права запазени."
+
+dateFormatLong: "2 January 2006"
+dateFormatShort: "2 Jan 2006"
+
+language_en: "английски"
+language_bg: "български"
+inLanguage: "Статията е на {{ .Language }}"
+notTranslated: "Тази страница още не е налична на {{ .Language }}"
+
+# Articles
+readingTime:
+  one: "{{ .Count }} мин. четене"
+  other: "{{ .Count }} мин. четене"
+byAuthors: "Автор: {{ .Authors }}"
+toggleTheme: "Превключи тъмен/светъл режим"
+moreArticles: "Още статии"
+previousArticle: "Предишна статия"
+nextArticle: "Следваща статия"
+onThisPage: "На тази страница"
+keepReading: "Прочетете още"
+relatedArticles: "Свързани статии"
+tagged: "Етикети"
+shareEmailBody: "Вижте тази статия:"
+termDescription: "Статии за {{ .Term }} в {{ .Site }}."
+
+# Listings and tag pages
+eyebrowWriting: "статии"
+eyebrowTag: "етикет"
+articleCount:
+  one: "{{ .Count }} статия"
+  other: "{{ .Count }} статии"
+articleLabel:
+  one: "статия"
+  other: "статии"
+topicCount:
+  one: "{{ .Count }} тема"
+  other: "{{ .Count }} теми"
+allTechnologies: "Всички технологии"
+filterArticles: "Търсене в статиите"
+filterArticlesPlaceholder: "търсене в статиите..."
+noArticlesMatch: "Няма статии, които отговарят на търсенето."
+knowledgeIndex: "индекс на знанията"
+technologies: "Технологии"
+filterTechnologiesPlaceholder: "търсене на технология..."
+noTechnologiesMatch: "Няма технологии, които отговарят на търсенето."
+
+# Home page
+aboutMe: "За мен"
+profilePicture: "Профилна снимка"
+yearsOfExperience: "Години опит"
+companiesWorkedFor: "Компании в кариерата ми"
+projects: "Проекти"
+cuttingEdgeTechnologies: "Съвременни технологии"
+skillLinkLabel: "{{ .Skill }} — статии с етикет {{ .Tag }}"
+latestWork: "Най-новото"
+recentProjects: "Последни проекти"
+viewAllProjects: "Всички проекти"
+getInTouch: "Свържете се с мен"
+viewCV: "Вижте CV"
+readingList: "Списък за четене"
+bookLabel: "„{{ .Title }}“ от {{ .Author }}"
+bookBuyLabel: "{{ .Label }} — купете от Amazon (отваря се в нов раздел)"
+bookCover: "Корица на {{ .Label }}"
+
+# CV page
+cvPhoto: "Профилна снимка"
+cvSummary: "Профил"
+cvExperience: "Професионален опит"
+cvPhilosophy: "Житейска философия"
+cvLanguages: "Езици"
+cvCertification: "Сертификати"
+cvCredentialID: "ID на сертификата {{ .ID }}"
+cvEducation: "Образование"
+cvProjects: "Проекти"
+cvHobby: "Хоби"
+cvSkills: "Умения"
+cvMyTime: "Моето време"
+
+# 404 page
+notFoundTitle: "Изгубени в облаците"
+notFoundText: "Страницата, която търсите, не съществува или е преместена."
+notFoundHome: "Начало"
+notFoundHomeText: "Обратно към началото"
+notFoundProjects: "Проекти"
+notFoundProjectsText: "Статии и разработки"
+notFoundTags: "Технологии"
+notFoundTagsText: "Разгледайте по тема"

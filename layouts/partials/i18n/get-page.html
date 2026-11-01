@@ -1,0 +1,9 @@
+{{- /*
+Returns the page at a path in the current language, else the default language's
+page (e.g. a CV that is not translated yet), else nil.
+
+@context {string} . The page path, e.g. "/cv" or "/tags/aws".
+*/ -}}
+{{- $page := site.GetPage . }}
+{{- if not $page }}{{ $page = (partial "i18n/default-site.html" .).GetPage . }}{{ end }}
+{{- return $page }}

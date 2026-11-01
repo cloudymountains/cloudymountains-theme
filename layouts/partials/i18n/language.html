@@ -1,0 +1,14 @@
+{{- /*
+Returns a language's code, name and text direction. Hugo 0.158 renamed these
+(LanguageCode → Locale, LanguageName → Label, LanguageDirection → Direction).
+
+@context {language} . A language, e.g. site.Language or .Language of a page.
+@returns {map} code ("en-us"; the language key when unset), name, dir ("ltr" when unset).
+*/ -}}
+{{- $code := "" }}{{ $name := "" }}{{ $dir := "" }}
+{{- if ge hugo.Version "0.158.0" }}
+  {{- $code = .Locale }}{{ $name = .Label }}{{ $dir = .Direction }}
+{{- else }}
+  {{- $code = .LanguageCode }}{{ $name = .LanguageName }}{{ $dir = .LanguageDirection }}
+{{- end }}
+{{- return dict "code" (or $code .Lang) "name" (or $name .Lang) "dir" (or $dir "ltr") }}

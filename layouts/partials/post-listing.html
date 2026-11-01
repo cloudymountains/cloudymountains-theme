@@ -1,6 +1,7 @@
 {{- /*
 A page of post cards with a header (and optional live search).
 Shared by section lists (list.html) and single-tag pages (taxonomy.html).
+In a translation, the default language's untranslated articles are listed too.
 
 @context {page}   page      The list page. A section's own content renders as an intro under the title.
 @context {string} eyebrow   Small label above the title.
@@ -11,13 +12,19 @@ Shared by section lists (list.html) and single-tag pages (taxonomy.html).
 {{- /* A section lists every article below it, including those in nested series sections */}}
 {{- $pages := $page.Pages }}
 {{- if $page.IsSection }}{{ $pages = $page.RegularPagesRecursive }}{{ end }}
+{{- with partial "i18n/fallback-site.html" . }}
+  {{- range where $page.AllTranslations "Lang" .Language.Lang }}
+    {{- $originals := .Pages }}{{ if .IsSection }}{{ $originals = .RegularPagesRecursive }}{{ end }}
+    {{- $pages = partial "i18n/merge-untranslated.html" (dict "pages" $pages "fallback" $originals) }}
+  {{- end }}
+{{- end }}
 {{- $pages = $pages.ByDate.Reverse }}
 {{- $count := len $pages }}
 <section class="tags-page listing-page">
   <header class="tags-page-header">
     <p class="tags-page-eyebrow">// {{ .eyebrow }}</p>
     <h1 class="tags-page-title">{{ $page.Title }}</h1>
-    <p class="tags-page-subtitle">{{ $count }} {{ cond (eq $count 1) "article" "articles" }}</p>
+    <p class="tags-page-subtitle">{{ T "articleCount" $count }}</p>
     {{- with $page.Content }}
     <div class="listing-intro">{{ . }}</div>
     {{- end }}
@@ -34,7 +41,7 @@ Shared by section lists (list.html) and single-tag pages (taxonomy.html).
         <circle cx="11" cy="11" r="8"></circle>
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
-      <input type="search" id="postSearch" placeholder="filter articles..." class="tags-search-input" autocomplete="off" aria-label="Filter articles">
+      <input type="search" id="postSearch" placeholder="{{ T "filterArticlesPlaceholder" }}" class="tags-search-input" autocomplete="off" aria-label="{{ T "filterArticles" }}">
       <span class="tags-search-count" id="postCount" aria-live="polite">{{ $count }}</span>
     </div>
     {{- end }}
@@ -45,6 +52,6 @@ Shared by section lists (list.html) and single-tag pages (taxonomy.html).
       {{- end }}
     </div>
 
-    <p class="tags-no-results" id="postsNoResults" hidden>No articles match your filter.</p>
+    <p class="tags-no-results" id="postsNoResults" hidden>{{ T "noArticlesMatch" }}</p>
   </div>
 </section>

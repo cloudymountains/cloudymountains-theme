@@ -1,6 +1,10 @@
 <head>
     <meta charset="utf-8">
     <script>document.documentElement.classList.add('js')</script>
+    {{- if hugo.IsMultilingual }}
+    {{- /* Arrived from the language switcher (menu.js): the same page in another language, shown without entrance animations */}}
+    <script>try{if(sessionStorage.getItem('lang-switch')!==null)document.documentElement.classList.add('lang-switched')}catch(e){}</script>
+    {{- end }}
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {{- $seo := .Site.Params.seo | default dict }}
     {{- $title := .Title }}
@@ -9,7 +13,7 @@
     {{- $description := .Description }}
     {{- if not $description }}
       {{- if .IsPage }}{{ $description = .Summary | plainify | htmlUnescape | truncate 160 }}
-      {{- else if eq .Kind "term" }}{{ $description = printf "Articles about %s on %s." .Title .Site.Title }}
+      {{- else if eq .Kind "term" }}{{ $description = T "termDescription" (dict "Term" .Title "Site" .Site.Title) }}
       {{- end }}
     {{- end }}
     {{- $description = $description | default $seo.description | default .Site.Params.description }}
@@ -45,6 +49,12 @@
     <meta property="og:title" content="{{ $title }}">
     <meta property="og:description" content="{{ $description }}">
     <meta property="og:image" content="{{ $image }}">
+    {{- /* og:locale wants language_TERRITORY: "en-us" becomes "en_US" */}}
+    {{- range slice . | append .Translations }}
+    {{- $parts := split (partial "i18n/language.html" .Language).code "-" }}
+    {{- $locale := lower (index $parts 0) }}{{ if gt (len $parts) 1 }}{{ $locale = printf "%s_%s" $locale (upper (index $parts 1)) }}{{ end }}
+    <meta property="og:locale{{ if ne .Language.Lang site.Language.Lang }}:alternate{{ end }}" content="{{ $locale }}">
+    {{- end }}
     {{- if $isArticle }}
     <meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
     <meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}">
@@ -59,6 +69,16 @@
     {{- if ne .Kind "404" }}
     <!-- Canonical URL -->
     <link rel="canonical" href="{{ .Permalink }}">
+    {{- end }}
+    {{- /* Translations of this page; x-default is the default language's version */}}
+    {{- if and .IsTranslated (not $noindex) }}
+    {{- $default := (partial "i18n/default-site.html" .).Language.Lang }}
+    {{- range .AllTranslations }}
+    <link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}">
+    {{- end }}
+    {{- range where .AllTranslations "Lang" $default }}
+    <link rel="alternate" hreflang="x-default" href="{{ .Permalink }}">
+    {{- end }}
     {{- end }}
     {{- with .OutputFormats.Get "rss" }}
     <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ $.Site.Title }}">

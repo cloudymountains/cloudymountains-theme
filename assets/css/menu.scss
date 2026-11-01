@@ -154,6 +154,43 @@ body > header {
     }
 }
 
+// Language switcher (multilingual sites): the current language is filled
+.lang-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15rem;
+    padding: 0.2rem;
+    border: 1px solid rgba(232, 184, 75, 0.22);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+}
+
+.lang-switch-item {
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    color: rgba(221, 216, 204, 0.8);
+    text-decoration: none;
+    transition: color 0.25s ease, background 0.25s ease;
+
+    &.is-current {
+        background: #e8b84b;
+        color: #07090f;
+    }
+
+    // The page has no translation in this language
+    &.is-unavailable {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+}
+
+a.lang-switch-item:hover {
+    background: rgba(232, 184, 75, 0.14);
+    color: #fff;
+}
+
 .site-nav a:focus-visible,
 .hamburger:focus-visible {
     outline: 2px solid #e8b84b;
@@ -239,6 +276,11 @@ body > header {
     .nav-cta {
         justify-content: center;
     }
+
+    .lang-switch {
+        align-self: flex-start;
+        font-size: 0.85rem;
+    }
 }
 
 // Post pages in light mode
@@ -253,8 +295,17 @@ body.single-theme-light .site-nav {
         color: #111;
     }
 
-    .nav-link {
+    .nav-link,
+    .lang-switch-item:not(.is-current) {
         color: #4a4e55;
+    }
+
+    a.lang-switch-item:hover {
+        color: #111;
+    }
+
+    .lang-switch {
+        border-color: rgba(0, 0, 0, 0.12);
     }
 
     .hamburger .bar {
@@ -285,6 +336,7 @@ body.single-theme-light .site-nav {
     .main-nav,
     .nav-link::after,
     .nav-cta,
+    .lang-switch-item,
     .hamburger .bar {
         transition: none;
     }

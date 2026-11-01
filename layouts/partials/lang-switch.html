@@ -1,0 +1,26 @@
+{{- /*
+Language switcher for multilingual sites: one link per language, to this page's
+translation. A language the page is not translated into is shown disabled, so
+the switcher never takes the reader away from the page.
+
+@context {page} . The current page.
+*/ -}}
+{{- if hugo.IsMultilingual }}
+{{- $page := . }}
+<div class="lang-switch" role="group" aria-label="{{ T "language" }}">
+  {{- range site.Home.AllTranslations }}
+    {{- $lang := .Language.Lang }}
+    {{- $name := (partial "i18n/language.html" .Language).name }}
+    {{- $target := false }}
+    {{- range $page.AllTranslations }}{{ if eq .Language.Lang $lang }}{{ $target = . }}{{ end }}{{ end }}
+    {{- if eq $lang site.Language.Lang }}
+    <span class="lang-switch-item is-current" aria-current="true" title="{{ $name }}">{{ upper $lang }}</span>
+    {{- else if $target }}
+    <a class="lang-switch-item" href="{{ $target.RelPermalink }}" hreflang="{{ $lang }}" lang="{{ $lang }}" title="{{ $name }}" aria-label="{{ $name }}">{{ upper $lang }}</a>
+    {{- else }}
+    {{- $note := T "notTranslated" (dict "Language" (T (printf "language_%s" $lang) | default $name)) }}
+    <span class="lang-switch-item is-unavailable" title="{{ $note }}"><span aria-hidden="true">{{ upper $lang }}</span><span class="visually-hidden">{{ $note }}</span></span>
+    {{- end }}
+  {{- end }}
+</div>
+{{- end -}}

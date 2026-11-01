@@ -1,7 +1,11 @@
 {{- /*
 Site navigation: a sticky top bar with the brand, the links from the given
-menu and an optional call-to-action button (params.nav_cta). Below 900px the
-links and CTA collapse into a slide-out panel behind a hamburger button.
+menu, a language switcher (multilingual sites) and an optional call-to-action
+button (params.nav_cta). Below 900px the links, switcher and CTA collapse into a
+slide-out panel behind a hamburger button.
+
+Site-relative URLs ("/#about", "/projects/") get the language prefix, so every
+language can use the same URLs in its menu and CTA.
 
 On pages with a hero (home, 404) the bar starts transparent over the hero and
 turns frosted once scrolled past it (menu.js adds .is-scrolled).
@@ -9,16 +13,17 @@ turns frosted once scrolled past it (menu.js adds .is-scrolled).
 {{- $page := .page }}
 {{- $menuID := .menuID }}
 {{- $overlay := or $page.IsHome (eq $page.Kind "404") }}
+{{- $home := site.Home.RelPermalink }}
 
-<a class="skip-link" href="#main-content">Skip to content</a>
-<nav class="site-nav{{ if $overlay }} is-overlay{{ end }}" id="site-nav" aria-label="Main">
+<a class="skip-link" href="#main-content">{{ T "skipToContent" }}</a>
+<nav class="site-nav{{ if $overlay }} is-overlay{{ end }}" id="site-nav" aria-label="{{ T "navMain" }}">
   <div class="site-nav-inner">
-    <a class="site-nav-brand" href="{{ "/" | relURL }}">
+    <a class="site-nav-brand" href="{{ $home }}">
       {{- with site.Params.logo }}<img src="{{ . | relURL }}" alt="" width="28" height="28">{{ end -}}
       <span>{{ site.Title }}</span>
     </a>
 
-    <button class="hamburger" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Open menu">
+    <button class="hamburger" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="{{ T "openMenu" }}" data-label-open="{{ T "openMenu" }}" data-label-close="{{ T "closeMenu" }}">
       <span class="bar"></span>
       <span class="bar"></span>
       <span class="bar"></span>
@@ -28,15 +33,17 @@ turns frosted once scrolled past it (menu.js adds .is-scrolled).
       {{- with index site.Menus $menuID }}
       <ul>
         {{- range . }}
+          {{- $url := relLangURL .URL }}
           {{- /* Active by page: "/#projects" is active on pages in the projects section */}}
-          {{- $section := strings.TrimPrefix "/#" .URL }}
-          {{- $active := or (and $page.IsHome (eq .URL "/")) (and (not $page.IsHome) (ne $section .URL) (eq $section $page.Section)) }}
-          <li><a href="{{ .URL }}" class="nav-link{{ if $active }} is-active{{ end }}"{{ if $active }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
+          {{- $section := strings.TrimPrefix (printf "%s#" $home) $url }}
+          {{- $active := or (and $page.IsHome (eq $url $home)) (and (not $page.IsHome) (ne $section $url) (eq $section $page.Section)) }}
+          <li><a href="{{ $url }}" class="nav-link{{ if $active }} is-active{{ end }}"{{ if $active }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
         {{- end }}
       </ul>
       {{- end }}
+      {{- partial "lang-switch.html" $page }}
       {{- with site.Params.nav_cta }}
-      <a class="nav-cta" href="{{ .url | default "/#contacts" }}">{{ .text | default "Work with me" }}</a>
+      <a class="nav-cta" href="{{ relLangURL (.url | default "/#contacts") }}">{{ .text | default (T "workWithMe") }}</a>
       {{- end }}
     </div>
   </div>

@@ -1,6 +1,8 @@
 {{- /*
 Post card: cover image, date and reading time, title, excerpt and up to three
 tags. The whole card is one link, so tags are plain chips (no nested links).
+An article in another language (an untranslated original, see
+i18n/merge-untranslated.html) is marked with its language code.
 
 @context {page}   page   The post.
 @context {int}    i      Position in the list (staggers the reveal animation).
@@ -13,7 +15,8 @@ tags. The whole card is one link, so tags are plain chips (no nested links).
 {{- $tags := $p.GetTerms "tags" }}
 {{- $tagNames := slice }}
 {{- range $tags }}{{ $tagNames = $tagNames | append .Title }}{{ end }}
-<a class="post-card card-spotlight" href="{{ $p.RelPermalink }}" data-reveal style="--i: {{ math.Min (.i | default 0) 3 }}"
+{{- $foreign := ne $p.Lang site.Language.Lang }}
+<a class="post-card card-spotlight" href="{{ $p.RelPermalink }}"{{ if $foreign }} hreflang="{{ $p.Lang }}"{{ end }} data-reveal style="--i: {{ math.Min (.i | default 0) 3 }}"
    data-search="{{ lower (printf "%s %s %s" $p.Title $excerpt (delimit $tagNames " ")) }}">
   <div class="post-card-media">
     {{- with $p.Params.image }}
@@ -22,16 +25,20 @@ tags. The whole card is one link, so tags are plain chips (no nested links).
   </div>
   <div class="post-card-body">
     <p class="post-card-meta">
-      <time datetime="{{ $p.Date.Format "2006-01-02" }}">{{ $p.Date.Format "Jan 2, 2006" }}</time>
+      <time datetime="{{ $p.Date.Format "2006-01-02" }}">{{ time.Format (T "dateFormatShort" | default "Jan 2, 2006") $p.Date }}</time>
       <span aria-hidden="true">·</span>
-      <span>{{ $p.ReadingTime }} min read</span>
+      <span>{{ T "readingTime" $p.ReadingTime }}</span>
+      {{- if $foreign }}
+      {{- $language := T (printf "language_%s" $p.Lang) | default (partial "i18n/language.html" $p.Language).name }}
+      <span class="post-card-lang" title="{{ T "inLanguage" (dict "Language" $language) }}"><span aria-hidden="true">{{ $p.Lang }}</span><span class="visually-hidden">{{ T "inLanguage" (dict "Language" $language) }}</span></span>
+      {{- end }}
     </p>
     {{- if eq $level "h3" }}
-    <h3 class="post-card-title">{{ $p.Title }}</h3>
+    <h3 class="post-card-title"{{ if $foreign }} lang="{{ $p.Lang }}"{{ end }}>{{ $p.Title }}</h3>
     {{- else }}
-    <h2 class="post-card-title">{{ $p.Title }}</h2>
+    <h2 class="post-card-title"{{ if $foreign }} lang="{{ $p.Lang }}"{{ end }}>{{ $p.Title }}</h2>
     {{- end }}
-    <p class="post-card-excerpt">{{ $excerpt | truncate 220 }}</p>
+    <p class="post-card-excerpt"{{ if $foreign }} lang="{{ $p.Lang }}"{{ end }}>{{ $excerpt | truncate 220 }}</p>
     {{- with first 3 $tags }}
     <div class="post-card-tags">
       {{- range . }}<span class="chip">{{ .Title }}</span>{{ end }}

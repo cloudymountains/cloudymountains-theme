@@ -3,8 +3,11 @@
 {{- $headingCount := len (findRE `<h[23][\s>]` .Content) }}
 {{- $showToc := ge $headingCount 3 }}
 
-{{- /* Older / newer posts in the same section, by date */}}
+{{- /* Older / newer posts in the same section, by date (in a translation, with the untranslated originals) */}}
 {{- $section := where site.RegularPages "Section" .Section }}
+{{- with partial "i18n/fallback-site.html" . }}
+  {{- $section = partial "i18n/merge-untranslated.html" (dict "pages" $section "fallback" (where .RegularPages "Section" $.Section)) }}
+{{- end }}
 {{- $older := false }}
 {{- with first 1 (where $section "Date" "lt" .Date).ByDate.Reverse }}{{ $older = index . 0 }}{{ end }}
 {{- $newer := false }}
@@ -25,7 +28,7 @@
 
   <article class="post">
     <div class="single-post-container" id="single-post-container" data-theme="dark">
-      <button type="button" class="single-post-theme-toggle" id="single-post-theme-toggle" aria-label="Toggle dark/light mode" title="Toggle dark/light mode">
+      <button type="button" class="single-post-theme-toggle" id="single-post-theme-toggle" aria-label="{{ T "toggleTheme" }}" title="{{ T "toggleTheme" }}">
         <span class="theme-icon theme-icon-dark" aria-hidden="true">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
         </span>
@@ -42,10 +45,10 @@
           <h1 class="single-post-title">{{ .Title }}</h1>
           <div class="single-post-meta">
             <p>
-              {{- with .Params.authors }}<span>By {{ if reflect.IsSlice . }}{{ delimit . ", " }}{{ else }}{{ . }}{{ end }}</span><span class="meta-sep">·</span>{{ end }}
-              <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+              {{- with .Params.authors }}{{ $authors := . }}{{ if reflect.IsSlice . }}{{ $authors = delimit . ", " }}{{ end }}<span>{{ T "byAuthors" (dict "Authors" $authors) }}</span><span class="meta-sep">·</span>{{ end }}
+              <time datetime="{{ .Date.Format "2006-01-02" }}">{{ time.Format (T "dateFormatLong" | default "January 2, 2006") .Date }}</time>
               <span class="meta-sep">·</span>
-              <span>{{ .ReadingTime }} min read</span>
+              <span>{{ T "readingTime" .ReadingTime }}</span>
               {{- /* Posts in a series section (below the top-level section) link to the series page */}}
               {{- with .Parent }}{{ if not (.Eq $.FirstSection) }}
               <span class="meta-sep">·</span>
@@ -75,16 +78,16 @@
             </footer>
 
             {{ if or $older $newer }}
-            <nav class="post-pager" aria-label="More articles">
+            <nav class="post-pager" aria-label="{{ T "moreArticles" }}">
               {{ with $older }}
-              <a class="post-pager-link post-pager-prev card-spotlight" href="{{ .RelPermalink }}" rel="prev">
-                <span class="post-pager-label"><i class="bi bi-arrow-left" aria-hidden="true"></i> Previous article</span>
+              <a class="post-pager-link post-pager-prev card-spotlight" href="{{ .RelPermalink }}" rel="prev"{{ if ne .Lang site.Language.Lang }} hreflang="{{ .Lang }}"{{ end }}>
+                <span class="post-pager-label"><i class="bi bi-arrow-left" aria-hidden="true"></i> {{ T "previousArticle" }}</span>
                 <span class="post-pager-title">{{ .Title }}</span>
               </a>
               {{ end }}
               {{ with $newer }}
-              <a class="post-pager-link post-pager-next card-spotlight" href="{{ .RelPermalink }}" rel="next">
-                <span class="post-pager-label">Next article <i class="bi bi-arrow-right" aria-hidden="true"></i></span>
+              <a class="post-pager-link post-pager-next card-spotlight" href="{{ .RelPermalink }}" rel="next"{{ if ne .Lang site.Language.Lang }} hreflang="{{ .Lang }}"{{ end }}>
+                <span class="post-pager-label">{{ T "nextArticle" }} <i class="bi bi-arrow-right" aria-hidden="true"></i></span>
                 <span class="post-pager-title">{{ .Title }}</span>
               </a>
               {{ end }}
@@ -93,8 +96,8 @@
           </div>
 
           {{ if $showToc }}
-          <aside class="post-toc" aria-label="On this page">
-            <p class="post-toc-title">On this page</p>
+          <aside class="post-toc" aria-label="{{ T "onThisPage" }}">
+            <p class="post-toc-title">{{ T "onThisPage" }}</p>
             {{ .TableOfContents }}
           </aside>
           {{ end }}
@@ -104,8 +107,8 @@
         <section class="post-related" aria-labelledby="related-heading">
           <header class="section-header">
             <div>
-              <p class="section-eyebrow">// Keep reading</p>
-              <h2 class="section-title" id="related-heading">Related articles</h2>
+              <p class="section-eyebrow">// {{ T "keepReading" }}</p>
+              <h2 class="section-title" id="related-heading">{{ T "relatedArticles" }}</h2>
             </div>
           </header>
           <div class="post-grid">

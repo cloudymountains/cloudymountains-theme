@@ -13,7 +13,7 @@
 <div class="bookshelf">
   <ul class="bookshelf-row">
     {{ range $i, $b := $books.items }}
-    {{ $label := .title }}{{ with .author }}{{ $label = printf "%s by %s" $label . }}{{ end }}
+    {{ $label := .title }}{{ with .author }}{{ $label = T "bookLabel" (dict "Title" $label "Author" .) }}{{ end }}
     {{ $c := index $palette (mod $i (len $palette)) }}
     {{ $style := printf "--spine-bg: %s; --spine-fg: %s;" (.spine_color | default $c.bg) (.spine_text | default $c.fg) }}
     {{/* Spine width: 30–50px, derived from the title so it stays stable between builds */}}
@@ -21,7 +21,7 @@
     {{ $style = printf "%s --thick: %v;" $style $thick }}
     <li class="book" style="{{ $style | safeCSS }}">
       {{ if .url }}
-      <a class="book-3d" href="{{ .url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ $label }} — buy on Amazon (opens in a new tab)">
+      <a class="book-3d" href="{{ .url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ T "bookBuyLabel" (dict "Label" $label) }}">
       {{ else }}
       <div class="book-3d" tabindex="0" aria-label="{{ $label }}">
       {{ end }}
@@ -38,7 +38,7 @@
         <span class="book-pages" aria-hidden="true"></span>
         <span class="book-front">
           {{ with .cover }}
-          <img src="{{ . | relURL }}" alt="Cover of {{ $label }}" loading="lazy" decoding="async" width="150" height="225">
+          <img src="{{ . | relURL }}" alt="{{ T "bookCover" (dict "Label" $label) }}" loading="lazy" decoding="async" width="150" height="225">
           {{ else }}
           <span class="book-placeholder">
             <span class="book-placeholder-title">{{ .title }}</span>

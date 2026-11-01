@@ -1,0 +1,6 @@
+{{- /*
+Returns the site of the default content language (Hugo 0.156 moved .Sites to hugo.Sites).
+*/ -}}
+{{- $sites := false }}
+{{- if ge hugo.Version "0.156.0" }}{{ $sites = hugo.Sites }}{{ else }}{{ $sites = site.Sites }}{{ end }}
+{{- return $sites.Default }}

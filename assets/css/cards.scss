@@ -131,6 +131,15 @@ $card-border-hover: rgba(232, 184, 75, 0.45);
     color: $card-muted;
 }
 
+// Language of an article listed from another language (an untranslated original)
+.post-card-lang {
+    margin-left: auto;
+    padding: 0 0.45rem;
+    border: 1px solid rgba(232, 184, 75, 0.35);
+    border-radius: 999px;
+    color: $card-accent;
+}
+
 .post-card-title {
     margin: 0;
     font-family: 'Fraunces', Georgia, serif;

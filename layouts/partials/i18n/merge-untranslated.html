@@ -1,0 +1,15 @@
+{{- /*
+Adds the fallback pages that have no translation in the current language, so a
+listing in a translation also shows the articles that exist only in the default
+language. The cards link to those originals (post-card.html marks their language).
+
+@context {pages} pages     Pages in the current language.
+@context {pages} fallback  The same collection in the default language.
+@returns {pages}
+*/ -}}
+{{- $lang := site.Language.Lang }}
+{{- $pages := .pages }}
+{{- range .fallback }}
+  {{- if not (where .Translations "Lang" $lang) }}{{ $pages = $pages | append . }}{{ end }}
+{{- end }}
+{{- return $pages }}

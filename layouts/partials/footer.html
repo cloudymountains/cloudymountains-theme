@@ -7,36 +7,36 @@ which is replaced with the current year at build time.
 <div class="site-footer">
   <div class="site-footer-inner">
     <div class="site-footer-brand">
-      <a class="site-footer-title" href="{{ "/" | relURL }}">{{ site.Title }}</a>
+      <a class="site-footer-title" href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a>
       {{ with $p.description }}<p class="site-footer-tagline">{{ . }}</p>{{ end }}
       {{ with $p.nav_cta }}
-      <a class="site-footer-cta" href="{{ .url | default "/#contacts" }}">{{ .text | default "Work with me" }} <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+      <a class="site-footer-cta" href="{{ relLangURL (.url | default "/#contacts") }}">{{ .text | default (T "workWithMe") }} <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
       {{ end }}
     </div>
 
     {{ with site.Menus.main }}
-    <nav class="site-footer-col" aria-label="Footer">
-      <p class="site-footer-heading">Navigate</p>
+    <nav class="site-footer-col" aria-label="{{ T "navFooter" }}">
+      <p class="site-footer-heading">{{ T "footerNavigate" }}</p>
       <ul>
-        {{ range . }}<li><a href="{{ .URL }}">{{ .Name }}</a></li>{{ end }}
+        {{ range . }}<li><a href="{{ relLangURL .URL }}">{{ .Name }}</a></li>{{ end }}
       </ul>
     </nav>
     {{ end }}
 
     {{ if or $p.linkedin $p.github $p.email }}
     <div class="site-footer-col">
-      <p class="site-footer-heading">Connect</p>
+      <p class="site-footer-heading">{{ T "footerConnect" }}</p>
       <ul>
         {{ with $p.linkedin }}<li><a href="{{ . }}" target="_blank" rel="noopener"><i class="bi bi-linkedin" aria-hidden="true"></i> LinkedIn</a></li>{{ end }}
         {{ with $p.github }}<li><a href="{{ . }}" target="_blank" rel="noopener"><i class="bi bi-github" aria-hidden="true"></i> GitHub</a></li>{{ end }}
-        {{ with $p.email }}<li><a href="mailto:{{ . }}"><i class="bi bi-envelope" aria-hidden="true"></i> Email</a></li>{{ end }}
+        {{ with $p.email }}<li><a href="mailto:{{ . }}"><i class="bi bi-envelope" aria-hidden="true"></i> {{ T "email" }}</a></li>{{ end }}
       </ul>
     </div>
     {{ end }}
   </div>
 
   <div class="site-footer-bottom">
-    <p>{{ with $p.seo.copyright }}{{ replace . "{year}" (string now.Year) }}{{ else }}© {{ now.Year }} {{ site.Title }}. All rights reserved.{{ end }}</p>
-    <a class="site-footer-top" href="#main-content">Back to top <i class="bi bi-arrow-up" aria-hidden="true"></i></a>
+    <p>{{ with $p.seo.copyright }}{{ replace . "{year}" (string now.Year) }}{{ else }}{{ T "copyright" (dict "Year" now.Year "Title" site.Title) }}{{ end }}</p>
+    <a class="site-footer-top" href="#main-content">{{ T "backToTop" }} <i class="bi bi-arrow-up" aria-hidden="true"></i></a>
   </div>
 </div>

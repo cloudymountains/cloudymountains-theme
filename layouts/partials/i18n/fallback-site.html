@@ -1,0 +1,12 @@
+{{- /*
+On a translation of a multilingual site, returns the default language's site, whose
+untranslated articles are listed next to the translated ones (see merge-untranslated.html).
+Returns false in the default language, on single-language sites and when
+params.showUntranslated is false.
+*/ -}}
+{{- $fallback := false }}
+{{- if and hugo.IsMultilingual (ne site.Params.showUntranslated false) }}
+  {{- $default := partial "i18n/default-site.html" . }}
+  {{- if ne $default.Language.Lang site.Language.Lang }}{{ $fallback = $default }}{{ end }}
+{{- end }}
+{{- return $fallback }}

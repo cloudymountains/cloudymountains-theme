@@ -1,0 +1,34 @@
+{{- /*
+The terms of a taxonomy with their pages, as on the terms page. In a translation
+(see fallback-site.html) each term also counts the default language's untranslated
+articles, and terms used only by those articles link to the original term page.
+
+@context {string} . The taxonomy, e.g. "tags".
+@returns {slice} of { page, pages, count }, most-used first.
+*/ -}}
+{{- $path := printf "/%s" . }}
+{{- $terms := slice }}
+{{- $own := site.GetPage $path }}
+{{- with partial "i18n/fallback-site.html" . }}
+  {{- $default := . }}
+  {{- with $default.GetPage $path }}
+    {{- range .Pages }}
+      {{- $original := . }}
+      {{- $term := site.GetPage .Path }}
+      {{- $ownPages := slice }}{{ with $term }}{{ $ownPages = .Pages }}{{ end }}
+      {{- $pages := partial "i18n/merge-untranslated.html" (dict "pages" $ownPages "fallback" $original.Pages) }}
+      {{- if $pages }}{{ $terms = $terms | append (dict "page" (or $term $original) "pages" $pages "count" (len $pages)) }}{{ end }}
+    {{- end }}
+  {{- end }}
+  {{- with $own }}
+    {{- range .Pages }}
+      {{- if not ($default.GetPage .Path) }}{{ $terms = $terms | append (dict "page" . "pages" .Pages "count" (len .Pages)) }}{{ end }}
+    {{- end }}
+  {{- end }}
+  {{- $terms = sort (sort $terms "page.Title") "count" "desc" }}
+{{- else }}
+  {{- with $own }}
+    {{- range .Data.Terms.ByCount }}{{ $terms = $terms | append (dict "page" .Page "pages" .Pages "count" (len .Pages)) }}{{ end }}
+  {{- end }}
+{{- end }}
+{{- return $terms }}

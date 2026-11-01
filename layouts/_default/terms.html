@@ -1,10 +1,16 @@
 {{ define "main" }}
+{{- /* Terms with their articles; in a translation also the untranslated originals (i18n/terms.html) */}}
+{{- $terms := partial "i18n/terms.html" "tags" }}
+{{- $articles := where .Site.RegularPages "Params.tags" "!=" nil }}
+{{- with partial "i18n/fallback-site.html" . }}
+  {{- $articles = partial "i18n/merge-untranslated.html" (dict "pages" $articles "fallback" (where .RegularPages "Params.tags" "!=" nil)) }}
+{{- end }}
 <section class="tags-page">
 
   <div class="tags-page-header">
-    <p class="tags-page-eyebrow">// knowledge index</p>
-    <h1 class="tags-page-title">Technologies</h1>
-    <p class="tags-page-subtitle">{{ len .Site.Taxonomies.tags }} topics · {{ len (where .Site.RegularPages "Params.tags" "!=" nil) }} articles</p>
+    <p class="tags-page-eyebrow">// {{ T "knowledgeIndex" }}</p>
+    <h1 class="tags-page-title">{{ T "technologies" }}</h1>
+    <p class="tags-page-subtitle">{{ T "topicCount" (len $terms) }} · {{ T "articleCount" (len $articles) }}</p>
   </div>
 
   <div class="tags-page-content">
@@ -14,20 +20,20 @@
         <circle cx="11" cy="11" r="8"></circle>
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
-      <input type="text" id="tagSearch" placeholder="filter technologies..." class="tags-search-input" autocomplete="off">
-      <span class="tags-search-count" id="tagCount">{{ len .Site.Taxonomies.tags }}</span>
+      <input type="text" id="tagSearch" placeholder="{{ T "filterTechnologiesPlaceholder" }}" class="tags-search-input" autocomplete="off">
+      <span class="tags-search-count" id="tagCount">{{ len $terms }}</span>
     </div>
 
     <div class="tags-grid" id="tagsGrid">
-      {{ range $i, $t := .Data.Terms.ByCount }}
-        {{ $count := len .Pages }}
-        <a href="{{ .Page.RelPermalink }}" class="tag-card card-spotlight" data-reveal style="--i: {{ math.Min $i 7 }}" data-title="{{ .Page.Title | lower }}">
+      {{ range $i, $t := $terms }}
+        {{ $count := .count }}
+        <a href="{{ .page.RelPermalink }}" class="tag-card card-spotlight" data-reveal style="--i: {{ math.Min $i 7 }}" data-title="{{ .page.Title | lower }}">
           <span class="tag-card-ambient">{{ $count }}</span>
           <div class="tag-card-body">
-            <h2 class="tag-card-name">{{ .Page.Title }}</h2>
+            <h2 class="tag-card-name">{{ .page.Title }}</h2>
             <p class="tag-card-meta">
               <span class="tag-card-count">{{ $count }}</span>
-              <span class="tag-card-label">{{ if eq $count 1 }}article{{ else }}articles{{ end }}</span>
+              <span class="tag-card-label">{{ T "articleLabel" $count }}</span>
             </p>
           </div>
           <div class="tag-card-arrow">→</div>
@@ -35,7 +41,7 @@
       {{ end }}
     </div>
 
-    <p class="tags-no-results" id="tagsNoResults" style="display:none;">No technologies match your filter.</p>
+    <p class="tags-no-results" id="tagsNoResults" style="display:none;">{{ T "noTechnologiesMatch" }}</p>
 
   </div>
 </section>

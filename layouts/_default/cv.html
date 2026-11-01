@@ -24,7 +24,7 @@
       </div>
       {{ with .Params.profile_image | default .Site.Params.profile_image }}
       <div class="cv-header-photo">
-        {{ partial "responsive-image.html" (dict "res" (resources.Get (strings.TrimPrefix "/" .)) "src" . "alt" "Profile" "widths" (slice 120 240) "sizes" "120px" "eager" true) }}
+        {{ partial "responsive-image.html" (dict "res" (resources.Get (strings.TrimPrefix "/" .)) "src" . "alt" (T "cvPhoto") "widths" (slice 120 240) "sizes" "120px" "eager" true) }}
       </div>
       {{ end }}
     </header>
@@ -32,7 +32,7 @@
     <div class="cv-columns">
       {{ with .Params.summary }}
       <section class="cv-section cv-full-width">
-        <h2 class="cv-section-title">Summary</h2>
+        <h2 class="cv-section-title">{{ T "cvSummary" }}</h2>
         <p class="cv-summary">{{ . }}</p>
       </section>
       {{ end }}
@@ -40,7 +40,7 @@
       <div class="cv-column-left">
         {{ with .Params.experience }}
         <section class="cv-section">
-          <h2 class="cv-section-title">Experience</h2>
+          <h2 class="cv-section-title">{{ T "cvExperience" }}</h2>
           {{ range . }}
           <div class="cv-job">
             <div class="cv-job-header">
@@ -65,7 +65,7 @@
       <div class="cv-column-right">
         {{ with .Params.philosophy }}
         <section class="cv-section">
-          <h2 class="cv-section-title">My Life Philosophy</h2>
+          <h2 class="cv-section-title">{{ T "cvPhilosophy" }}</h2>
           {{ range . }}
           <div class="cv-philosophy-card">
             <p class="cv-philosophy-quote"><em>{{ .quote }}</em></p>
@@ -77,12 +77,13 @@
 
         {{ with .Params.languages }}
         <section class="cv-section">
-          <h2 class="cv-section-title">Languages</h2>
+          <h2 class="cv-section-title">{{ T "cvLanguages" }}</h2>
           <div class="cv-languages">
+            {{- /* Dots from an English level name, or set `dots` (1–5) for a level in another language */}}
             {{ $levelToDots := dict "beginner" 1 "intermediate" 2 "advanced" 3 "mastery" 4 "native" 5 }}
             {{ range . }}
             {{ $l := .level | lower }}
-            {{ $n := index $levelToDots $l | default 1 }}
+            {{ $n := .dots | default (index $levelToDots $l) | default 1 }}
             <div class="cv-lang-card">
               <div class="cv-lang-text">
                 <span class="cv-lang-name">{{ .language }}</span>
@@ -101,10 +102,10 @@
 
         {{ with .Params.certifications }}
         <section class="cv-section">
-          <h2 class="cv-section-title">Certification</h2>
+          <h2 class="cv-section-title">{{ T "cvCertification" }}</h2>
           {{ range . }}
           <div class="cv-cert">
-            <span class="cv-cert-name">{{ .name }}</span>{{ with .credential_id }}<span class="cv-cert-id">Credential ID {{ . }}</span>{{ end }}
+            <span class="cv-cert-name">{{ .name }}</span>{{ with .credential_id }}<span class="cv-cert-id">{{ T "cvCredentialID" (dict "ID" .) }}</span>{{ end }}
           </div>
           {{ end }}
         </section>
@@ -112,7 +113,7 @@
 
         {{ with .Params.education }}
         <section class="cv-section">
-          <h2 class="cv-section-title">Education</h2>
+          <h2 class="cv-section-title">{{ T "cvEducation" }}</h2>
           {{ range . }}
           <div class="cv-edu">
             <div class="cv-edu-header">
@@ -128,7 +129,7 @@
 
         {{ with .Params.projects }}
         <section class="cv-section">
-          <h2 class="cv-section-title">Projects</h2>
+          <h2 class="cv-section-title">{{ T "cvProjects" }}</h2>
           {{ range . }}
           <div class="cv-project">
             <div class="cv-project-header">
@@ -150,19 +151,21 @@
 
         {{ with .Params.hobby }}
         <section class="cv-section">
-          <h2 class="cv-section-title">Hobby</h2>
+          <h2 class="cv-section-title">{{ T "cvHobby" }}</h2>
           <p class="cv-hobby">{{ . }}</p>
         </section>
         {{ end }}
 
         {{ with .Params.skills_list }}
         <section class="cv-section">
-          <h2 class="cv-section-title">Skills</h2>
+          <h2 class="cv-section-title">{{ T "cvSkills" }}</h2>
           <div class="cv-skills-list">
             {{ range . }}
-            {{- /* Link a skill only when articles are tagged with it; a missing tag page is a 404 */}}
-            {{ $skill := . }}
-            {{ with site.GetPage (printf "/tags/%s" (urlize .)) }}
+            {{- /* Link a skill only when articles are tagged with it; a missing tag page is a 404.
+                 A skill is a name, or { name, tag } when the tag is named differently (e.g. in a translation) */}}
+            {{ $skill := . }}{{ $tag := . }}
+            {{- if reflect.IsMap . }}{{ $skill = .name }}{{ $tag = .tag | default .name }}{{ end }}
+            {{ with partial "i18n/get-page.html" (printf "/tags/%s" (urlize $tag)) }}
             <a href="{{ .RelPermalink }}" class="cv-skill-tag">{{ $skill }}</a>
             {{ else }}
             <span class="cv-skill-tag">{{ $skill }}</span>
@@ -174,7 +177,7 @@
 
         {{ with .Params.my_time }}
         <section class="cv-section">
-          <h2 class="cv-section-title">My Time</h2>
+          <h2 class="cv-section-title">{{ T "cvMyTime" }}</h2>
           {{ $colors := slice "#e8b84b" "#f5cc72" "#4ecdc4" "#d4a020" "#8eccc7" "#b5830e" }}
           {{ $items := . }}
           {{ $s := newScratch }}

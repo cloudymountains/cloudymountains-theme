@@ -9,8 +9,8 @@ homepage = 'https://github.com/cloudymountains/cloudymountains-theme'
 # If you have a running demo of the theme
 demosite = 'https://cloudymountains.cloud'
 
-tags = ['blog', 'portfolio', 'personal', 'responsive', 'dark-mode', 'search', 'minimal']
-features = ['responsive', 'dark-mode', 'light-mode', 'search', 'cv-page', 'skills', 'projects', 'seo', 'google-analytics', 'syntax-highlighting', 'tags', 'rss']
+tags = ['blog', 'portfolio', 'personal', 'responsive', 'dark-mode', 'search', 'minimal', 'multilingual']
+features = ['responsive', 'dark-mode', 'light-mode', 'search', 'cv-page', 'skills', 'projects', 'seo', 'google-analytics', 'syntax-highlighting', 'tags', 'rss', 'multilingual']
 
 [author]
   name = 'Denislav Tsonev'

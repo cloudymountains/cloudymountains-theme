@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="{{ .Site.LanguageCode }}">
+{{- $language := partial "i18n/language.html" site.Language }}
+<html lang="{{ $language.code }}" dir="{{ $language.dir }}">
 <head>
     {{ partial "head.html" . }}
     {{ $notFound := resources.Get "css/404.scss" | toCSS | resources.Minify | resources.Fingerprint }}
@@ -11,28 +12,29 @@
         {{ partial "header.html" . }}
     </header>
     <main id="main-content">
+        {{- $projectsURL := "projects/" | relLangURL }}{{ with partial "i18n/get-page.html" "/projects" }}{{ $projectsURL = .RelPermalink }}{{ end }}
         <div class="hero notfound" id="home">
             {{ partial "hero-clouds.html" . }}
             <div class="hero-content notfound-content">
                 <p class="notfound-eyebrow">// 404</p>
-                <h1>Lost in the clouds</h1>
-                <p class="notfound-text">The page you're looking for doesn't exist or has moved.</p>
+                <h1>{{ T "notFoundTitle" }}</h1>
+                <p class="notfound-text">{{ T "notFoundText" }}</p>
 
                 <div class="notfound-grid">
-                    <a href="{{ "/" | relURL }}" class="notfound-item card-spotlight">
+                    <a href="{{ site.Home.RelPermalink }}" class="notfound-item card-spotlight">
                         <i class="bi bi-house" aria-hidden="true"></i>
-                        <h2>Home</h2>
-                        <p>Back to the start</p>
+                        <h2>{{ T "notFoundHome" }}</h2>
+                        <p>{{ T "notFoundHomeText" }}</p>
                     </a>
-                    <a href="{{ "projects/" | relURL }}" class="notfound-item card-spotlight">
+                    <a href="{{ $projectsURL }}" class="notfound-item card-spotlight">
                         <i class="bi bi-journal-text" aria-hidden="true"></i>
-                        <h2>Projects</h2>
-                        <p>Articles and write-ups</p>
+                        <h2>{{ T "notFoundProjects" }}</h2>
+                        <p>{{ T "notFoundProjectsText" }}</p>
                     </a>
-                    <a href="{{ "tags/" | relURL }}" class="notfound-item card-spotlight">
+                    <a href="{{ "tags/" | relLangURL }}" class="notfound-item card-spotlight">
                         <i class="bi bi-tags" aria-hidden="true"></i>
-                        <h2>Technologies</h2>
-                        <p>Browse by topic</p>
+                        <h2>{{ T "notFoundTags" }}</h2>
+                        <p>{{ T "notFoundTagsText" }}</p>
                     </a>
                 </div>
             </div>
