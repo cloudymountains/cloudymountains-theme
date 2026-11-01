@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/cloudymountains/cloudymountains-theme/compare/v2.5.1...v2.6.0) (2026-11-01)
+
+
+### Features
+
+* **i18n:** multilingual sites with English and Bulgarian ([853b635](https://github.com/cloudymountains/cloudymountains-theme/commit/853b635d11f28c2e593b79c91ba20c3a4a165b92))
+
 ## [2.5.1](https://github.com/cloudymountains/cloudymountains-theme/compare/v2.5.0...v2.5.1) (2026-11-01)
 
 
