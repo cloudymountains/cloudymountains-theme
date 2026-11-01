@@ -146,7 +146,9 @@ theme = 'cloudymountains-theme'
     description = "One or two sentences for search results."  # optional: meta description fallback (default: params.description)
     noindexKinds = ["taxonomy", "term"]            # optional: page kinds marked noindex and left out of the sitemap
 
-    # Optional: Iubenda cookie consent
+    # Optional: Iubenda cookie consent. When enabled, Google Analytics is tagged
+    # for Iubenda's manual prior blocking and runs only after consent to
+    # measurement (purpose 4); the synchronous autoblocking script is not used.
     [params.seo.iubenda]
       enable = false
       siteId = "your-site-id"

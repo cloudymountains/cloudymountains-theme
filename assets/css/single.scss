@@ -620,54 +620,18 @@ $single-prose-width: 50rem; // comfortable reading measure (~75 characters)
         background-color: rgba(0, 0, 0, 0.06);
         color: #1a1a1a;
     }
-    .hljs {
+    // Chroma token classes, same groups as code.scss
+    .chroma {
         color: #24292f;
         background: transparent;
-    }
-    .hljs-keyword,
-    .hljs-selector-tag,
-    .hljs-title.function_,
-    .hljs-doctag,
-    .hljs-meta-keyword,
-    .hljs-tag,
-    .hljs-name,
-    .hljs-operator {
-        color: #cf222e;
-    }
-    .hljs-string,
-    .hljs-attr,
-    .hljs-attribute,
-    .hljs-meta-string,
-    .hljs-regexp,
-    .hljs-link {
-        color: #0a6e0a;
-    }
-    .hljs-number,
-    .hljs-literal,
-    .hljs-symbol,
-    .hljs-bullet {
-        color: #953800;
-    }
-    .hljs-comment,
-    .hljs-meta {
-        color: #6e7781;
-        font-style: italic;
-    }
-    .hljs-function,
-    .hljs-title,
-    .hljs-type,
-    .hljs-section {
-        color: #0550ae;
-    }
-    .hljs-params,
-    .hljs-variable,
-    .hljs-punctuation {
-        color: #24292f;
-    }
-    .hljs-built_in,
-    .hljs-selector-class,
-    .hljs-selector-id {
-        color: #953800;
+
+        .k, .kd, .kn, .kp, .kr, .o, .ow, .nt { color: #cf222e; }
+        .s, .sa, .sb, .sc, .dl, .sd, .s1, .s2, .se, .sh, .si, .sx, .sr, .na { color: #0a6e0a; }
+        .m, .mb, .mf, .mh, .mi, .il, .mo, .l, .ld, .kc, .ss { color: #953800; }
+        .c, .ch, .cm, .c1, .cs, .cp, .cpf, .nd { color: #6e7781; font-style: italic; }
+        .nf, .fm, .nc, .kt, .gh, .gu { color: #0550ae; }
+        .nv, .vc, .vg, .vi, .vm, .p { color: #24292f; }
+        .nb, .bp { color: #953800; }
     }
     .copy-button {
         background: rgba(0, 0, 0, 0.06);

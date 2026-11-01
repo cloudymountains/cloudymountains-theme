@@ -1,7 +1,7 @@
 .projects-section {
     min-height: 100vh;
     position: relative;
-    background-image: url('/images/forest-background.jpg');
+    @include forest-background;
     background-position: center;
     background-repeat: repeat;
     background-size: cover;

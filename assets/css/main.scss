@@ -1,5 +1,11 @@
 $heroBackgroundImage: '';
 
+// Forest background: WebP (1920px) where image-set() is supported, the JPEG otherwise
+@mixin forest-background {
+    background-image: url('/images/forest-background.jpg');
+    background-image: image-set(url('/images/forest-background.webp') type('image/webp'), url('/images/forest-background.jpg') type('image/jpeg'));
+}
+
 // Design tokens
 $color-bg: #07090f;
 $color-bg-surface: #0c1018;
@@ -29,7 +35,7 @@ body, html {
 .hero {
     height: 100vh;
     width: 100%;
-    background-image: url('../images/forest-background.jpg');
+    @include forest-background;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -384,7 +390,7 @@ body, html {
 .projects-section {
     min-height: 100vh;
     position: relative;
-    background-image: url('/images/forest-background.jpg');
+    @include forest-background;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

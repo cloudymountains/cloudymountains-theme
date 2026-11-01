@@ -30,114 +30,38 @@ p code, li code {
   color: #e0e0e0;
 }
 
-// Syntax highlighting colors
-.hljs {
+// Syntax highlighting colors. Hugo highlights code at build time (Chroma, with
+// markup.highlight.noClasses = false); these rules color its token classes.
+.chroma {
   color: #e0e0e0;
   background: transparent;
-}
 
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-title.function_ {
-  color: #ff79c6;
-  font-weight: bold;
-}
+  // Keywords, operators, tags
+  .k, .kd, .kn, .kp, .kr { color: #ff79c6; font-weight: bold; }
+  .o, .ow, .nt { color: #ff79c6; }
 
-.hljs-string,
-.hljs-attr {
-  color: #50fa7b;
-}
+  // Strings and attribute names
+  .s, .sa, .sb, .sc, .dl, .sd, .s1, .s2, .se, .sh, .si, .sx, .sr, .na { color: #50fa7b; }
 
-.hljs-number,
-.hljs-literal {
-  color: #bd93f9;
-}
+  // Numbers, literals, constants, symbols
+  .m, .mb, .mf, .mh, .mi, .il, .mo, .l, .ld, .kc, .ss { color: #bd93f9; }
 
-.hljs-comment {
-  color: #6272a4;
-  font-style: italic;
-}
+  // Comments and preprocessor / decorators
+  .c, .ch, .cm, .c1, .cs { color: #6272a4; font-style: italic; }
+  .cp, .cpf, .nd { color: #6272a4; }
 
-.hljs-function,
-.hljs-title {
-  color: #8be9fd;
-}
+  // Functions, classes and types
+  .nf, .fm, .nc, .kt { color: #8be9fd; }
+  .gh, .gu { color: #8be9fd; font-weight: bold; }
 
-.hljs-params {
-  color: #f8f8f2;
-}
+  // Built-ins
+  .nb, .bp { color: #ffb86c; }
 
-.hljs-built_in {
-  color: #ffb86c;
-}
+  // Variables and punctuation
+  .nv, .vc, .vg, .vi, .vm, .p { color: #f8f8f2; }
 
-.hljs-type {
-  color: #8be9fd;
-}
-
-.hljs-variable {
-  color: #f8f8f2;
-}
-
-.hljs-operator {
-  color: #ff79c6;
-}
-
-.hljs-punctuation {
-  color: #f8f8f2;
-}
-
-.hljs-meta {
-  color: #6272a4;
-}
-
-.hljs-meta-string {
-  color: #50fa7b;
-}
-
-.hljs-doctag,
-.hljs-meta-keyword {
-  color: #ff79c6;
-}
-
-.hljs-section {
-  color: #8be9fd;
-  font-weight: bold;
-}
-
-.hljs-selector-class,
-.hljs-selector-id {
-  color: #ffb86c;
-}
-
-.hljs-attribute {
-  color: #50fa7b;
-}
-
-.hljs-tag {
-  color: #ff79c6;
-}
-
-.hljs-name {
-  color: #ff79c6;
-}
-
-.hljs-regexp,
-.hljs-link {
-  color: #50fa7b;
-}
-
-.hljs-symbol,
-.hljs-bullet {
-  color: #bd93f9;
-}
-
-.hljs-emphasis {
-  font-style: italic;
-}
-
-.hljs-strong {
-  font-weight: bold;
+  .ge { font-style: italic; }
+  .gs { font-weight: bold; }
 }
 
 // Copy button styling

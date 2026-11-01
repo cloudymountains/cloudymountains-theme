@@ -64,8 +64,20 @@
     <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ $.Site.Title }}">
     {{- end }}
 
+    {{- $iubenda := false }}{{ with $seo.iubenda }}{{ $iubenda = .enable }}{{ end }}
     <!-- Google Analytics -->
     {{ with .Site.Params.seo.googleAnalytics }}
+    {{- if $iubenda }}
+    <!-- Google tag (gtag.js), inert until Iubenda records consent to measurement (purpose 4) -->
+    <script type="text/plain" class="_iub_cs_activate" data-iub-purposes="4" data-suppressedsrc="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
+    <script type="text/plain" class="_iub_cs_activate-inline" data-iub-purposes="4">
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', '{{ . }}');
+    </script>
+    {{- else }}
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
     <script>
@@ -75,20 +87,21 @@
 
       gtag('config', '{{ . }}');
     </script>
+    {{- end }}
     {{ end }}
 
-    <!-- Iubenda Consent Manager -->
-    {{ with .Site.Params.seo.iubenda }}
-    {{ if .enable }}
+    <!-- Iubenda Consent Manager: scripts are blocked by manual tagging (above), not
+         the synchronous autoblocking script, so nothing here delays rendering -->
+    {{- if $iubenda }}
+    {{- with $seo.iubenda }}
     <script type="text/javascript">
     var _iub = _iub || [];
     _iub.csConfiguration = {"siteId":{{ .siteId }},"cookiePolicyId":{{ .cookiePolicyId }},"lang":"{{ .lang }}","storage":{"useSiteId":true}};
     </script>
-    <script type="text/javascript" src="https://cs.iubenda.com/autoblocking/{{ .siteId }}.js"></script>
-    <script type="text/javascript" src="//cdn.iubenda.com/cs/gpp/stub.js"></script>
+    <script type="text/javascript" src="//cdn.iubenda.com/cs/gpp/stub.js" async></script>
     <script type="text/javascript" src="//cdn.iubenda.com/cs/iubenda_cs.js" charset="UTF-8" async></script>
-    {{ end }}
-    {{ end }}
+    {{- end }}
+    {{- end }}
 
     <!-- Structured Data -->
     {{ partial "schema.html" . }}
@@ -110,10 +123,7 @@
     {"prefetch": [{"where": {"and": [{"href_matches": "/*"}, {"not": {"href_matches": "/*.xml"}}]}, "eagerness": "moderate"}]}
     </script>
 
-    <!-- Highlight.js -->
-    {{ partial "head/highlight.html" . }}
-
-    <!-- Styles -->
+    <!-- Styles (code blocks are highlighted by Hugo at build time; colors in code.scss) -->
     {{ partialCached "head/css.html" . }}
     {{ partialCached "head/js.html" . }}
 </head>
